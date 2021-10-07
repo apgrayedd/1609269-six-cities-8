@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export default function Point(): JSX.Element {
+  const favoriteClassName = `place-card__bookmark-button button ${Math.random() > 0.5 ? 'place-card__bookmark-button--active' : ''}`;
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -17,7 +18,7 @@ export default function Point(): JSX.Element {
             <b className="place-card__price-value">€120</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={favoriteClassName} type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>

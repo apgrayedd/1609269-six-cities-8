@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
 const Options = {
-  COUNT: 1,
+  COUNT: 5,
 };
 
 ReactDOM.render(
