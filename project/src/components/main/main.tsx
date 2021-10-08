@@ -8,7 +8,7 @@ type countPoints = {
 };
 
 export default function Main({count}: countPoints): JSX.Element {
-  const arrayPoints = new Array(count).fill(0).map(() => <Point key = {2}/>);
+  const arrayPoints = [...Array(count)].map(() => <Point key = {2}/>);
   return (
     <div className="page page--gray page--main">
       <header className="header">

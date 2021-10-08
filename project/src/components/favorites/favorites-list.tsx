@@ -7,7 +7,7 @@ type countFavorites = {
 }
 
 export default function FavoritesList({count} : countFavorites): JSX.Element {
-  const arrayFavorites = new Array(count).fill(0).map(() => <FavoritesItem key = {2}/>);
+  const arrayFavorites = [...Array(count)].map(() => <FavoritesItem key = {2}/>);
   return (
     count > 0
       ?
