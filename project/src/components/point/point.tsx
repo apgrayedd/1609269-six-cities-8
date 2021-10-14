@@ -1,17 +1,19 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-export default function Point(): JSX.Element {
+import PointLink from './point-link';
+
+type pointOptions = {
+  id: number,
+};
+
+export default function Point({id}: pointOptions): JSX.Element {
   const favoriteClassName = `place-card__bookmark-button button ${Math.random() > 0.5 ? 'place-card__bookmark-button--active' : ''}`;
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src="img/apartment-01.jpg" alt="Place image" width={260} height={200} />
-        </a>
-      </div>
+      <PointLink id = {id}/>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">

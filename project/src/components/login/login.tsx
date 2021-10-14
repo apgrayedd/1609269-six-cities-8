@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import Logo from '../logo/logo';
+
 export default function FavoritesEmpty(): JSX.Element {
   return (
     <div className="page page--gray page--login">
@@ -6,15 +8,7 @@ export default function FavoritesEmpty(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </a>
+              <Logo />
             </div>
           </div>
         </div>
