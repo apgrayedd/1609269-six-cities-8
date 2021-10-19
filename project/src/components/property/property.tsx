@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { AuthorizationStatus } from '../../const';
@@ -10,6 +11,7 @@ type propertyOptions = {
 };
 
 export default function Property({authorizationStatus}: propertyOptions): JSX.Element {
+  const arrayPoints = [...Array(3)].map((_,i) => <Point id = {i} key = {i} />);
   return (
     <div className="page">
       <header className="header">
@@ -313,9 +315,7 @@ export default function Property({authorizationStatus}: propertyOptions): JSX.El
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <Point id = {2} key = {2} />
-              <Point id = {2} key = {2} />
-              <Point id = {2} key = {2} />
+              {arrayPoints}
             </div>
           </section>
         </div>

@@ -8,6 +8,20 @@ type pageErrorOptions = {
   authorizationStatus: AuthorizationStatus,
 };
 
+const ErrorDivStyle = {
+  HEIGHT: '50vh',
+  WIDTH: '1144px',
+  MARGIN_LEFT: 'auto',
+  MARGIN_RIGHT: 'auto',
+  PADDING_LEFT: '58px',
+  PADDING_RIGHT: '58px',
+};
+
+const ErrorDescriptionStyle = {
+  FONT_SIZE: '78px',
+  MARGIN_BOTTOM: '20px',
+};
+
 export default function Page404({authorizationStatus}: pageErrorOptions): JSX.Element {
   return (
     <div className = 'page'>
@@ -24,18 +38,18 @@ export default function Page404({authorizationStatus}: pageErrorOptions): JSX.El
         </div>
       </header>
       <div className = "error error--404" style = {{
-        height: '50vh',
-        width: '1144px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        paddingLeft: '58px',
-        paddingRight: '58px',
+        height: ErrorDivStyle.HEIGHT,
+        width: ErrorDivStyle.WIDTH,
+        marginLeft: ErrorDivStyle.MARGIN_LEFT,
+        marginRight: ErrorDivStyle.MARGIN_RIGHT,
+        paddingLeft: ErrorDivStyle.PADDING_LEFT,
+        paddingRight: ErrorDivStyle.MARGIN_RIGHT,
       }}
       >
         <Link to = '/'>
           <p style = {{
-            fontSize: '78px',
-            marginBottom: '20px',
+            fontSize: ErrorDescriptionStyle.FONT_SIZE,
+            marginBottom: ErrorDescriptionStyle.MARGIN_BOTTOM,
           }}
           >
             Ошибка 404

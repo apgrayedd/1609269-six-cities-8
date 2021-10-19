@@ -40,7 +40,6 @@ export default function FavoritesList({count, authorizationStatus} : countFavori
                 </div>
               </div>
               <div className="favorites__places">
-                {/* Место для избранных */}
                 {arrayFavorites}
               </div>
             </li>

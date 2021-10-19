@@ -5,7 +5,7 @@ import { AuthorizationStatus } from './const';
 
 const Options = {
   COUNT: 5,
-  AUTHORIZATION: AuthorizationStatus.NoAuth,
+  AUTHORIZATION: AuthorizationStatus.Auth,
 };
 
 ReactDOM.render(

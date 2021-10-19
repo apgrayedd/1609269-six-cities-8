@@ -7,7 +7,8 @@ type pointOptions = {
 };
 
 export default function Point({id}: pointOptions): JSX.Element {
-  const favoriteClassName = `place-card__bookmark-button button ${Math.random() > 0.5 ? 'place-card__bookmark-button--active' : ''}`;
+  const favoriteClassName = `place-card__bookmark-button button ${Math.random() > 0.5 ?
+    'place-card__bookmark-button--active' : ''}`;
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">

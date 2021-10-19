@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Point from '../point/point';
@@ -12,7 +13,7 @@ type countPoints = {
 };
 
 export default function Main({count, authorizationStatus}: countPoints): JSX.Element {
-  const arrayPoints = [...Array(count)].map(() => <Point id = {2} key = {2}/>);
+  const arrayPoints = [...Array(count)].map((_,i) => <Point id = {i} key = {i}/>);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -88,7 +89,6 @@ export default function Main({count, authorizationStatus}: countPoints): JSX.Ele
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  {/* Место для поинтов */}
                   {arrayPoints}
                 </div>
               </section>

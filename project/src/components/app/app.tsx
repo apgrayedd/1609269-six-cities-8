@@ -2,7 +2,7 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
-import Favorites from '../favorites/favorites-list';
+import Favorites from '../favorites/favorites';
 import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
@@ -17,7 +17,7 @@ function App({count, authorizationStatus}: countPoints): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route exact path = {AppRoute.Main}>
-          <Main authorizationStatus={authorizationStatus} count = {count}/>
+          <Main authorizationStatus = {authorizationStatus} count = {count}/>
         </Route>
         <Route exact path = {AppRoute.SignIn}>
           <Login />
@@ -25,15 +25,15 @@ function App({count, authorizationStatus}: countPoints): JSX.Element {
         <PrivateRoute
           exact
           path = {AppRoute.Favorites}
-          render={() => <Favorites authorizationStatus={authorizationStatus} count = {0}/>}
-          authorizationStatus={authorizationStatus}
+          render={() => <Favorites authorizationStatus = {authorizationStatus} count = {0}/>}
+          authorizationStatus = {authorizationStatus}
         >
         </PrivateRoute>
         <Route exact path = {AppRoute.Room}>
-          <Property authorizationStatus={authorizationStatus} />
+          <Property authorizationStatus = {authorizationStatus} />
         </Route>
         <Route>
-          <Page404 authorizationStatus={authorizationStatus} />
+          <Page404 authorizationStatus = {authorizationStatus} />
         </Route>
       </Switch>
     </BrowserRouter>
