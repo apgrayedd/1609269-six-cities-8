@@ -6,14 +6,15 @@ import MainEmpty from './main-empty';
 import Logo from '../logo/logo';
 import {AuthorizationStatus} from '../../const';
 import LoginLink from '../login/login-link';
+import { Hostel } from '../../mocks/hostel';
 
 type countPoints = {
-  count: number;
-  authorizationStatus: AuthorizationStatus
+  hostels: Hostel[],
+  authorizationStatus: AuthorizationStatus,
 };
 
-export default function Main({count, authorizationStatus}: countPoints): JSX.Element {
-  const arrayPoints = [...Array(count)].map((_,i) => <Point id = {i} key = {i}/>);
+export default function Main({hostels, authorizationStatus}: countPoints): JSX.Element {
+  const arrayPoints = hostels.map((hostel) => <Point key = {hostel.id} hostel = {hostel}/>);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -28,7 +29,7 @@ export default function Main({count, authorizationStatus}: countPoints): JSX.Ele
           </div>
         </div>
       </header>
-      {count > 0
+      {hostels.length > 0
         ?
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>

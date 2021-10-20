@@ -2,16 +2,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { AuthorizationStatus } from '../../const';
+import { Hostel } from '../../mocks/hostel';
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
 import Point from '../point/point';
 
 type propertyOptions = {
+  hostels: Hostel[],
   authorizationStatus: AuthorizationStatus,
 };
 
-export default function Property({authorizationStatus}: propertyOptions): JSX.Element {
-  const arrayPoints = [...Array(3)].map((_,i) => <Point id = {i} key = {i} />);
+export default function Property({hostels, authorizationStatus}: propertyOptions): JSX.Element {
+  const arrayPoints = hostels.map((hostel,i) => <Point hostel = {hostel} key = {hostel.id} />);
   return (
     <div className="page">
       <header className="header">

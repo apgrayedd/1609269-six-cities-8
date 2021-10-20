@@ -1,24 +1,30 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { Hostel } from '../../mocks/hostel';
 import PointLink from './point-link';
 
 type pointOptions = {
-  id: number,
+  hostel: Hostel,
 };
 
-export default function Point({id}: pointOptions): JSX.Element {
-  const favoriteClassName = `place-card__bookmark-button button ${Math.random() > 0.5 ?
+export default function Point({hostel}: pointOptions): JSX.Element {
+  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite ?
     'place-card__bookmark-button--active' : ''}`;
   return (
     <article className="cities__place-card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <PointLink id = {id}/>
+      {
+        hostel.is_premium
+          ?
+          <div className="place-card__mark">
+            <span>Premium</span>
+          </div>
+          : ''
+      }
+      <PointLink id = {hostel.id}/>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€120</b>
+            <b className="place-card__price-value">€{hostel.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button className={favoriteClassName} type="button">
@@ -30,14 +36,14 @@ export default function Point({id}: pointOptions): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}} />
+            <span style={{width: `${(Math.round(hostel.rating) * 20)}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="#">{hostel.description}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1)}</p>
       </div>
     </article>
   );
