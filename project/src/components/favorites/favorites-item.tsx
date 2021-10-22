@@ -42,7 +42,7 @@ export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
             {hostel.title}
           </Link>
         </h2>
-        <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1)}</p>
+        <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1).toLocaleLowerCase()}</p>
       </div>
     </article>
   );

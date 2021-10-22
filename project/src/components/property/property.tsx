@@ -3,8 +3,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
 import { Hostel } from '../../mocks/hostel';
-import LoginLink from '../login/login-link';
-import Logo from '../logo/logo';
+import Header from '../header/header';
 import Point from '../point/point-item';
 import PropertyFormComment from './property-form-comment';
 
@@ -40,18 +39,7 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
     'property__bookmark-button--active' : ''}`;
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <LoginLink authorizationStatus = {authorizationStatus} />
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header authorizationStatus = {authorizationStatus} />
       <main className="page__main page__main--property">
         <section className="property">
           {propertyGalleryContainer(hostelProperty)}

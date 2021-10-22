@@ -1,9 +1,10 @@
-import LoginLink from '../login/login-link';
+import { AuthorizationStatus } from '../../const';
+import { Hostel } from '../../mocks/hostel';
 import Logo from '../logo/logo';
 import FavoritesEmpty from './favorites-empty';
 import FavoritesList from './favorites-list';
-import { AuthorizationStatus } from '../../const';
-import { Hostel } from '../../mocks/hostel';
+
+import Header from '../header/header';
 
 type countFavorites = {
   hostels: Hostel[],
@@ -13,28 +14,19 @@ type countFavorites = {
 export default function Favorites({hostels, authorizationStatus} : countFavorites): JSX.Element {
   return (
     <div className = 'page'>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <LoginLink authorizationStatus = {authorizationStatus} />
-            </nav>
-          </div>
-        </div>
-      </header>
-      {hostels.length > 0
-        ?
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList hostels = {hostels} />
-          </section>
-        </div>
-        :
-        <FavoritesEmpty/>}
+      <Header authorizationStatus = {authorizationStatus} />
+      <div className="page__favorites-container container">
+        {
+          hostels.length > 0
+            ?
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <FavoritesList hostels = {hostels} />
+            </section>
+            :
+            <FavoritesEmpty/>
+        }
+      </div>
       <footer className="footer container">
         <Logo />
       </footer>

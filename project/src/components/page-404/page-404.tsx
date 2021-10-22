@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
-import LoginLink from '../login/login-link';
+import Header from '../header/header';
 import Logo from '../logo/logo';
 
 type pageErrorOptions = {
@@ -24,18 +24,7 @@ const ErrorDescriptionStyle = {
 export default function Page404({authorizationStatus}: pageErrorOptions): JSX.Element {
   return (
     <div className = 'page'>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <LoginLink authorizationStatus = {authorizationStatus} />
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header authorizationStatus = {authorizationStatus} />
       <div className = "error error--404" style = {{
         height: ErrorDivStyle.HEIGHT,
         width: ErrorDivStyle.WIDTH,
