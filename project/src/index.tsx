@@ -5,7 +5,7 @@ import { AuthorizationStatus } from './const';
 import { hostels } from './mocks/hostels';
 
 const Options = {
-  AUTHORIZATION: AuthorizationStatus.NoAuth,
+  AUTHORIZATION: AuthorizationStatus.Auth,
 };
 
 ReactDOM.render(

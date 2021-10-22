@@ -32,7 +32,7 @@ export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element
         <li className="favorites__locations-items" key = {i}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
-              <Link to = {`/main/${hostelInfo.key}`} className = "locations__item-link">
+              <Link to = {`/main/${hostelInfo.key.toLocaleLowerCase()}`} className = "locations__item-link">
                 <span>{hostelInfo.key}</span>
               </Link>
             </div>
