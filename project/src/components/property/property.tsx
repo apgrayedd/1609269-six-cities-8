@@ -5,7 +5,7 @@ import { AuthorizationStatus } from '../../const';
 import { Hostel } from '../../mocks/hostel';
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
-import Point from '../point/point';
+import Point from '../point/point-item';
 import PropertyFormComment from './property-form-comment';
 
 type propertyOptions = {

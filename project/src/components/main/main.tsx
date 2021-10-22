@@ -1,4 +1,4 @@
-import Points from '../point/points';
+import PointList from '../point/point-list';
 import MainEmpty from './main-empty';
 import Logo from '../logo/logo';
 import {AuthorizationStatus} from '../../const';
@@ -55,7 +55,7 @@ export default function Main({hostels, authorizationStatus}: countPoints): JSX.E
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <Points hostels = {hostels} />
+                <PointList hostels = {hostels} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>

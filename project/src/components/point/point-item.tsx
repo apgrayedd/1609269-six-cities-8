@@ -7,7 +7,7 @@ type pointOptions = {
   hostel: Hostel,
 };
 
-export default function Point({hostel}: pointOptions): JSX.Element {
+export default function PointItem({hostel}: pointOptions): JSX.Element {
   const stateHover = useState(false);
   const [status, setHoverStatus] = stateHover;
   const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite ?
