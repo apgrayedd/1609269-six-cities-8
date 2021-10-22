@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key */
+import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
 import { Cities } from '../../const';
 
@@ -23,7 +23,7 @@ export default function MainCitiesList(): JSX.Element {
       {
         cities.length > 0
           ?
-          cities.map((city, i) => <MainCitiesItem key = {i} city = {city}/>)
+          cities.map((city) => <MainCitiesItem key = {nanoid()} city = {city}/>)
           :
           ''
       }

@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Hostel } from '../../mocks/hostel';
 import PointLink from './point-link';
 
@@ -48,7 +47,9 @@ export default function Point({hostel}: pointOptions): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{hostel.title}</a>
+          <Link to = {`/property/${hostel.id}`}>
+            {hostel.title}
+          </Link>
         </h2>
         <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1)}</p>
       </div>

@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Link } from 'react-router-dom';
-// import { AppRoute } from '../../const';
 
 type linkOptions = {
   id: number,

@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 
 export default function FavoritesEmpty(): JSX.Element {
@@ -45,9 +45,9 @@ export default function FavoritesEmpty(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className = "locations__item-link" to = '/main/amsterdam'>
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

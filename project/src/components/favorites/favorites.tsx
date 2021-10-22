@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
 import FavoritesEmpty from './favorites-empty';

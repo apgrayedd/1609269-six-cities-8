@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Points from '../point/points';
 import MainEmpty from './main-empty';
 import Logo from '../logo/logo';

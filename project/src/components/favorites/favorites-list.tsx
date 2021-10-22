@@ -1,7 +1,5 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../mocks/hostel';
 import { getTitleListFromListByKey } from '../../utils/common';
@@ -29,7 +27,7 @@ export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element
     return (
       favoritesArray.length > 0
         ?
-        <li className="favorites__locations-items" key = {i}>
+        <li className="favorites__locations-items" key = {nanoid()}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <Link to = {`/main/${hostelInfo.key.toLocaleLowerCase()}`} className = "locations__item-link">

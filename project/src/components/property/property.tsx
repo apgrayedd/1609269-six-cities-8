@@ -1,7 +1,5 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
+import { nanoid } from '@reduxjs/toolkit';
 import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
 import { Hostel } from '../../mocks/hostel';
@@ -16,11 +14,11 @@ type propertyOptions = {
 };
 
 function propertyGalleryContainer(hostel: Hostel): JSX.Element{
-  const propertyGallery = hostel.images.map((img, i) => (
-    <div className="property__image-wrapper" key = {i}>
+  const propertyGallery = hostel.images.map((img) => (
+    <div className="property__image-wrapper" key = {nanoid()}>
       <img
         className="property__image"
-        src="img/room.jpg"
+        src={img}
         alt="Photo studio"
       />
     </div>
@@ -105,7 +103,7 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    hostelProperty.goods.map((good, i) => <li className="property__inside-item" key = {i}>{good}</li>)
+                    hostelProperty.goods.map((good) => <li className="property__inside-item" key = {nanoid()}>{good}</li>)
                   }
                 </ul>
               </div>
