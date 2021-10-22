@@ -16,7 +16,7 @@ type FavoritesListType = {
 
 export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element {
   const favoritesList:FavoritesListType[] = getTitleListFromListByKey(hostels, 'city');
-  const favoritesListArray = favoritesList.map((hostelInfo, i) => {
+  const favoritesListArray = favoritesList.map((hostelInfo) => {
     const favoritesArray = hostelInfo.values.map((hostel) => (
       hostel.is_favorite
         ?

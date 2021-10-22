@@ -1,6 +1,6 @@
 export enum AppRoute {
   Root = '/',
-  Main = '/main/:name',
+  Main = '/main/:activeCity',
   SignIn = '/login',
   Favorites = '/favorites',
   Page404 = '/page-404',
