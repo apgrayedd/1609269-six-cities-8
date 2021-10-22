@@ -5,14 +5,12 @@ import { AuthorizationStatus } from './const';
 import { hostels } from './mocks/hostels';
 
 const Options = {
-  COUNT: 5,
-  AUTHORIZATION: AuthorizationStatus.Auth,
+  AUTHORIZATION: AuthorizationStatus.NoAuth,
 };
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      count = {Options.COUNT}
       authorizationStatus = {Options.AUTHORIZATION}
       hostels = {hostels}
     />

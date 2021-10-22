@@ -9,15 +9,17 @@ import PrivateRoute from '../private-route/private-route';
 import { Hostel } from '../../mocks/hostel';
 
 type countPoints = {
-  count: number,
   authorizationStatus: AuthorizationStatus,
   hostels: Hostel[],
 };
 
-function App({hostels, count, authorizationStatus}: countPoints): JSX.Element {
+function App({hostels, authorizationStatus}: countPoints): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path = {AppRoute.Root}>
+          <Main authorizationStatus={authorizationStatus} hostels = {hostels}/>
+        </Route>
         <Route exact path = {AppRoute.Main}>
           <Main authorizationStatus={authorizationStatus} hostels = {hostels}/>
         </Route>
@@ -27,7 +29,7 @@ function App({hostels, count, authorizationStatus}: countPoints): JSX.Element {
         <PrivateRoute
           exact
           path = {AppRoute.Favorites}
-          render={() => <Favorites authorizationStatus={authorizationStatus} count = {0}/>}
+          render={() => <Favorites authorizationStatus={authorizationStatus} hostels = {hostels}/>}
           authorizationStatus={authorizationStatus}
         >
         </PrivateRoute>

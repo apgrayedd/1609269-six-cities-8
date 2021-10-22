@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Point from '../point/point';
+import Points from '../point/points';
 import MainEmpty from './main-empty';
 import Logo from '../logo/logo';
 import {AuthorizationStatus} from '../../const';
@@ -14,7 +14,6 @@ type countPoints = {
 };
 
 export default function Main({hostels, authorizationStatus}: countPoints): JSX.Element {
-  const arrayPoints = hostels.map((hostel) => <Point key = {hostel.id} hostel = {hostel}/>);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -89,9 +88,7 @@ export default function Main({hostels, authorizationStatus}: countPoints): JSX.E
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {arrayPoints}
-                </div>
+                <Points hostels = {hostels} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>

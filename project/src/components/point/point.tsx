@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from 'react';
 import { Hostel } from '../../mocks/hostel';
 import PointLink from './point-link';
 
@@ -8,10 +9,16 @@ type pointOptions = {
 };
 
 export default function Point({hostel}: pointOptions): JSX.Element {
+  const stateHover = useState(false);
+  const [status, setHoverStatus] = stateHover;
   const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite ?
     'place-card__bookmark-button--active' : ''}`;
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card"
+      onMouseOver={() => setHoverStatus(!status)}
+      onMouseOut ={() => setHoverStatus(!status)}
+    >
       {
         hostel.is_premium
           ?
@@ -20,7 +27,7 @@ export default function Point({hostel}: pointOptions): JSX.Element {
           </div>
           : ''
       }
-      <PointLink id = {hostel.id}/>
+      <PointLink id = {hostel.id} imgLinlk = {hostel.preview_image}/>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
@@ -31,7 +38,7 @@ export default function Point({hostel}: pointOptions): JSX.Element {
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{hostel.is_favorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -41,7 +48,7 @@ export default function Point({hostel}: pointOptions): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{hostel.description}</a>
+          <a href="#">{hostel.title}</a>
         </h2>
         <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1)}</p>
       </div>

@@ -13,13 +13,13 @@ export type Hostel = {
   'host': {
     'avatar_url': string,
     'id': number,
-    'is_pro': true,
+    'is_pro': boolean,
     'name': string,
   },
   'id': number,
   'images': string[],
-  'is_favorite': false,
-  'is_premium': false,
+  'is_favorite': boolean,
+  'is_premium': boolean,
   'location': {
     'latitude': number,
     'longitude': number,

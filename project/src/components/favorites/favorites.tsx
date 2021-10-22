@@ -2,16 +2,16 @@
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
 import FavoritesEmpty from './favorites-empty';
-import FavoritesItem from './favorites-item';
+import FavoritesList from './favorites-list';
 import { AuthorizationStatus } from '../../const';
+import { Hostel } from '../../mocks/hostel';
 
 type countFavorites = {
-  count: number,
+  hostels: Hostel[],
   authorizationStatus: AuthorizationStatus,
 }
 
-export default function FavoritesList({count, authorizationStatus} : countFavorites): JSX.Element {
-  const arrayFavorites = [...Array(count)].map(() => <FavoritesItem key = {2}/>);
+export default function Favorites({hostels, authorizationStatus} : countFavorites): JSX.Element {
   return (
     <div className = 'page'>
       <header className="header">
@@ -26,25 +26,14 @@ export default function FavoritesList({count, authorizationStatus} : countFavori
           </div>
         </div>
       </header>
-      {count > 0
+      {hostels.length > 0
         ?
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <ul className="favorites__list">
-            <li className="favorites__locations-items">
-              <div className="favorites__locations locations locations--current">
-                <div className="locations__item">
-                  <a className="locations__item-link" href="#">
-                    <span>Amsterdam</span>
-                  </a>
-                </div>
-              </div>
-              <div className="favorites__places">
-                {arrayFavorites}
-              </div>
-            </li>
-          </ul>
-        </section>
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <FavoritesList hostels = {hostels} />
+          </section>
+        </div>
         :
         <FavoritesEmpty/>}
       <footer className="footer container">

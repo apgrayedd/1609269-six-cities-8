@@ -1,19 +1,45 @@
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
+import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
 import { Hostel } from '../../mocks/hostel';
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
 import Point from '../point/point';
+import PropertyFormComment from './property-form-comment';
 
 type propertyOptions = {
   hostels: Hostel[],
   authorizationStatus: AuthorizationStatus,
 };
 
+function propertyGalleryContainer(hostel: Hostel): JSX.Element{
+  const propertyGallery = hostel.images.map((img, i) => (
+    <div className="property__image-wrapper" key = {i}>
+      <img
+        className="property__image"
+        src="img/room.jpg"
+        alt="Photo studio"
+      />
+    </div>
+  ));
+  return (
+    <div className="property__gallery-container container">
+      <div className="property__gallery">
+        {propertyGallery}
+      </div>
+    </div>
+  );
+}
+
 export default function Property({hostels, authorizationStatus}: propertyOptions): JSX.Element {
-  const arrayPoints = hostels.map((hostel,i) => <Point hostel = {hostel} key = {hostel.id} />);
+  const arrayPoints = hostels.map((hostel) => <Point hostel = {hostel} key = {hostel.id} />);
+  const {id} = useParams<{ id: string }>();
+  const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
+  const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite ?
+    'property__bookmark-button--active' : ''}`;
   return (
     <div className="page">
       <header className="header">
@@ -30,103 +56,57 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
       </header>
       <main className="page__main page__main--property">
         <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-            </div>
-          </div>
+          {propertyGalleryContainer(hostelProperty)}
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {
+                hostelProperty.is_premium
+                  ?
+                  <div className="property__mark">
+                    <span>Premium</span>
+                  </div>
+                  :
+                  ''
+              }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-              Beautiful &amp; luxurious studio at great location
+                  {hostelProperty.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={favoriteClassName} type="button">
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">{hostelProperty.is_favorite ? 'In bookmarks' : 'To bookmarks'}</span>
                 </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: '80%' }} />
+                  <span style={{width: `${(Math.round(hostelProperty.rating) * 20)}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{hostelProperty.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-              Apartment
+                  {hostelProperty.type.charAt(0).toUpperCase() + hostelProperty.type.slice(1)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-              3 Bedrooms
+                  {hostelProperty.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-              Max 4 adults
+                  Max {hostelProperty.max_adults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€120</b>
+                <b className="property__price-value">€{hostelProperty.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">Wi-Fi</li>
-                  <li className="property__inside-item">Washing machine</li>
-                  <li className="property__inside-item">Towels</li>
-                  <li className="property__inside-item">Heating</li>
-                  <li className="property__inside-item">Coffee machine</li>
-                  <li className="property__inside-item">Baby seat</li>
-                  <li className="property__inside-item">Kitchen</li>
-                  <li className="property__inside-item">Dishwasher</li>
-                  <li className="property__inside-item">Cabel TV</li>
-                  <li className="property__inside-item">Fridge</li>
+                  {
+                    hostelProperty.goods.map((good, i) => <li className="property__inside-item" key = {i}>{good}</li>)
+                  }
                 </ul>
               </div>
               <div className="property__host">
@@ -135,31 +115,30 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                     <img
                       className="property__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
+                      src={hostelProperty.host.avatar_url}
                       alt="Host avatar"
                       width={74}
                       height={74}
                     />
                   </div>
-                  <span className="property__user-name">Angelina</span>
-                  <span className="property__user-status">Pro</span>
+                  <span className="property__user-name">{hostelProperty.host.name}</span>
+                  {
+                    hostelProperty.host.is_pro
+                      ?
+                      <span className="property__user-status">Pro</span>
+                      :
+                      ''
+                  }
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                A quiet cozy and picturesque that hides behind a a river by the
-                unique lightness of Amsterdam. The building is green and from 18th
-                century.
-                  </p>
-                  <p className="property__text">
-                An independent House, strategically located between Rembrand
-                Square and National Opera, but where the bustle of the city comes
-                to rest in this alley flowery and colorful.
+                    {hostelProperty.description}
                   </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
-              Reviews · <span className="reviews__amount">1</span>
+                  Reviews · <span className="reviews__amount">1</span>
                 </h2>
                 <ul className="reviews__list">
                   <li className="reviews__item">
@@ -282,13 +261,7 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
                           </svg>
                         </label>
                       </div>
-                      <textarea
-                        className="reviews__textarea form__textarea"
-                        id="review"
-                        name="review"
-                        placeholder="Tell how was your stay, what you like and what can be improved"
-                        defaultValue={''}
-                      />
+                      {<PropertyFormComment />}
                       <div className="reviews__button-wrapper">
                         <p className="reviews__help">
                       To submit review please make sure to set{' '}
