@@ -1,3 +1,11 @@
+export const starsTitlesInReview  = [
+  'terribly',
+  'badly',
+  'not bad',
+  'good',
+  'perfect',
+];
+
 export enum AppRoute {
   Root = '/',
   Main = '/main/:activeCity',
