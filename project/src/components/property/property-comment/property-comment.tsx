@@ -1,22 +1,14 @@
-import { useState,FormEvent } from 'react';
 import PropertyCommentStarList from './property-comment-start-list';
+import PropertyCommentTextArea from './property-comment-textArea';
 
 export default function PropertyFormComment(): JSX.Element {
-  const [commentText, setComment] = useState('');
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       {<PropertyCommentStarList />}
-      <textarea
-        className="reviews__textarea form__textarea"
-        id="review"
-        name="review"
-        placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={commentText}
-        onChange = {(evt: FormEvent<HTMLTextAreaElement>) => setComment((evt.target as HTMLTextAreaElement).value)}
-      />
+      {<PropertyCommentTextArea />}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
             To submit review please make sure to set{' '}

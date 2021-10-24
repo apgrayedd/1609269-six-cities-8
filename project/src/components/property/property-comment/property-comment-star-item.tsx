@@ -11,14 +11,14 @@ export default function PropertyCommentStarItem({starNumber, starTitle, setRatin
       <input
         className="form__rating-input visually-hidden"
         name="rating"
-        defaultValue={starNumber}
-        id={`${starNumber}-stars`}
+        defaultValue={starNumber + 1}
+        id={`${starNumber + 1}-stars`}
         type="radio"
         onChange = {setRating}
-        value = {starNumber}
+        value = {starNumber + 1}
       />
       <label
-        htmlFor={`${starNumber}-stars`}
+        htmlFor={`${starNumber + 1}-stars`}
         className="reviews__rating-label form__rating-label"
         title={starTitle}
       >
