@@ -2,7 +2,7 @@ import { REVIEWS_TEXT_AMOUNT } from '../../../const';
 import PropertyCommentStarList from './property-comment-start-list';
 import PropertyCommentTextArea from './property-comment-textArea';
 
-export default function PropertyFormComment(): JSX.Element {
+export default function PropertyComment(): JSX.Element {
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">

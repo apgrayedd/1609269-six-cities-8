@@ -7,13 +7,15 @@ import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
 import { Hostel } from '../../mocks/hostel';
+import { Comment } from '../../mocks/comment';
 
 type countPoints = {
   authorizationStatus: AuthorizationStatus,
   hostels: Hostel[],
+  comments: Comment[],
 };
 
-function App({hostels, authorizationStatus}: countPoints): JSX.Element {
+function App({hostels, comments, authorizationStatus}: countPoints): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -34,7 +36,7 @@ function App({hostels, authorizationStatus}: countPoints): JSX.Element {
         >
         </PrivateRoute>
         <Route exact path = {AppRoute.Room}>
-          <Property hostels= {hostels} authorizationStatus={authorizationStatus} />
+          <Property hostels= {hostels} comments = {comments} authorizationStatus={authorizationStatus} />
         </Route>
         <Route>
           <Page404 authorizationStatus={authorizationStatus} />

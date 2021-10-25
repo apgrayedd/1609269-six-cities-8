@@ -3,13 +3,15 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
+import { Comment } from '../../mocks/comment';
 import { Hostel } from '../../mocks/hostel';
 import Header from '../header/header';
 import Point from '../point/point-item';
-import PropertyComment from './property-comment/property-comment';
+import PropertyReviews from './property-reviews/property-reviews';
 
 type propertyOptions = {
   hostels: Hostel[],
+  comments: Comment[],
   authorizationStatus: AuthorizationStatus,
 };
 
@@ -32,7 +34,7 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   );
 }
 
-export default function Property({hostels, authorizationStatus}: propertyOptions): JSX.Element {
+export default function Property({hostels, comments, authorizationStatus}: propertyOptions): JSX.Element {
   const arrayPoints = hostels.map((hostel) => <Point hostel = {hostel} key = {hostel.id} />);
   const {id} = useParams<{ id: string }>();
   const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
@@ -97,7 +99,7 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`property__avatar-wrapper user__avatar-wrapper ${hostelProperty.host.is_pro && 'property__avatar-wrapper--pro'}`}>
                     <img
                       className="property__avatar user__avatar"
                       src={hostelProperty.host.avatar_url}
@@ -118,47 +120,7 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
-                </h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="img/avatar-max.jpg"
-                          alt="Reviews avatar"
-                          width={54}
-                          height={54}
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }} />
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                    April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
-                {
-                  authorizationStatus === AuthorizationStatus.Auth &&
-                    <PropertyComment />
-                }
-              </section>
+              <PropertyReviews comments = {comments} authorizationStatus = {authorizationStatus}/>
             </div>
           </div>
           <section className="property__map map" />
