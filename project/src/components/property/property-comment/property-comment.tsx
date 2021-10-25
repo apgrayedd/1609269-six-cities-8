@@ -1,3 +1,4 @@
+import { REVIEWS_TEXT_AMOUNT } from '../../../const';
 import PropertyCommentStarList from './property-comment-start-list';
 import PropertyCommentTextArea from './property-comment-textArea';
 
@@ -14,7 +15,7 @@ export default function PropertyFormComment(): JSX.Element {
             To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your
             stay with at least{' '}
-          <b className="reviews__text-amount">50 characters</b>.
+          <b className="reviews__text-amount">{REVIEWS_TEXT_AMOUNT} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const getValuesFromListByKey = (values: any, key: string) => {
-  const results:any[] = [];
-  values.forEach((obj: any) => {
-    results.push(obj[key]);
-  });
-  return results;
-};
+export const getByKey = (values: any, key: string) => values.map((item: any) => item[key]);
 
-export const getTitleListFromListByKey = (values: any, key: string) => {
+export const getTitleList = (values: any, key: string) => {
   type resultType = {
     'key': string,
     'values': any[],
@@ -17,7 +11,7 @@ export const getTitleListFromListByKey = (values: any, key: string) => {
   const result:resultType[] = [];
   Object.keys(values).forEach((keyValue) => {
     const keyInfo = values[keyValue][key]['name'];
-    const resultKeys = getValuesFromListByKey(result, 'key');
+    const resultKeys = getByKey(result, 'key');
     if (resultKeys.includes(keyInfo)) {
       for (const keyResult in result) {
         if (result[keyResult]['key'] === keyInfo) {

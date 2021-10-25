@@ -23,8 +23,7 @@ export default function Favorites({hostels, authorizationStatus} : countFavorite
               <h1 className="favorites__title">Saved listing</h1>
               <FavoritesList hostels = {hostels} />
             </section>
-            :
-            <FavoritesEmpty/>
+            : <FavoritesEmpty/>
         }
       </div>
       <footer className="footer container">

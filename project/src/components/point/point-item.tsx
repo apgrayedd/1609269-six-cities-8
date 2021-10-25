@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../mocks/hostel';
 import PointLink from './point-link';
@@ -8,10 +8,11 @@ type pointOptions = {
 };
 
 export default function PointItem({hostel}: pointOptions): JSX.Element {
+  const raiting = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
   const stateHover = useState(false);
   const [status, setHoverStatus] = stateHover;
-  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite ?
-    'place-card__bookmark-button--active' : ''}`;
+  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
+    'place-card__bookmark-button--active'}`;
 
   return (
     <article className="cities__place-card place-card"
@@ -19,14 +20,12 @@ export default function PointItem({hostel}: pointOptions): JSX.Element {
       onMouseOut ={() => setHoverStatus(!status)}
     >
       {
-        hostel.is_premium
-          ?
+        hostel.is_premium &&
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
-          : ''
       }
-      <PointLink id = {hostel.id} imgLinlk = {hostel.preview_image}/>
+      <PointLink id = {hostel.id} img = {hostel.preview_image}/>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
@@ -42,7 +41,7 @@ export default function PointItem({hostel}: pointOptions): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(Math.round(hostel.rating) * 20)}%`}} />
+            <span style={{width: `${raiting}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -51,7 +50,7 @@ export default function PointItem({hostel}: pointOptions): JSX.Element {
             {hostel.title}
           </Link>
         </h2>
-        <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1).toLocaleLowerCase()}</p>
+        <p className="place-card__type" style = {{textTransform: 'capitalize'}}>{hostel.type}</p>
       </div>
     </article>
   );

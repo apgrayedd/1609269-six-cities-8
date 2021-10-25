@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 type linkOptions = {
   id: number,
-  imgLinlk: string,
+  img: string,
 };
 
-export default function PointLink({id, imgLinlk}: linkOptions): JSX.Element {
+export default function PointLink({id, img}: linkOptions): JSX.Element {
   return (
     <Link to = {`/property/${id}`}>
-      <img className="place-card__image" src={imgLinlk}
+      <img className="place-card__image" src={img}
         alt="Place image" width={260} height={200}
       />
     </Link>

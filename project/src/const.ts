@@ -1,3 +1,6 @@
+export const DEFAULT_ACTIVE_CITY = 'Amsterdam';
+export const REVIEWS_TEXT_AMOUNT = 50;
+
 export const starsTitlesInReview  = [
   'terribly',
   'badly',

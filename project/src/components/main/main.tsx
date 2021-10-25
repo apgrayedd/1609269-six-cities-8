@@ -52,8 +52,7 @@ export default function Main({hostels, authorizationStatus}: countPoints): JSX.E
               </div>
             </div>
           </main>
-          :
-          <MainEmpty/>
+          : <MainEmpty/>
       }
     </div>
   );

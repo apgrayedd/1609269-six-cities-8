@@ -9,9 +9,7 @@ type LoginStatus = {
 export default function LoginLink({authorizationStatus}: LoginStatus): JSX.Element {
   return (
     authorizationStatus === AuthorizationStatus.Auth
-      ?
-      <LoginLinkLogged />
-      :
-      <LoginLinkNotLogged />
+      ? <LoginLinkLogged />
+      : <LoginLinkNotLogged />
   );
 }

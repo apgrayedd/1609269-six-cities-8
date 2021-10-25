@@ -2,7 +2,7 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../mocks/hostel';
-import { getTitleListFromListByKey } from '../../utils/common';
+import { getTitleList } from '../../utils/common';
 import FavoritesItem from './favorites-item';
 
 type FavoritesOptions = {
@@ -15,18 +15,14 @@ type FavoritesListType = {
 };
 
 export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element {
-  const favoritesList:FavoritesListType[] = getTitleListFromListByKey(hostels, 'city');
+  const favoritesList:FavoritesListType[] = getTitleList(hostels, 'city');
   const favoritesListArray = favoritesList.map((hostelInfo) => {
     const favoritesArray = hostelInfo.values.map((hostel) => (
-      hostel.is_favorite
-        ?
+      hostel.is_favorite &&
         <FavoritesItem key = {hostel.id} hostel = {hostel}/>
-        :
-        false
     ));
     return (
-      favoritesArray.length > 0
-        ?
+      favoritesArray.length > 0 &&
         <li className="favorites__locations-items" key = {nanoid()}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
@@ -39,8 +35,6 @@ export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element
             {favoritesArray}
           </div>
         </li>
-        :
-        false
     );
   });
   return (

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
+import { useMemo } from 'react';
 import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
 import { Hostel } from '../../mocks/hostel';
@@ -35,8 +36,9 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
   const arrayPoints = hostels.map((hostel) => <Point hostel = {hostel} key = {hostel.id} />);
   const {id} = useParams<{ id: string }>();
   const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
-  const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite ?
-    'property__bookmark-button--active' : ''}`;
+  const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite &&
+    'property__bookmark-button--active'}`;
+  const raiting = useMemo(() => Math.round(hostelProperty.rating) * 20, [hostelProperty.rating]);
   return (
     <div className="page">
       <Header authorizationStatus = {authorizationStatus} />
@@ -46,13 +48,10 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
           <div className="property__container container">
             <div className="property__wrapper">
               {
-                hostelProperty.is_premium
-                  ?
+                hostelProperty.is_premium &&
                   <div className="property__mark">
                     <span>Premium</span>
                   </div>
-                  :
-                  ''
               }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
@@ -67,14 +66,14 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${(Math.round(hostelProperty.rating) * 20)}%`}} />
+                  <span style={{width: `${raiting}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{hostelProperty.rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {hostelProperty.type.charAt(0).toUpperCase() + hostelProperty.type.slice(1)}
+                <li className="property__feature property__feature--entire" style = {{textTransform: 'capitalize'}}>
+                  {hostelProperty.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {hostelProperty.bedrooms} Bedrooms
@@ -109,11 +108,8 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
                   </div>
                   <span className="property__user-name">{hostelProperty.host.name}</span>
                   {
-                    hostelProperty.host.is_pro
-                      ?
+                    hostelProperty.host.is_pro &&
                       <span className="property__user-status">Pro</span>
-                      :
-                      ''
                   }
                 </div>
                 <div className="property__description">
@@ -159,11 +155,8 @@ export default function Property({hostels, authorizationStatus}: propertyOptions
                   </li>
                 </ul>
                 {
-                  authorizationStatus === AuthorizationStatus.Auth
-                    ?
+                  authorizationStatus === AuthorizationStatus.Auth &&
                     <PropertyComment />
-                    :
-                    ''
                 }
               </section>
             </div>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../mocks/hostel';
 import PointLink from '../point/point-link';
@@ -7,13 +8,14 @@ type HostelOptions = {
 };
 
 export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
-  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite ?
-    'place-card__bookmark-button--active' : ''}`;
+  const rating = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
+  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
+    'place-card__bookmark-button--active'}`;
 
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <PointLink id = {hostel.id} imgLinlk = {hostel.preview_image} />
+        <PointLink id = {hostel.id} img = {hostel.preview_image} />
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -33,7 +35,7 @@ export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(Math.round(hostel.rating) * 20)}%`}} />
+            <span style={{width: `${rating}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -42,7 +44,7 @@ export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
             {hostel.title}
           </Link>
         </h2>
-        <p className="place-card__type">{hostel.type.charAt(0).toUpperCase() + hostel.type.slice(1).toLocaleLowerCase()}</p>
+        <p className="place-card__type" style={{textTransform: 'capitalize'}}>{hostel.type}</p>
       </div>
     </article>
   );
