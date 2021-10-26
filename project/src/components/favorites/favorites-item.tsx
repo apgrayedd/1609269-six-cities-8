@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Hostel } from '../../mocks/hostel';
+import { Hostel } from '../../types/hostel';
 import PointLink from '../point/point-link';
 
 type HostelOptions = {

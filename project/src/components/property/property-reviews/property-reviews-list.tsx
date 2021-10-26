@@ -1,4 +1,4 @@
-import { Comment } from '../../../mocks/comment';
+import { Comment } from '../../../types/comment';
 import PropertyReviewsItem from './property-reviews-item';
 
 type RropertyReviewsListOptions = {

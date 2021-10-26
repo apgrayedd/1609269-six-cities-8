@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Comment } from '../../../mocks/comment';
+import { Comment } from '../../../types/comment';
 
 type RropertyReviewsItemOptions = {
   comment: Comment,

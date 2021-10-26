@@ -1,9 +1,11 @@
 import {AuthorizationStatus} from '../../const';
-import { Hostel } from '../../mocks/hostel';
+import { Hostel } from '../../types/hostel';
 import Header from '../header/header';
 import PointList from '../point/point-list';
 import MainEmpty from './main-empty';
 import MainCitiesList from './main-cities-list';
+import Map from '../map/map';
+import { useState } from 'react';
 
 type countPoints = {
   hostels: Hostel[],
@@ -11,6 +13,12 @@ type countPoints = {
 };
 
 export default function Main({hostels, authorizationStatus}: countPoints): JSX.Element {
+  const [selectedHostel, setSelectedHostel] = useState<Hostel | undefined>(undefined);
+  const onEnterFunction = (id?: number) => {
+    const currentPoint = hostels.find((hostel) => hostel.id === id);
+    setSelectedHostel(currentPoint);
+  };
+
   return (
     <div className={`page page--gray page--main ${!hostels.length && 'page__main--index-empty'}`}>
       <Header authorizationStatus = {authorizationStatus} />
@@ -44,10 +52,12 @@ export default function Main({hostels, authorizationStatus}: countPoints): JSX.E
                       <li className="places__option" tabIndex={0}>Top rated first</li>
                     </ul>
                   </form>
-                  <PointList hostels = {hostels} />
+                  <PointList hostels = {hostels} onEnterFunction = {onEnterFunction}/>
                 </section>
                 <div className="cities__right-section">
-                  <section className="cities__map map"></section>
+                  <section className="cities__map map">
+                    <Map hostels = {hostels} selectedHostel = {selectedHostel}/>
+                  </section>
                 </div>
               </div>
               : <MainEmpty/>

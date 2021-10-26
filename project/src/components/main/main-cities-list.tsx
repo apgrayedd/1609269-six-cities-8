@@ -9,8 +9,7 @@ export default function MainCitiesList(): JSX.Element {
   return (
     <ul className="locations__list tabs__list">
       {
-        cities.length > 0 &&
-          cities.map((city) => <MainCitiesItem activeCity = {activeCity || DEFAULT_ACTIVE_CITY} key = {nanoid()} city = {city}/>)
+        cities.map((city) => <MainCitiesItem activeCity = {activeCity || DEFAULT_ACTIVE_CITY} key = {nanoid()} city = {city}/>)
       }
     </ul>
   );

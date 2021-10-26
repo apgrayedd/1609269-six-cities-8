@@ -6,8 +6,8 @@ import Favorites from '../favorites/favorites';
 import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-import { Hostel } from '../../mocks/hostel';
-import { Comment } from '../../mocks/comment';
+import { Hostel } from '../../types/hostel';
+import { Comment } from '../../types/comment';
 
 type countPoints = {
   authorizationStatus: AuthorizationStatus,

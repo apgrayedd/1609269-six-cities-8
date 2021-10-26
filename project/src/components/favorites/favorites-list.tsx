@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
-import { Hostel } from '../../mocks/hostel';
+import { Hostel } from '../../types/hostel';
 import { getTitleList } from '../../utils/common';
 import FavoritesItem from './favorites-item';
 
@@ -22,19 +22,18 @@ export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element
         <FavoritesItem key = {hostel.id} hostel = {hostel}/>
     ));
     return (
-      favoritesArray.length > 0 &&
-        <li className="favorites__locations-items" key = {nanoid()}>
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <Link to = {`/main/${hostelInfo.key.toLocaleLowerCase()}`} className = "locations__item-link">
-                <span>{hostelInfo.key}</span>
-              </Link>
-            </div>
+      <li className="favorites__locations-items" key = {nanoid()}>
+        <div className="favorites__locations locations locations--current">
+          <div className="locations__item">
+            <Link to = {`/main/${hostelInfo.key.toLocaleLowerCase()}`} className = "locations__item-link">
+              <span>{hostelInfo.key}</span>
+            </Link>
           </div>
-          <div className = 'favorites__places'>
-            {favoritesArray}
-          </div>
-        </li>
+        </div>
+        <div className = 'favorites__places'>
+          {favoritesArray}
+        </div>
+      </li>
     );
   });
   return (

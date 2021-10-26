@@ -1,5 +1,5 @@
 import { AuthorizationStatus } from '../../const';
-import { Hostel } from '../../mocks/hostel';
+import { Hostel } from '../../types/hostel';
 import Logo from '../logo/logo';
 import FavoritesEmpty from './favorites-empty';
 import FavoritesList from './favorites-list';

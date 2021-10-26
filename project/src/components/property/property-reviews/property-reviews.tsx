@@ -1,5 +1,5 @@
 import { AuthorizationStatus } from '../../../const';
-import { Comment } from '../../../mocks/comment';
+import { Comment } from '../../../types/comment';
 import PropertyComment from '../property-comment/property-comment';
 import PropertyReviewsList from './property-reviews-list';
 

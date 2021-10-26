@@ -1,24 +1,34 @@
-import { useMemo, useState } from 'react';
+import { useMemo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Hostel } from '../../mocks/hostel';
+import { Hostel } from '../../types/hostel';
 import PointLink from './point-link';
 
 type pointOptions = {
   hostel: Hostel,
+  onEnterFunction?: (id?: number) => void,
 };
 
-export default function PointItem({hostel}: pointOptions): JSX.Element {
+export default function PointItem({hostel, onEnterFunction}: pointOptions): JSX.Element {
   const raiting = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
-  const stateHover = useState(false);
-  const [status, setHoverStatus] = stateHover;
   const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
     'place-card__bookmark-button--active'}`;
 
+  const onEnterHandler = onEnterFunction
+    ? (evt: MouseEvent) => {
+      evt.preventDefault();
+      onEnterFunction(hostel.id);
+    }
+    : undefined;
+
+  const onLeaveHandler = onEnterFunction
+    ? (evt: MouseEvent) => {
+      evt.preventDefault();
+      onEnterFunction();
+    }
+    : undefined;
+
   return (
-    <article className="cities__place-card place-card"
-      onMouseOver={() => setHoverStatus(!status)}
-      onMouseOut ={() => setHoverStatus(!status)}
-    >
+    <article className="cities__place-card place-card" onMouseEnter = {onEnterHandler} onMouseLeave = {onLeaveHandler}>
       {
         hostel.is_premium &&
           <div className="place-card__mark">
