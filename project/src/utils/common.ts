@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const getByKey = (values: any, key: string) => values.map((item: any) => item[key]);
+export const getByKey = (values: any, key: string) => values.map((item: any) => item ? item[key] : false);
 
 export const getTitleList = (values: any, key: string) => {
   type resultType = {

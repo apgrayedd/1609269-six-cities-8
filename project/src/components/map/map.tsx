@@ -2,10 +2,11 @@ import {Icon, Marker} from 'leaflet';
 import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/useMap';
 import { Hostel } from '../../types/hostel';
+import { getByKey } from '../../utils/common';
 
 type MapOptions = {
   hostels: Hostel[];
-  selectedHostel: Hostel | undefined;
+  selectedHostel: (Hostel | undefined)[] | Hostel | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -36,7 +37,10 @@ export default function Map({hostels, selectedHostel}: MapOptions): JSX.Element 
 
         marker
           .setIcon(
-            selectedHostel !== undefined && hostel.id === selectedHostel.id
+            selectedHostel !== undefined && (
+              Array.isArray(selectedHostel)
+                ? getByKey(selectedHostel, 'id').includes(hostel.id)
+                : selectedHostel.id === hostel.id)
               ? currentCustomIcon
               : defaultCustomIcon,
           )

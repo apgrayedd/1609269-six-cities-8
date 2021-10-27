@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
 import { Comment } from '../../types/comment';
 import { Hostel } from '../../types/hostel';
 import Header from '../header/header';
-import Point from '../point/point-item';
+import Map from '../map/map';
+import PropertyNeighbourhoodList from './property-neighbourhood-list';
 import PropertyReviews from './property-reviews/property-reviews';
 
 type propertyOptions = {
@@ -35,9 +36,9 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
 }
 
 export default function Property({hostels, comments, authorizationStatus}: propertyOptions): JSX.Element {
-  const arrayPoints = hostels.map((hostel) => <Point hostel = {hostel} key = {hostel.id} />);
   const {id} = useParams<{ id: string }>();
   const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
+  const [onEnterItem, setEnterItem] = useState<Hostel | undefined>(undefined);
   const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite &&
     'property__bookmark-button--active'}`;
   const raiting = useMemo(() => Math.round(hostelProperty.rating) * 20, [hostelProperty.rating]);
@@ -123,15 +124,12 @@ export default function Property({hostels, comments, authorizationStatus}: prope
               <PropertyReviews comments = {comments} authorizationStatus = {authorizationStatus}/>
             </div>
           </div>
-          <section className="property__map map" />
+          <section className="property__map map">
+            <Map hostels = {hostels} selectedHostel = {[hostelProperty, onEnterItem]}/>
+          </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {arrayPoints}
-            </div>
-          </section>
+          <PropertyNeighbourhoodList hostelInProperty = {hostelProperty} hostels = {hostels} onEnterFunction = {setEnterItem}/>
         </div>
       </main>
     </div>

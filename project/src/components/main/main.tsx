@@ -14,8 +14,8 @@ type countPoints = {
 
 export default function Main({hostels, authorizationStatus}: countPoints): JSX.Element {
   const [selectedHostel, setSelectedHostel] = useState<Hostel | undefined>(undefined);
-  const onEnterFunction = (id?: number) => {
-    const currentPoint = hostels.find((hostel) => hostel.id === id);
+  const onEnterFunction = (value: Hostel | undefined) => {
+    const currentPoint = hostels.find((hostel) => value ?  hostel.id === value.id  : undefined);
     setSelectedHostel(currentPoint);
   };
 

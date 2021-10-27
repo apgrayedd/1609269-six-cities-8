@@ -5,7 +5,7 @@ import PointLink from './point-link';
 
 type pointOptions = {
   hostel: Hostel,
-  onEnterFunction?: (id?: number) => void,
+  onEnterFunction: (value: Hostel | undefined) => void,
 };
 
 export default function PointItem({hostel, onEnterFunction}: pointOptions): JSX.Element {
@@ -16,14 +16,14 @@ export default function PointItem({hostel, onEnterFunction}: pointOptions): JSX.
   const onEnterHandler = onEnterFunction
     ? (evt: MouseEvent) => {
       evt.preventDefault();
-      onEnterFunction(hostel.id);
+      onEnterFunction(hostel);
     }
     : undefined;
 
   const onLeaveHandler = onEnterFunction
     ? (evt: MouseEvent) => {
       evt.preventDefault();
-      onEnterFunction();
+      onEnterFunction(undefined);
     }
     : undefined;
 

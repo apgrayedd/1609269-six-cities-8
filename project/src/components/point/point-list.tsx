@@ -3,7 +3,7 @@ import PointItem from './point-item';
 
 type PointListOption = {
   hostels: Hostel[],
-  onEnterFunction: (id?: number) => void,
+  onEnterFunction: (value: Hostel | undefined) => void,
 };
 
 export default function PointList ({hostels,onEnterFunction}: PointListOption):  JSX.Element {
