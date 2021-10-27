@@ -56,5 +56,5 @@ export default function Map({hostels, selectedHostel}: MapOptions): JSX.Element 
     }
   }, [map, hostels, selectedHostel]);
 
-  return <div ref={mapRef}></div>;
+  return <div style = {{maxWidth: '300px', maxHeight: '300px'}} ref={mapRef}></div>;
 }

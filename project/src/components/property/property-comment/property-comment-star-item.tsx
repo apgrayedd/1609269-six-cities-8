@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import {FormEvent} from 'react';
+
 type starOption = {
   starNumber: number,
   starTitle: string,
-  setRating: any,
+  setRating: (evt: FormEvent<HTMLInputElement>) => void,
 }
 
 export default function PropertyCommentStarItem({starNumber, starTitle, setRating}:starOption): JSX.Element {

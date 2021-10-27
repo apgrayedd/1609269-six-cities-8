@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../types/hostel';
@@ -11,7 +10,7 @@ type FavoritesOptions = {
 
 type FavoritesListType = {
   'key': string,
-  'values': any[],
+  'values': Hostel[],
 };
 
 export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element {
