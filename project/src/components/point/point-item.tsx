@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable semi */
 import { useMemo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../types/hostel';
