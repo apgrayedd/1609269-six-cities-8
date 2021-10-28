@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable semi */
 import { useMemo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../types/hostel';
@@ -6,29 +8,28 @@ import PointLink from './point-link';
 type pointOptions = {
   hostel: Hostel,
   onEnterFunction: (value: Hostel | undefined) => void,
+  hoverStatus?: boolean,
 };
 
-export default function PointItem({hostel, onEnterFunction}: pointOptions): JSX.Element {
+export default function PointItem({hostel, onEnterFunction, hoverStatus}: pointOptions): JSX.Element {
   const raiting = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
   const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
     'place-card__bookmark-button--active'}`;
 
-  const onEnterHandler = onEnterFunction
-    ? (evt: MouseEvent) => {
-      evt.preventDefault();
-      onEnterFunction(hostel);
-    }
-    : undefined;
-
-  const onLeaveHandler = onEnterFunction
-    ? (evt: MouseEvent) => {
-      evt.preventDefault();
-      onEnterFunction(undefined);
-    }
-    : undefined;
+  const onEnterHandler = (evt: MouseEvent) => {
+    evt.preventDefault();
+    onEnterFunction(hostel);
+  };
+  const onLeaveHandler = (evt: MouseEvent) => {
+    evt.preventDefault();
+    onEnterFunction(undefined);
+  };
+  const hoverStyle = hoverStatus ? {'opacity': '0.6'} : {};
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter = {onEnterHandler} onMouseLeave = {onLeaveHandler}>
+    <article className="cities__place-card place-card" onMouseEnter = {onEnterHandler}
+      onMouseLeave = {onLeaveHandler} style = {hoverStyle}
+    >
       {
         hostel.is_premium &&
           <div className="place-card__mark">

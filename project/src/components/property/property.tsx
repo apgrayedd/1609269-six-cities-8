@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
 import { useMemo, useState } from 'react';
@@ -39,9 +41,11 @@ export default function Property({hostels, comments, authorizationStatus}: prope
   const {id} = useParams<{ id: string }>();
   const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
   const [onEnterItem, setEnterItem] = useState<Hostel | undefined>(undefined);
+  const [hoverElement, setHoverElement] = useState<number | undefined>(undefined);
   const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite &&
     'property__bookmark-button--active'}`;
   const raiting = useMemo(() => Math.round(hostelProperty.rating) * 20, [hostelProperty.rating]);
+  console.log(hoverElement)
   return (
     <div className="page">
       <Header authorizationStatus = {authorizationStatus} />
@@ -125,7 +129,7 @@ export default function Property({hostels, comments, authorizationStatus}: prope
             </div>
           </div>
           <section className="property__map map">
-            <Map hostels = {hostels} selectedHostel = {[hostelProperty, onEnterItem]}/>
+            <Map hostels = {hostels} selectedHostel = {[hostelProperty, onEnterItem]} setHoverElement = {setHoverElement}/>
           </section>
         </section>
         <div className="container">

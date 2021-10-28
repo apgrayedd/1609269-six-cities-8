@@ -1,4 +1,4 @@
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, DEFAULT_ACTIVE_CITY} from '../../const';
 import { Hostel } from '../../types/hostel';
 import Header from '../header/header';
 import PointList from '../point/point-list';
@@ -6,6 +6,7 @@ import MainEmpty from './main-empty';
 import MainCitiesList from './main-cities-list';
 import Map from '../map/map';
 import { useState } from 'react';
+import { useParams } from 'react-router';
 
 type countPoints = {
   hostels: Hostel[],
@@ -13,14 +14,18 @@ type countPoints = {
 };
 
 export default function Main({hostels, authorizationStatus}: countPoints): JSX.Element {
+  const {activeCity} = useParams<{ activeCity:string }>();
   const [selectedHostel, setSelectedHostel] = useState<Hostel | undefined>(undefined);
+  const [hoverElement, setHoverElement] = useState<number | undefined>(undefined);
+  const hostelsByCity = hostels.filter((hostel) =>
+    hostel.city.name.toLowerCase() === (activeCity ||  DEFAULT_ACTIVE_CITY.toLowerCase()));
   const onEnterFunction = (value: Hostel | undefined) => {
-    const currentPoint = hostels.find((hostel) => value ?  hostel.id === value.id  : undefined);
+    const currentPoint = hostelsByCity.find((hostel) => value && hostel.id === value.id);
     setSelectedHostel(currentPoint);
   };
 
   return (
-    <div className={`page page--gray page--main ${!hostels.length && 'page__main--index-empty'}`}>
+    <div className={`page page--gray page--main ${!hostelsByCity.length && 'page__main--index-empty'}`}>
       <Header authorizationStatus = {authorizationStatus} />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -31,12 +36,12 @@ export default function Main({hostels, authorizationStatus}: countPoints): JSX.E
         </div>
         <div className="cities">
           {
-            hostels.length
+            hostelsByCity.length
               ?
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{hostels.length} places to stay in Amsterdam</b>
+                  <b className="places__found">{hostelsByCity.length} places to stay in Amsterdam</b>
                   <form className="places__sorting" action="#" method="get">
                     <span className="places__sorting-caption">Sort by</span>
                     <span className="places__sorting-type" tabIndex={0}>
@@ -52,11 +57,11 @@ export default function Main({hostels, authorizationStatus}: countPoints): JSX.E
                       <li className="places__option" tabIndex={0}>Top rated first</li>
                     </ul>
                   </form>
-                  <PointList hostels = {hostels} onEnterFunction = {onEnterFunction}/>
+                  <PointList hostels = {hostelsByCity} onEnterFunction = {onEnterFunction} hoverElementId = {hoverElement}/>
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
-                    <Map hostels = {hostels} selectedHostel = {selectedHostel}/>
+                    <Map hostels = {hostelsByCity} selectedHostel = {selectedHostel} setHoverElement = {setHoverElement}/>
                   </section>
                 </div>
               </div>
