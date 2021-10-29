@@ -24,7 +24,9 @@ export function reducer(state: State = initialState, action: Actions):State {
     case ActionType.ChangeHostelsAction:
       return {...state, hostels: action.hostels};
     case ActionType.ChangeSortingAction:
-      return {...state, sorting: action.sorting, hostels: hostels
+      return {...state, sorting: action.sorting, hostels: state.hostels
+        .filter((hostel) =>
+          (hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase()))
         .sort(SortingList.filter(({name}) => name === action.sorting)[0].funct),
       };
     case ActionType.ChangeHoverHostelgAction:
