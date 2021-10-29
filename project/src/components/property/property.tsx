@@ -132,7 +132,7 @@ function Property({hostels, comments, authorizationStatus}: ConnectedComponentPr
             </div>
           </div>
           <section className="property__map map">
-            <Map />
+            <Map activeHostelId = {parseInt(id,10)}/>
           </section>
         </section>
         <div className="container">

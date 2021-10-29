@@ -21,7 +21,7 @@ export const changeHoverHostelAction = (hostelId: number | undefined):ChangeHove
   hostelId: hostelId,
 });
 
-export const changeHoverMarkerAction = (markerId: (number | undefined)[] | number | undefined):ChangeHoverMarker => ({
+export const changeHoverMarkerAction = (markerId: number | undefined):ChangeHoverMarker => ({
   type: ActionType.ChangeHoverMarkerAction,
   markerId: markerId,
 });

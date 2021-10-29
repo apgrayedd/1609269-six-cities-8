@@ -30,7 +30,7 @@ export type ChangeHoverHostel = {
 
 export type ChangeHoverMarker = {
   type: ActionType.ChangeHoverMarkerAction,
-  markerId: (number | undefined)[] | number | undefined,
+  markerId: number | undefined,
 };
 
 

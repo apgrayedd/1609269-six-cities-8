@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {Icon, Marker} from 'leaflet';
 import { useRef, useEffect, Dispatch } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -5,6 +6,10 @@ import useMap from '../../hooks/useMap';
 import { changeHoverHostelAction } from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
+
+type MapOptions = {
+  activeHostelId?: number | undefined,
+};
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -29,8 +34,9 @@ const dispatchToProps = (dispatch: Dispatch<Actions>) => ({
 });
 const connector = connect(stateToProps, dispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MapOptions;
 
-function Map({hostels, setHostelId, hoverMarker}: PropsFromRedux): JSX.Element {
+function Map({hostels, setHostelId, hoverMarker, activeHostelId}: ConnectedComponentProps): JSX.Element {
   const mapRef = useRef(null);
   const city = hostels[0].city;
   const map = useMap(mapRef, {...city.location});
@@ -52,13 +58,7 @@ function Map({hostels, setHostelId, hoverMarker}: PropsFromRedux): JSX.Element {
       });
 
       marker.on('mouseout', (evt) => {
-        // eslint-disable-next-line no-console
-        console.log(hoverMarker);
-        if (hoverMarker === undefined || (
-          Array.isArray(hoverMarker)
-            ? hoverMarker.some((hoverMarkerItem) =>
-              hoverMarkerItem && hoverMarkerItem !== hostel.id)
-            : hoverMarker !== hostel.id)) {
+        if (hoverMarker === undefined && activeHostelId !== hostel.id) {
           evt.target.setIcon(defaultCustomIcon);
         }
         setHostelId(undefined);
@@ -70,11 +70,7 @@ function Map({hostels, setHostelId, hoverMarker}: PropsFromRedux): JSX.Element {
 
       marker
         .setIcon(
-          hoverMarker !== undefined && (
-            Array.isArray(hoverMarker)
-              ? hoverMarker.some((hoverMarkerItem) =>
-                hoverMarkerItem && hoverMarkerItem === hostel.id)
-              : hoverMarker === hostel.id)
+          (hoverMarker === hostel.id || activeHostelId === hostel.id)
             ? currentCustomIcon
             : defaultCustomIcon,
         )
@@ -88,7 +84,7 @@ function Map({hostels, setHostelId, hoverMarker}: PropsFromRedux): JSX.Element {
         map.removeLayer(marker);
       });
     });
-  }, [map, hostels, hoverMarker, setHostelId]);
+  }, [map, hostels, hoverMarker, setHostelId, activeHostelId]);
 
   return <div style = {{maxWidth: '300px', maxHeight: '300px'}} ref={mapRef}></div>;
 }

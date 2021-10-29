@@ -5,5 +5,5 @@ export type State = {
   hostels: Hostel[],
   sorting: string,
   hoverHostel: number | undefined,
-  hoverMarker:(number | undefined)[] | number | undefined,
+  hoverMarker: number | undefined,
 };
