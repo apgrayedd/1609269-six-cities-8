@@ -1,17 +1,42 @@
-import { Link } from 'react-router-dom';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { MouseEvent } from 'react';
+import { changeCityAction } from '../../store/action';
+import { State } from '../../types/state';
+import { Dispatch } from 'redux';
+import { connect,ConnectedProps } from 'react-redux';
+import { Actions } from '../../types/action';
 
 type cityOption = {
   city: string,
   activeCity: string,
 }
+const statesToProps = ({city}: State) => ({
+  activeCity: city,
+});
+const dispatchToProps = (dispacth: Dispatch<Actions>) => ({
+  setCity(city:string) {
+    dispacth(changeCityAction(city));
+  },
+});
+const connector = connect(statesToProps, dispatchToProps);
 
-export default function MainCitiesItem({city, activeCity}:cityOption): JSX.Element {
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & cityOption;
+
+function MainCitiesItem({city, activeCity, setCity}:ConnectedComponentProps): JSX.Element {
   const linkClassName = `locations__item-link tabs__item ${activeCity.toLowerCase() === city.toLowerCase() && 'tabs__item--active'}`;
+  const setCityHandler = (evt:MouseEvent) => {
+    evt.preventDefault();
+    setCity(city);
+  };
   return (
     <li className="locations__item">
-      <Link className = {linkClassName} to = {`/main/${city.toLocaleLowerCase()}`}>
+      <a className = {linkClassName} onClick = {setCityHandler}>
         <span>{city}</span>
-      </Link>
+      </a>
     </li>
   );
 }
+
+export {MainCitiesItem};
+export default connector(MainCitiesItem);

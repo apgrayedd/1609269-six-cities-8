@@ -1,28 +1,44 @@
-import { useMemo, MouseEvent } from 'react';
+import { useMemo, MouseEvent, Dispatch } from 'react';
 import { Link } from 'react-router-dom';
+import { State } from '../../types/state';
 import { Hostel } from '../../types/hostel';
 import PointLink from './point-link';
+import { Actions } from '../../types/action';
+import { changeHoverMarkerAction } from '../../store/action';
+import { connect, ConnectedProps } from 'react-redux';
 
-type pointOptions = {
+type PointOptions = {
   hostel: Hostel,
-  onEnterFunction: (value: Hostel | undefined) => void,
-  hoverStatus?: boolean,
 };
 
-export default function PointItem({hostel, onEnterFunction, hoverStatus}: pointOptions): JSX.Element {
+const stateToProps = ({hoverHostel}:State) => ({
+  hoverId: hoverHostel,
+});
+const dispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  setMarkerId(id:number | undefined) {
+    dispatch(changeHoverMarkerAction(id));
+  },
+});
+const connector = connect(stateToProps, dispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & PointOptions;
+
+
+function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX.Element {
   const raiting = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
   const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
     'place-card__bookmark-button--active'}`;
 
   const onEnterHandler = (evt: MouseEvent) => {
     evt.preventDefault();
-    onEnterFunction(hostel);
+    setMarkerId(hostel.id);
   };
   const onLeaveHandler = (evt: MouseEvent) => {
     evt.preventDefault();
-    onEnterFunction(undefined);
+    setMarkerId(undefined);
   };
-  const hoverStyle = hoverStatus ? {'opacity': '0.6'} : {};
+  const hoverStyle = hoverId === hostel.id ? {'opacity': '0.6'} : {};
 
   return (
     <article className="cities__place-card place-card" onMouseEnter = {onEnterHandler}
@@ -64,3 +80,6 @@ export default function PointItem({hostel, onEnterFunction, hoverStatus}: pointO
     </article>
   );
 }
+
+export {PointItem};
+export default connector(PointItem);

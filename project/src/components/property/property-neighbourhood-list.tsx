@@ -1,19 +1,24 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Hostel } from '../../types/hostel';
+import { State } from '../../types/state';
 import PointItem from '../point/point-item';
 
 type PropertyNeighbourhoodListOptions = {
-  hostels: Hostel[],
   hostelInProperty: Hostel,
-  onEnterFunction: (value: Hostel | undefined) => void,
-  hoverElementId: number | undefined,
 }
 
-export default function PropertyNeighbourhoodList(
-  {hostels, onEnterFunction, hostelInProperty, hoverElementId}:PropertyNeighbourhoodListOptions,
-):JSX.Element {
+const stateToProps = ({hostels}:State) => ({
+  hostels,
+});
+const connector = connect(stateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & PropertyNeighbourhoodListOptions;
+
+function PropertyNeighbourhoodList({hostels, hostelInProperty}:ConnectedComponentProps):JSX.Element {
   const hostelsOnNeighbourhood = hostels.filter((hostel) => hostel.id !== hostelInProperty.id);
   const arrayPoints = hostelsOnNeighbourhood.map((hostel) =>
-    <PointItem hoverStatus = {hoverElementId === hostel.id} hostel = {hostel} key = {hostel.id} onEnterFunction = {onEnterFunction}/>);
+    <PointItem hostel = {hostel} key = {hostel.id}/>);
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -23,3 +28,6 @@ export default function PropertyNeighbourhoodList(
     </section>
   );
 }
+
+export {PropertyNeighbourhoodList};
+export default connector(PropertyNeighbourhoodList);

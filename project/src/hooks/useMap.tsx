@@ -4,7 +4,7 @@ import {useEffect, useState, MutableRefObject} from 'react';
 type Coordinates = {
   'latitude': number,
   'longitude': number,
-  'zoom'?: number,
+  'zoom': number,
 }
 
 export default function useMap(mapRef:MutableRefObject<HTMLElement | null>, coordinates: Coordinates): Map | null {
@@ -17,7 +17,7 @@ export default function useMap(mapRef:MutableRefObject<HTMLElement | null>, coor
           lat: coordinates.latitude,
           lng: coordinates.longitude,
         },
-        zoom: 10,
+        zoom: coordinates.zoom,
       });
 
       const layer = new TileLayer(

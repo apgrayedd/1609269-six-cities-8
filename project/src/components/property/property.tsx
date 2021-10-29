@@ -1,17 +1,18 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
 import { AuthorizationStatus } from '../../const';
 import { Comment } from '../../types/comment';
 import { Hostel } from '../../types/hostel';
+import { State } from '../../types/state';
 import Header from '../header/header';
 import Map from '../map/map';
 import PropertyNeighbourhoodList from './property-neighbourhood-list';
 import PropertyReviews from './property-reviews/property-reviews';
 
-type propertyOptions = {
-  hostels: Hostel[],
+type PropertyOptions = {
   comments: Comment[],
   authorizationStatus: AuthorizationStatus,
 };
@@ -35,11 +36,16 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   );
 }
 
-export default function Property({hostels, comments, authorizationStatus}: propertyOptions): JSX.Element {
+const stateToProps = ({hostels}:State) => ({
+  hostels,
+});
+const connector = connect(stateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropertyOptions & PropsFromRedux;
+
+function Property({hostels, comments, authorizationStatus}: ConnectedComponentProps): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
-  const [onEnterItem, setEnterItem] = useState<Hostel | undefined>(undefined);
-  const [hoverElement, setHoverElement] = useState<number | undefined>(undefined);
   const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite &&
     'property__bookmark-button--active'}`;
   const raiting = useMemo(() => Math.round(hostelProperty.rating) * 20, [hostelProperty.rating]);
@@ -126,13 +132,16 @@ export default function Property({hostels, comments, authorizationStatus}: prope
             </div>
           </div>
           <section className="property__map map">
-            <Map hostels = {hostels} selectedHostel = {[hostelProperty, onEnterItem]} setHoverElement = {setHoverElement}/>
+            <Map />
           </section>
         </section>
         <div className="container">
-          <PropertyNeighbourhoodList hoverElementId = {hoverElement} hostelInProperty = {hostelProperty} hostels = {hostels} onEnterFunction = {setEnterItem}/>
+          <PropertyNeighbourhoodList hostelInProperty = {hostelProperty}/>
         </div>
       </main>
     </div>
   );
 }
+
+export {Property};
+export default connector(Property);

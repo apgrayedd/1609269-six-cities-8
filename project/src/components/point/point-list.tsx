@@ -1,18 +1,22 @@
-import { Hostel } from '../../types/hostel';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
 import PointItem from './point-item';
 
-type PointListOption = {
-  hostels: Hostel[],
-  onEnterFunction: (value: Hostel | undefined) => void,
-  hoverElementId: number | undefined,
-};
+const stateToProps = ({hostels}:State) => ({
+  hostels,
+});
+const connector = connect(stateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default function PointList ({hostels,onEnterFunction, hoverElementId}: PointListOption):  JSX.Element {
+function PointList ({hostels}:PropsFromRedux):  JSX.Element {
   const hostelsList = hostels.map((hostel) =>
-    <PointItem key = {hostel.id} onEnterFunction = {onEnterFunction} hostel = {hostel} hoverStatus = {hostel.id === hoverElementId}/>);
+    <PointItem key = {hostel.id} hostel = {hostel}/>);
   return (
     <div className="cities__places-list places__list tabs__content">
       {hostelsList}
     </div>
   );
 }
+
+export {PointList};
+export default connector(PointList);

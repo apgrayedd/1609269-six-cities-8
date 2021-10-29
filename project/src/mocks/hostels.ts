@@ -137,4 +137,38 @@ export const hostels: Hostel[] = [
     'title': 'Beautiful & luxurious studio at great location',
     'type': 'apartment',
   },
+  {
+    'bedrooms': 1,
+    'city': {
+      'location': {
+        'latitude': 52.370216,
+        'longitude': 4.895168,
+        'zoom': 10,
+      },
+      'name': 'BRUSSELS',
+    },
+    'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
+    'host': {
+      'avatar_url': 'img/avatar-angelina.jpg',
+      'id': 4,
+      'is_pro': true,
+      'name': 'Angelina',
+    },
+    'id': 4,
+    'images': ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
+    'is_favorite': true,
+    'is_premium': false,
+    'location': {
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
+      'zoom': 8,
+    },
+    'max_adults': 4,
+    'preview_image': 'img/apartment-01.jpg',
+    'price': 12,
+    'rating': 3,
+    'title': 'Beautiful & luxurious studio at great location',
+    'type': 'apartment',
+  },
 ];

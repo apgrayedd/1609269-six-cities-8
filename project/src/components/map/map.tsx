@@ -1,13 +1,10 @@
 import {Icon, Marker} from 'leaflet';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, Dispatch } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import useMap from '../../hooks/useMap';
-import { Hostel } from '../../types/hostel';
-
-type MapOptions = {
-  hostels: Hostel[];
-  selectedHostel: (Hostel | undefined)[] | Hostel | undefined;
-  setHoverElement: (id: number | undefined) => void;
-};
+import { changeHoverHostelAction } from '../../store/action';
+import { Actions } from '../../types/action';
+import { State } from '../../types/state';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -21,7 +18,19 @@ const currentCustomIcon = new Icon({
   iconAnchor: [27, 39],
 });
 
-export default function Map({hostels, selectedHostel, setHoverElement}: MapOptions): JSX.Element {
+const stateToProps = ({hostels, hoverMarker}:State) => ({
+  hostels,
+  hoverMarker,
+});
+const dispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  setHostelId(id: number | undefined) {
+    dispatch(changeHoverHostelAction(id));
+  },
+});
+const connector = connect(stateToProps, dispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Map({hostels, setHostelId, hoverMarker}: PropsFromRedux): JSX.Element {
   const mapRef = useRef(null);
   const city = hostels[0].city;
   const map = useMap(mapRef, {...city.location});
@@ -39,18 +48,20 @@ export default function Map({hostels, selectedHostel, setHoverElement}: MapOptio
 
       marker.on('mouseover', (evt) => {
         evt.target.setIcon(currentCustomIcon);
-        setHoverElement(hostel.id);
+        setHostelId(hostel.id);
       });
 
       marker.on('mouseout', (evt) => {
-        if (selectedHostel !== undefined && (
-          Array.isArray(selectedHostel)
-            ? selectedHostel.some((selectHostel) =>
-              selectHostel ? selectHostel.id === hostel.id : undefined)
-            : selectedHostel.id !== hostel.id)) {
+        // eslint-disable-next-line no-console
+        console.log(hoverMarker);
+        if (hoverMarker === undefined || (
+          Array.isArray(hoverMarker)
+            ? hoverMarker.some((hoverMarkerItem) =>
+              hoverMarkerItem && hoverMarkerItem !== hostel.id)
+            : hoverMarker !== hostel.id)) {
           evt.target.setIcon(defaultCustomIcon);
         }
-        setHoverElement(undefined);
+        setHostelId(undefined);
       });
 
       marker.on('click', () => {
@@ -59,15 +70,14 @@ export default function Map({hostels, selectedHostel, setHoverElement}: MapOptio
 
       marker
         .setIcon(
-          selectedHostel !== undefined && (
-            Array.isArray(selectedHostel)
-              ? selectedHostel.some((selectHostel) =>
-                selectHostel ? selectHostel.id === hostel.id : undefined)
-              : selectedHostel.id === hostel.id)
+          hoverMarker !== undefined && (
+            Array.isArray(hoverMarker)
+              ? hoverMarker.some((hoverMarkerItem) =>
+                hoverMarkerItem && hoverMarkerItem === hostel.id)
+              : hoverMarker === hostel.id)
             ? currentCustomIcon
             : defaultCustomIcon,
         )
-        .bindPopup('<a href=#>Text</a>')
         .addTo(map);
 
       markers.push(marker);
@@ -78,7 +88,10 @@ export default function Map({hostels, selectedHostel, setHoverElement}: MapOptio
         map.removeLayer(marker);
       });
     });
-  }, [map, hostels, selectedHostel, setHoverElement]);
+  }, [map, hostels, hoverMarker, setHostelId]);
 
   return <div style = {{maxWidth: '300px', maxHeight: '300px'}} ref={mapRef}></div>;
 }
+
+export {Map};
+export default connector(Map);

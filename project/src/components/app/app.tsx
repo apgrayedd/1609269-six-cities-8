@@ -20,10 +20,10 @@ function App({hostels, comments, authorizationStatus}: countPoints): JSX.Element
     <BrowserRouter>
       <Switch>
         <Route exact path = {AppRoute.Root}>
-          <Main authorizationStatus={authorizationStatus} hostels = {hostels}/>
+          <Main authorizationStatus={authorizationStatus}/>
         </Route>
         <Route exact path = {AppRoute.Main}>
-          <Main authorizationStatus={authorizationStatus} hostels = {hostels}/>
+          <Main authorizationStatus={authorizationStatus}/>
         </Route>
         <Route exact path = {AppRoute.SignIn}>
           <Login />
@@ -36,7 +36,7 @@ function App({hostels, comments, authorizationStatus}: countPoints): JSX.Element
         >
         </PrivateRoute>
         <Route exact path = {AppRoute.Room}>
-          <Property hostels= {hostels} comments = {comments} authorizationStatus={authorizationStatus} />
+          <Property comments = {comments} authorizationStatus={authorizationStatus} />
         </Route>
         <Route>
           <Page404 authorizationStatus={authorizationStatus} />
