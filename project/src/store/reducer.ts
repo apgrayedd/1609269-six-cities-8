@@ -1,15 +1,14 @@
-import { DEFAULT_ACTIVE_CITY, DEFAULT_ACTIVE_SORT, SortingList } from '../const';
+import { DEFAULT_ACTIVE_CITY, DEFAULT_ACTIVE_SORT } from '../const';
 import { hostels } from '../mocks/hostels';
 import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
+import { sortHostels } from '../utils/common';
 
 export const initialState = {
   city: DEFAULT_ACTIVE_CITY,
   sorting: DEFAULT_ACTIVE_SORT,
-  hostels: hostels
-    .filter((hostel) =>
-      (hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase()))
-    .sort(SortingList.filter(({name}) => name === DEFAULT_ACTIVE_SORT)[0].funct),
+  hostels: sortHostels(hostels.filter((hostel) =>
+    (hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase())),DEFAULT_ACTIVE_SORT),
   hoverHostel: undefined,
   hoverMarker: undefined,
 };
@@ -24,10 +23,8 @@ export function reducer(state: State = initialState, action: Actions):State {
     case ActionType.ChangeHostelsAction:
       return {...state, hostels: action.hostels};
     case ActionType.ChangeSortingAction:
-      return {...state, sorting: action.sorting, hostels: state.hostels
-        .filter((hostel) =>
-          (hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase()))
-        .sort(SortingList.filter(({name}) => name === action.sorting)[0].funct),
+      return {...state, sorting: action.sorting, hostels: sortHostels(hostels.filter((hostel) =>
+        (hostel.city.name.toLowerCase() === state.city.toLowerCase())),action.sorting),
       };
     case ActionType.ChangeHoverHostelgAction:
       return {...state, hoverHostel: action.hostelId};

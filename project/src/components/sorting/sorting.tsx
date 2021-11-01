@@ -27,7 +27,7 @@ function Sorting({activeSort, setSorting}:ConnectedComponentProps):JSX.Element {
   const [listClassName, setListClassName] = useState('');
   const openSortingTemplate = (evt:MouseEvent) => setListClassName('places__options--opened');
   const closeSortingTemplate = (evt:MouseEvent) => setListClassName('');
-  const sortingList = SortingList.map(({name}) => {
+  const sortingList = Object.values(SortingList).map(({name}) => {
     const setSortingTemplate = (evt:MouseEvent) => {
       evt.preventDefault();
       setSorting(name);

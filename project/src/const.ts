@@ -12,12 +12,12 @@ export const starsTitlesInReview  = [
   'perfect',
 ];
 
-export const SortingList = [
-  {name: 'Popular', funct: undefined},
-  {name: 'Price: low to high', funct: (hostelA:Hostel, hostelB:Hostel):number => hostelA.price - hostelB.price},
-  {name: 'Price: high to low', funct: (hostelA:Hostel, hostelB:Hostel):number => hostelB.price - hostelA.price},
-  {name: 'Top rated first', funct: (hostelA:Hostel, hostelB:Hostel):number => hostelA.rating - hostelB.rating},
-];
+export const SortingList = {
+  Popular: {name: 'Popular', funct: undefined},
+  PriceLowToHigh: {name: 'Price: low to high', funct: (hostelA:Hostel, hostelB:Hostel):number => hostelA.price - hostelB.price},
+  PriceHighToLow: {name: 'Price: high to low', funct: (hostelA:Hostel, hostelB:Hostel):number => hostelB.price - hostelA.price},
+  TopRatedFirst: {name: 'Top rated first', funct: (hostelA:Hostel, hostelB:Hostel):number => hostelB.rating - hostelA.rating},
+};
 
 export enum AppRoute {
   Root = '/',
