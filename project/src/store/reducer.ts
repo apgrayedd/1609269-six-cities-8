@@ -8,7 +8,7 @@ export const initialState = {
   city: DEFAULT_ACTIVE_CITY,
   sorting: DEFAULT_ACTIVE_SORT,
   hostels: sortHostels(hostels.filter((hostel) =>
-    (hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase())),DEFAULT_ACTIVE_SORT),
+    (hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase())),DEFAULT_ACTIVE_SORT, DEFAULT_ACTIVE_CITY),
   hoverHostel: undefined,
   hoverMarker: undefined,
 };
@@ -23,9 +23,7 @@ export function reducer(state: State = initialState, action: Actions):State {
     case ActionType.ChangeHostelsAction:
       return {...state, hostels: action.hostels};
     case ActionType.ChangeSortingAction:
-      return {...state, sorting: action.sorting, hostels: sortHostels(hostels.filter((hostel) =>
-        (hostel.city.name.toLowerCase() === state.city.toLowerCase())),action.sorting),
-      };
+      return {...state, sorting: action.sorting, hostels: sortHostels(state.hostels,action.sorting, state.city)};
     case ActionType.ChangeHoverHostelgAction:
       return {...state, hoverHostel: action.hostelId};
     case ActionType.ChangeHoverMarkerAction:

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SortingList } from '../const';
+import { hostels } from '../mocks/hostels';
 import { Hostel } from '../types/hostel';
 
-
-export const getByKey = (values: any, key: string) => values.map((item: any) => item ? item[key] : false);
+export const getByKey = (values: any, key: string) => values.map((item: any) => item && item[key]);
 
 export const getTitleList = (values: any, key: string) => {
   type resultType = {
@@ -33,16 +33,16 @@ export const getTitleList = (values: any, key: string) => {
   return result;
 };
 
-export const sortHostels = (hostelsFromState: Hostel[], sortType:string):Hostel[] => {
+export const sortHostels = (hostelsFromState: Hostel[], sortType:string, cityForPopular:string):Hostel[] => {
   switch (sortType) {
     case SortingList.Popular.name:
-      return hostelsFromState;
+      return hostels.filter((hostel) => (hostel.city.name.toLowerCase() === cityForPopular.toLowerCase()));
     case SortingList.PriceLowToHigh.name:
-      return hostelsFromState.sort(SortingList.PriceLowToHigh.funct);
+      return new Array(...hostelsFromState.sort(SortingList.PriceLowToHigh.funct));
     case SortingList.PriceHighToLow.name:
-      return hostelsFromState.sort(SortingList.PriceHighToLow.funct);
+      return new Array(...hostelsFromState.sort(SortingList.PriceHighToLow.funct));
     case SortingList.TopRatedFirst.name:
-      return hostelsFromState.sort(SortingList.TopRatedFirst.funct);
+      return new Array(...hostelsFromState.sort(SortingList.TopRatedFirst.funct));
     default:
       throw new Error('Неизвестная сортировка');
   }
