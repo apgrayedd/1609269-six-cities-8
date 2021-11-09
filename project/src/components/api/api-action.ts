@@ -16,7 +16,7 @@ export const fetchHostelAction = (): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    // Я понимаю, что так делать тоже не стоит, ибо статус должен менятся в зависимости от ответа,
+    // Я понимаю, что так делать тоже не стоит, ибо статус должен меняться в зависимости от ответа,
     // но другого варианта я не вижу
     dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
     await api.get(APIRoute.Login)
