@@ -24,7 +24,6 @@ const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App({comments, isDataLoaded, authorizationStatus}: PropsFromRedux & countPoints): JSX.Element {
-  // isCheckedAuth(authorizationStatus) ||
   if (isDataLoaded) {
     return <LoadingSpinner />;
   }

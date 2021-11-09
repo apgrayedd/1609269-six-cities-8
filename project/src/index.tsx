@@ -15,7 +15,8 @@ import { AuthorizationStatus } from './const';
 import { ThunkAppDispatch } from './types/action';
 import {
   checkAuthAction,
-  fetchHostelAction } from './components/api/api-action';
+  fetchHostelAction
+} from './components/api/api-action';
 
 const api = createAPI(
   () => store.dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth)),

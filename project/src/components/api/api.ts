@@ -18,7 +18,7 @@ export const createAPI = (onUnauthorized: () => void):AxiosInstance => {
       const {response} = error;
 
       if (response?.status === 401) {
-        return onUnauthorized();
+        onUnauthorized();
       }
 
       return Promise.reject(error);
