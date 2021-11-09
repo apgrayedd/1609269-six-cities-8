@@ -30,6 +30,8 @@ export default function useMap(mapRef:MutableRefObject<HTMLElement | null>, coor
 
       instance.addLayer(layer);
       setMap(instance);
+    } else if(map !== null) {
+      map.flyTo([coordinates.latitude, coordinates.longitude], coordinates.zoom);
     }
   }, [mapRef, map, coordinates]);
 

@@ -1,15 +1,12 @@
-/* eslint-disable no-console */
 import {Icon, Marker} from 'leaflet';
 import { useRef, useEffect, Dispatch } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import useMap from '../../hooks/useMap';
-import { changeHoverHostelAction } from '../../store/action';
+import { changeHoverHostel } from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
-
-type MapOptions = {
-  activeHostelId?: number | undefined,
-};
+import 'leaflet/dist/leaflet.css';
+import { Hostel } from '../../types/hostel';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -23,15 +20,19 @@ const currentCustomIcon = new Icon({
   iconAnchor: [27, 39],
 });
 
-const stateToProps = ({hostels, hoverMarker}:State) => ({
-  hostels,
+const stateToProps = ({hoverMarker}:State) => ({
   hoverMarker,
 });
 const dispatchToProps = (dispatch: Dispatch<Actions>) => ({
   setHostelId(id: number | undefined) {
-    dispatch(changeHoverHostelAction(id));
+    dispatch(changeHoverHostel(id));
   },
 });
+
+type MapOptions = {
+  hostels: Hostel[],
+  activeHostelId?: number | undefined,
+};
 const connector = connect(stateToProps, dispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MapOptions;
@@ -39,7 +40,7 @@ type ConnectedComponentProps = PropsFromRedux & MapOptions;
 function Map({hostels, setHostelId, hoverMarker, activeHostelId}: ConnectedComponentProps): JSX.Element {
   const mapRef = useRef(null);
   const city = hostels[0].city;
-  const map = useMap(mapRef, {...city.location});
+  const map = useMap(mapRef,{...city.location});
 
   useEffect(() => {
     if (!map) {
@@ -86,7 +87,7 @@ function Map({hostels, setHostelId, hoverMarker, activeHostelId}: ConnectedCompo
     });
   }, [map, hostels, hoverMarker, setHostelId, activeHostelId]);
 
-  return <div style = {{maxWidth: '300px', maxHeight: '300px'}} ref={mapRef}></div>;
+  return <div style = {{height: '100%'}} ref={mapRef}></div>;
 }
 
 export {Map};

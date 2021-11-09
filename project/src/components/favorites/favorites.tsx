@@ -1,27 +1,28 @@
-import { AuthorizationStatus } from '../../const';
-import { Hostel } from '../../types/hostel';
+import { State } from '../../types/state';
 import Logo from '../logo/logo';
 import FavoritesEmpty from './favorites-empty';
 import FavoritesList from './favorites-list';
-
 import Header from '../header/header';
+import { connect, ConnectedProps } from 'react-redux';
 
-type countFavorites = {
-  hostels: Hostel[],
-  authorizationStatus: AuthorizationStatus,
-}
+const stateToProps = ({filteredHostels, authorizationStatus}:State) => ({
+  filteredHostels,
+  authorizationStatus,
+});
+const connector = connect(stateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default function Favorites({hostels, authorizationStatus} : countFavorites): JSX.Element {
+function Favorites({filteredHostels, authorizationStatus}: PropsFromRedux): JSX.Element {
   return (
     <div className = 'page'>
       <Header authorizationStatus = {authorizationStatus} />
       <div className="page__favorites-container container">
         {
-          hostels.length > 0
+          filteredHostels.length > 0
             ?
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <FavoritesList hostels = {hostels} />
+              <FavoritesList />
             </section>
             : <FavoritesEmpty/>
         }
@@ -32,3 +33,6 @@ export default function Favorites({hostels, authorizationStatus} : countFavorite
     </div>
   );
 }
+
+export {Favorites};
+export default connector(Favorites);

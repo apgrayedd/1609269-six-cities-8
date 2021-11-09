@@ -1,20 +1,25 @@
 import { nanoid } from '@reduxjs/toolkit';
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../types/hostel';
+import { State } from '../../types/state';
 import { getTitleList } from '../../utils/common';
 import FavoritesItem from './favorites-item';
-
-type FavoritesOptions = {
-  hostels: Hostel[],
-};
 
 type FavoritesListType = {
   'key': string,
   'values': Hostel[],
 };
 
-export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element {
-  const favoritesList:FavoritesListType[] = getTitleList(hostels, 'city');
+const stateToProps = ({filteredHostels, authorizationStatus}:State) => ({
+  filteredHostels,
+  authorizationStatus,
+});
+const connector = connect(stateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function FavoritesList ({filteredHostels}: PropsFromRedux): JSX.Element {
+  const favoritesList:FavoritesListType[] = getTitleList(filteredHostels, 'city');
   const favoritesListArray = favoritesList.map((hostelInfo) => {
     const favoritesArray = hostelInfo.values.map((hostel) => (
       hostel.is_favorite &&
@@ -41,3 +46,6 @@ export default function FavoritesList ({hostels}: FavoritesOptions): JSX.Element
     </ul>
   );
 }
+
+export {FavoritesList};
+export default connector(FavoritesList);

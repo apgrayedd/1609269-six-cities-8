@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { Dispatch,MouseEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { SortingList } from '../../const';
-import { changeSortingAction } from '../../store/action';
+import { changeSorting } from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 
@@ -15,7 +15,7 @@ const stateToProps = ({sorting}:State) => ({
 });
 const dispacthToProps = (dispacth: Dispatch<Actions>) => ({
   setSorting(sorting:string){
-    dispacth(changeSortingAction(sorting));
+    dispacth(changeSorting(sorting));
   },
 });
 const connector = connect(stateToProps, dispacthToProps);

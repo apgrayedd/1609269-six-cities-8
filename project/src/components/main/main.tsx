@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../../const';
+
 import Header from '../header/header';
 import PointList from '../point/point-list';
 import MainEmpty from './main-empty';
@@ -8,21 +8,16 @@ import { State } from '../../types/state';
 import { connect,ConnectedProps } from 'react-redux';
 import Sorting from '../sorting/sorting';
 
-type countPoints = {
-  authorizationStatus: AuthorizationStatus,
-};
-
-const statesToProps = ({hostels}: State) => ({
-  hostels,
+const statesToProps = ({filteredHostels, authorizationStatus}: State) => ({
+  filteredHostels,
+  authorizationStatus,
 });
 const connector = connect(statesToProps);
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & countPoints;
 
-function Main({hostels, authorizationStatus}: ConnectedComponentProps): JSX.Element {
+function Main({filteredHostels, authorizationStatus}: PropsFromRedux): JSX.Element {
   return (
-    <div className={`page page--gray page--main ${!hostels.length && 'page__main--index-empty'}`}>
+    <div className={`page page--gray page--main ${!filteredHostels.length && 'page__main--index-empty'}`}>
       <Header authorizationStatus = {authorizationStatus} />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -33,18 +28,18 @@ function Main({hostels, authorizationStatus}: ConnectedComponentProps): JSX.Elem
         </div>
         <div className="cities">
           {
-            hostels.length
+            filteredHostels.length
               ?
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{hostels.length} places to stay in Amsterdam</b>
+                  <b className="places__found">{filteredHostels.length} places to stay in Amsterdam</b>
                   <Sorting />
                   <PointList />
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
-                    <Map />
+                    <Map hostels = {filteredHostels}/>
                   </section>
                 </div>
               </div>

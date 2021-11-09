@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SortingList } from '../const';
+import { AuthorizationStatus, SortingList } from '../const';
 import { hostels } from '../mocks/hostels';
 import { Hostel } from '../types/hostel';
 
@@ -47,3 +47,6 @@ export const sortHostels = (hostelsFromState: Hostel[], sortType:string, cityFor
       throw new Error('Неизвестная сортировка');
   }
 };
+
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;

@@ -3,7 +3,6 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
-import { AuthorizationStatus } from '../../const';
 import { Comment } from '../../types/comment';
 import { Hostel } from '../../types/hostel';
 import { State } from '../../types/state';
@@ -14,7 +13,6 @@ import PropertyReviews from './property-reviews/property-reviews';
 
 type PropertyOptions = {
   comments: Comment[],
-  authorizationStatus: AuthorizationStatus,
 };
 
 function propertyGalleryContainer(hostel: Hostel): JSX.Element{
@@ -36,8 +34,9 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   );
 }
 
-const stateToProps = ({hostels}:State) => ({
+const stateToProps = ({hostels, authorizationStatus}:State) => ({
   hostels,
+  authorizationStatus,
 });
 const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -49,6 +48,7 @@ function Property({hostels, comments, authorizationStatus}: ConnectedComponentPr
   const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite &&
     'property__bookmark-button--active'}`;
   const raiting = useMemo(() => Math.round(hostelProperty.rating) * 20, [hostelProperty.rating]);
+
   return (
     <div className="page">
       <Header authorizationStatus = {authorizationStatus} />
@@ -132,7 +132,7 @@ function Property({hostels, comments, authorizationStatus}: ConnectedComponentPr
             </div>
           </div>
           <section className="property__map map">
-            <Map activeHostelId = {parseInt(id,10)}/>
+            <Map activeHostelId = {parseInt(id,10)} hostels = {hostels}/>
           </section>
         </section>
         <div className="container">

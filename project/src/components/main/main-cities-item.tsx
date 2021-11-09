@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { MouseEvent } from 'react';
-import { changeCityAction } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { State } from '../../types/state';
 import { Dispatch } from 'redux';
 import { connect,ConnectedProps } from 'react-redux';
@@ -15,7 +15,7 @@ const statesToProps = ({city}: State) => ({
 });
 const dispatchToProps = (dispacth: Dispatch<Actions>) => ({
   setCity(city:string) {
-    dispacth(changeCityAction(city));
+    dispacth(changeCity(city));
   },
 });
 const connector = connect(statesToProps, dispatchToProps);

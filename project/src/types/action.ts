@@ -1,37 +1,37 @@
-import { Hostel } from './hostel';
+import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { AxiosInstance } from 'axios';
+import {
+  changeCity,
+  changeHostels,
+  changeSorting,
+  changeHoverHostel,
+  changeHoverMarker,
+  changeAuthorizationStatus,
+  changeLoaderStatus,
+  changeFavorites
+} from '../store/action';
+import { State } from './state';
 
 export enum ActionType {
+  ChangeHostelsAction = 'data/changHostelsAction',
+  ChangeLoaderStatusAction = 'data/changeLoaderStatus',
+  ChangeFavoritesAction = 'data/changeFavoritesAction',
   ChangeCityAction = 'changCityAction',
-  ChangeHostelsAction = 'changHostelsAction',
   ChangeSortingAction = 'changSortingAction',
   ChangeHoverHostelgAction = 'hover/changHoverHostelAction',
   ChangeHoverMarkerAction = 'hover/changeHoverMarkerAction',
+  ChangeAuthorizationStatusAction = 'user/changeAuthorizationStatus',
 }
 
-export type ChangeCity = {
-  type: ActionType.ChangeCityAction,
-  city: string,
-};
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
-export type ChangeHostels = {
-  type: ActionType.ChangeHostelsAction,
-  hostels: Hostel[],
-};
-
-export type ChangeSorting = {
-  type: ActionType.ChangeSortingAction,
-  sorting: string,
-};
-
-export type ChangeHoverHostel = {
-  type: ActionType.ChangeHoverHostelgAction,
-  hostelId: number | undefined,
-};
-
-export type ChangeHoverMarker = {
-  type: ActionType.ChangeHoverMarkerAction,
-  markerId: number | undefined,
-};
-
-
-export type Actions = ChangeCity | ChangeHostels | ChangeSorting | ChangeHoverHostel | ChangeHoverMarker;
+export type Actions =
+  ReturnType<typeof changeCity> |
+  ReturnType<typeof changeHostels> |
+  ReturnType<typeof changeSorting> |
+  ReturnType<typeof changeHoverHostel> |
+  ReturnType<typeof changeHoverMarker> |
+  ReturnType<typeof changeAuthorizationStatus> |
+  ReturnType<typeof changeLoaderStatus> |
+  ReturnType<typeof changeFavorites>

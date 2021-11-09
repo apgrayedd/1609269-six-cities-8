@@ -1,29 +1,41 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
 import Favorites from '../favorites/favorites';
 import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-import { Hostel } from '../../types/hostel';
 import { Comment } from '../../types/comment';
+import { isCheckedAuth } from '../../utils/common';
+import { State } from '../../types/state';
+import { connect, ConnectedProps } from 'react-redux';
+import LoadingSpinner from '../loading-spinner/loading-spinner';
 
 type countPoints = {
-  authorizationStatus: AuthorizationStatus,
-  hostels: Hostel[],
   comments: Comment[],
 };
 
-function App({hostels, comments, authorizationStatus}: countPoints): JSX.Element {
+const stateToProps = ({isDataLoaded, authorizationStatus}:State) => ({
+  isDataLoaded,
+  authorizationStatus,
+});
+const connector = connect(stateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function App({comments, isDataLoaded, authorizationStatus}: PropsFromRedux & countPoints): JSX.Element {
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path = {AppRoute.Root}>
-          <Main authorizationStatus={authorizationStatus}/>
+          <Main />
         </Route>
         <Route exact path = {AppRoute.Main}>
-          <Main authorizationStatus={authorizationStatus}/>
+          <Main />
         </Route>
         <Route exact path = {AppRoute.SignIn}>
           <Login />
@@ -31,19 +43,19 @@ function App({hostels, comments, authorizationStatus}: countPoints): JSX.Element
         <PrivateRoute
           exact
           path = {AppRoute.Favorites}
-          render={() => <Favorites authorizationStatus={authorizationStatus} hostels = {hostels}/>}
-          authorizationStatus={authorizationStatus}
+          render={() => <Favorites />}
         >
         </PrivateRoute>
         <Route exact path = {AppRoute.Room}>
-          <Property comments = {comments} authorizationStatus={authorizationStatus} />
+          <Property comments = {comments} />
         </Route>
         <Route>
-          <Page404 authorizationStatus={authorizationStatus} />
+          <Page404 />
         </Route>
       </Switch>
     </BrowserRouter>
   );
 }
 
-export default App;
+export {App};
+export default connector(App);

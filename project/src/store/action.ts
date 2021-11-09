@@ -1,27 +1,43 @@
-import { ActionType, ChangeCity, ChangeHostels, ChangeHoverHostel, ChangeHoverMarker, ChangeSorting } from '../types/action';
+import { AuthorizationStatus } from '../const';
+import { ActionType} from '../types/action';
 import { Hostel } from '../types/hostel';
 
-export const changeCityAction = (city: string):ChangeCity => ({
+export const changeCity = (city: string) => ({
   type: ActionType.ChangeCityAction,
   city: city,
-});
+} as const);
 
-export const changeHostelsAction = (hostels: Hostel[]):ChangeHostels => ({
+export const changeHostels = (hostels: Hostel[]) => ({
   type: ActionType.ChangeHostelsAction,
   hostels: hostels,
-});
+} as const);
 
-export const changeSortingAction = (sorting: string):ChangeSorting => ({
+export const changeSorting = (sorting: string) => ({
   type: ActionType.ChangeSortingAction,
   sorting: sorting,
-});
+} as const);
 
-export const changeHoverHostelAction = (hostelId: number | undefined):ChangeHoverHostel => ({
+export const changeHoverHostel = (hostelId: number | undefined) => ({
   type: ActionType.ChangeHoverHostelgAction,
   hostelId: hostelId,
-});
+} as const);
 
-export const changeHoverMarkerAction = (markerId: number | undefined):ChangeHoverMarker => ({
+export const changeHoverMarker = (markerId: number | undefined) => ({
   type: ActionType.ChangeHoverMarkerAction,
   markerId: markerId,
-});
+} as const);
+
+export const changeAuthorizationStatus = (authorizationStatus: AuthorizationStatus) => ({
+  type: ActionType.ChangeAuthorizationStatusAction,
+  authorizationStatus: authorizationStatus,
+} as const);
+
+export const changeLoaderStatus = (isDataLoaded: boolean) => ({
+  type: ActionType.ChangeLoaderStatusAction,
+  isDataLoaded: isDataLoaded,
+} as const);
+
+export const changeFavorites = (favorites: Hostel[]) => ({
+  type: ActionType.ChangeFavoritesAction,
+  favorites: favorites,
+} as const);

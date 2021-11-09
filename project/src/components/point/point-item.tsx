@@ -4,7 +4,7 @@ import { State } from '../../types/state';
 import { Hostel } from '../../types/hostel';
 import PointLink from './point-link';
 import { Actions } from '../../types/action';
-import { changeHoverMarkerAction } from '../../store/action';
+import { changeHoverMarker } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 
 type PointOptions = {
@@ -16,7 +16,7 @@ const stateToProps = ({hoverHostel}:State) => ({
 });
 const dispatchToProps = (dispatch: Dispatch<Actions>) => ({
   setMarkerId(id:number | undefined) {
-    dispatch(changeHoverMarkerAction(id));
+    dispatch(changeHoverMarker(id));
   },
 });
 const connector = connect(stateToProps, dispatchToProps);
