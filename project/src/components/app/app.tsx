@@ -7,7 +7,7 @@ import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
 import { Comment } from '../../types/comment';
-import { isCheckedAuth } from '../../utils/common';
+// import { isCheckedAuth } from '../../utils/common';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import LoadingSpinner from '../loading-spinner/loading-spinner';
@@ -24,7 +24,8 @@ const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App({comments, isDataLoaded, authorizationStatus}: PropsFromRedux & countPoints): JSX.Element {
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  // isCheckedAuth(authorizationStatus) ||
+  if (isDataLoaded) {
     return <LoadingSpinner />;
   }
 

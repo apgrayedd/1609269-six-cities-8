@@ -16,10 +16,14 @@ export const fetchHostelAction = (): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
+    // Я понимаю, что так делать тоже не стоить, ибо статус должен менятся в зависимости от ответа,
+    // но другого варианта я не вижу
+    dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
     await api.get(APIRoute.Login)
-      .then(() => {
-        dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
-      });
+    // Из-за этого кода статус всегда Auth, но в академии было так
+    // .then(() => {
+    //   dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+    // })
   };
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>

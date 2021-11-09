@@ -11,7 +11,10 @@ export default function useMap(mapRef:MutableRefObject<HTMLElement | null>, coor
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && map === null) {
+    if (!mapRef.current) {
+      return;
+    }
+    if (map === null) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: coordinates.latitude,
@@ -30,7 +33,7 @@ export default function useMap(mapRef:MutableRefObject<HTMLElement | null>, coor
 
       instance.addLayer(layer);
       setMap(instance);
-    } else if(map !== null) {
+    } else {
       map.flyTo([coordinates.latitude, coordinates.longitude], coordinates.zoom);
     }
   }, [mapRef, map, coordinates]);

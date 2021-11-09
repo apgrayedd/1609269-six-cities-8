@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable semi */
 import axios, {AxiosError, AxiosResponse, AxiosInstance, AxiosRequestConfig} from 'axios';
 import { getToken } from './token';
 
@@ -16,7 +18,7 @@ export const createAPI = (onUnauthorized: () => void):AxiosInstance => {
       const {response} = error;
 
       if (response?.status === 401) {
-        return onUnauthorized;
+        return onUnauthorized();
       }
 
       return Promise.reject(error);
