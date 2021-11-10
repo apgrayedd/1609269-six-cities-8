@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable semi */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -41,21 +39,20 @@ type Id = number;
 
 export const loginFromIndex = ({login, password, action}:LoginFromIndex):Promise<void>=>
   (store.dispatch as ThunkAppDispatch)(loginAction({login: login, password: password}))
-    .then(() => store.dispatch(changeLoaderStatus(true)))
-    .then(() => action())
-    .then(() => store.dispatch(changeLoaderStatus(false)))
-    .then(() => Promise.resolve())
+    .then(() => {
+      store.dispatch(changeLoaderStatus(true));
+      action();
+      store.dispatch(changeLoaderStatus(false));
+    })
     .catch((err) => Promise.reject(err));
 
 export const OfferInfoFromIndex = (id: Id):Promise<void> =>
   (store.dispatch as ThunkAppDispatch)(fetchOfferInfo(id))
     .then((offerInfo:Hostel) => {
       store.dispatch(changeLoaderStatus(true));
-      console.log(offerInfo)
       store.dispatch(changeHostelProperty(offerInfo));
+      store.dispatch(changeLoaderStatus(false));
     })
-    .then(() => store.dispatch(changeLoaderStatus(false)))
-    .then(() => Promise.resolve())
     .catch((err) => Promise.reject(err));
 
 ReactDOM.render(
