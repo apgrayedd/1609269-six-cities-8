@@ -46,6 +46,7 @@ export enum Cities {
 
 export enum APIRoute {
   Hotels = '/hotels',
+  OfferInfo = '/hotels/id',
   NearbyHostels = '/hotels/:id/nearby',
   Favorites = '/favorite',
   Comments = '/comments/:id',

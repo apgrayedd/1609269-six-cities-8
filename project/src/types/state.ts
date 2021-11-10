@@ -5,6 +5,7 @@ import { Hostel } from './hostel';
 export type State = {
   city:string,
   hostels: Hostel[],
+  hostelProperty: Hostel | undefined,
   filteredHostels: Hostel[],
   nearbyHostels: Hostel[],
   favorites: Hostel[],

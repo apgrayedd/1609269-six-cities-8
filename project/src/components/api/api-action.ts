@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import { APIRoute, AuthorizationStatus } from '../../const';
 import { changeAuthorizationStatus, changeHostels, changeLoaderStatus } from '../../store/action';
-import { ThunkActionResult } from '../../types/action';
+import { ThunkActionResult, ThunkActionResultHostel } from '../../types/action';
 import { AuthData } from '../../types/auth-data';
 import { Hostel } from '../../types/hostel';
 import { dropToken, saveToken, Token } from './token';
@@ -12,6 +12,12 @@ export const fetchHostelAction = (): ThunkActionResult =>
     const {data} = await api.get<Hostel[]>(APIRoute.Hotels);
     dispatch(changeHostels(data));
     dispatch(changeLoaderStatus(false));
+  };
+
+export const fetchOfferInfo = (id: number): ThunkActionResultHostel =>
+  async (dispacth, _getstate, api): Promise<Hostel> => {
+    const {data} = await api.get<Hostel>(APIRoute.OfferInfo.replace('id', `${id}`));
+    return Promise.resolve(data);
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

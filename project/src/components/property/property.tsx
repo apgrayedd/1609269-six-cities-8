@@ -1,13 +1,16 @@
+/* eslint-disable no-debugger */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
+import { OfferInfoFromIndex } from '../..';
 import { Comment } from '../../types/comment';
 import { Hostel } from '../../types/hostel';
 import { State } from '../../types/state';
 import Header from '../header/header';
 import Map from '../map/map';
+import Page404 from '../page-404/page-404';
 import PropertyNeighbourhoodList from './property-neighbourhood-list';
 import PropertyReviews from './property-reviews/property-reviews';
 
@@ -34,21 +37,24 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   );
 }
 
-const stateToProps = ({hostels, authorizationStatus}:State) => ({
+const stateToProps = ({hostels, hostelProperty, authorizationStatus}:State) => ({
   hostels,
+  hostelProperty,
   authorizationStatus,
 });
 const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropertyOptions & PropsFromRedux;
 
-function Property({hostels, comments, authorizationStatus}: ConnectedComponentProps): JSX.Element {
+function Property({hostels, hostelProperty, comments, authorizationStatus}: ConnectedComponentProps): JSX.Element {
   const {id} = useParams<{ id: string }>();
-  const [hostelProperty] = hostels.filter((hostel) => hostel.id === parseInt(id, 10));
+  OfferInfoFromIndex(parseInt(id, 10));
+  if (!hostelProperty) {
+    return  <Page404 />;
+  }
+  const raiting = Math.round(hostelProperty.rating) * 20;
   const favoriteClassName = `property__bookmark-button button ${hostelProperty.is_favorite &&
     'property__bookmark-button--active'}`;
-  const raiting = useMemo(() => Math.round(hostelProperty.rating) * 20, [hostelProperty.rating]);
-
   return (
     <div className="page">
       <Header authorizationStatus = {authorizationStatus} />

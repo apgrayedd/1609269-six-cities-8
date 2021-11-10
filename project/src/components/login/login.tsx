@@ -1,7 +1,20 @@
-import { Link } from 'react-router-dom';
+import { useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { loginFromIndex } from '../..';
 import Logo from '../logo/logo';
 
 export default function FavoritesEmpty(): JSX.Element {
+  const formRef = useRef(null);
+  const history = useHistory();
+  const submitTemplate = (data: any) => {
+    data.preventDefault();
+    loginFromIndex({
+      login: data.email,
+      password: data.password,
+      action: () => history.push('/'),
+    });
+  };
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -17,7 +30,9 @@ export default function FavoritesEmpty(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="/login" method="post">
+            <form className="login__form form" action="/login" method="post"
+              ref = {formRef} onSubmit = {submitTemplate}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input

@@ -16,14 +16,13 @@ type countPoints = {
   comments: Comment[],
 };
 
-const stateToProps = ({isDataLoaded, authorizationStatus}:State) => ({
+const stateToProps = ({isDataLoaded}:State) => ({
   isDataLoaded,
-  authorizationStatus,
 });
 const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function App({comments, isDataLoaded, authorizationStatus}: PropsFromRedux & countPoints): JSX.Element {
+function App({comments, isDataLoaded}: PropsFromRedux & countPoints): JSX.Element {
   if (isDataLoaded) {
     return <LoadingSpinner />;
   }

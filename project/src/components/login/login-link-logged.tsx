@@ -6,8 +6,7 @@ import { changeAuthorizationStatus } from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 
-const stateToProps = ({hostels,authorizationStatus}:State) => ({
-  hostels,
+const stateToProps = ({authorizationStatus}:State) => ({
   authorizationStatus,
 });
 const dispatchToProps = (dispatch:Dispatch<Actions>) => ({

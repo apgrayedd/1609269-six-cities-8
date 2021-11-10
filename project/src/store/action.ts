@@ -41,3 +41,8 @@ export const changeFavorites = (favorites: Hostel[]) => ({
   type: ActionType.ChangeFavoritesAction,
   favorites: favorites,
 } as const);
+
+export const changeHostelProperty = (hostelProperty: Hostel | undefined) => ({
+  type: ActionType.ChangeHostelPropertyAction,
+  hostelProperty: hostelProperty,
+} as const);

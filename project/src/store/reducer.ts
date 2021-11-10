@@ -7,6 +7,7 @@ export const initialState = {
   city: DEFAULT_ACTIVE_CITY,
   sorting: DEFAULT_ACTIVE_SORT,
   hostels: [],
+  hostelProperty: undefined,
   filteredHostels: [],
   nearbyHostels: [],
   favorites: [],
@@ -39,6 +40,8 @@ export function reducer(state: State = initialState, action: Actions):State {
       return {...state, authorizationStatus: action.authorizationStatus};
     case ActionType.ChangeLoaderStatusAction:
       return {...state, isDataLoaded: action.isDataLoaded};
+    case ActionType.ChangeHostelPropertyAction:
+      return {...state, hostelProperty: action.hostelProperty};
     default:
       return state;
   }

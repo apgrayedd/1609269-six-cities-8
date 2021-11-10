@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable semi */
 import axios, {AxiosError, AxiosResponse, AxiosInstance, AxiosRequestConfig} from 'axios';
 import { getToken } from './token';
 
