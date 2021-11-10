@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable semi */
+/* eslint-disable no-console */
 /* eslint-disable no-debugger */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
@@ -37,7 +40,7 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   );
 }
 
-const stateToProps = ({hostels, hostelProperty, authorizationStatus}:State) => ({
+const stateToProps = ({hostelProperty, hostels, authorizationStatus}:State) => ({
   hostels,
   hostelProperty,
   authorizationStatus,
@@ -48,7 +51,9 @@ type ConnectedComponentProps = PropertyOptions & PropsFromRedux;
 
 function Property({hostels, hostelProperty, comments, authorizationStatus}: ConnectedComponentProps): JSX.Element {
   const {id} = useParams<{ id: string }>();
-  OfferInfoFromIndex(parseInt(id, 10));
+  if (hostelProperty === undefined || hostelProperty.id !== parseInt(id, 10)) {
+    OfferInfoFromIndex(parseInt(id, 10));
+  }
   if (!hostelProperty) {
     return  <Page404 />;
   }
