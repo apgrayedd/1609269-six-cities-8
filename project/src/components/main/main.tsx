@@ -10,15 +10,14 @@ import Sorting from '../sorting/sorting';
 
 const statesToProps = ({filteredHostels, authorizationStatus}: State) => ({
   filteredHostels,
-  authorizationStatus,
 });
 const connector = connect(statesToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Main({filteredHostels, authorizationStatus}: PropsFromRedux): JSX.Element {
+function Main({filteredHostels}: PropsFromRedux): JSX.Element {
   return (
     <div className={`page page--gray page--main ${!filteredHostels.length && 'page__main--index-empty'}`}>
-      <Header authorizationStatus = {authorizationStatus} />
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">

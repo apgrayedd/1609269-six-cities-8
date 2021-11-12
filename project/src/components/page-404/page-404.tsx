@@ -1,6 +1,4 @@
-import { connect, ConnectedProps } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { State } from '../../types/state';
 import Header from '../header/header';
 import Logo from '../logo/logo';
 
@@ -18,16 +16,10 @@ const ErrorDescriptionStyle = {
   MARGIN_BOTTOM: '20px',
 };
 
-const stateToProps = ({authorizationStatus}:State) => ({
-  authorizationStatus,
-});
-const connector = connect(stateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Page404({authorizationStatus}: PropsFromRedux): JSX.Element {
+export default function Page404(): JSX.Element {
   return (
     <div className = 'page'>
-      <Header authorizationStatus = {authorizationStatus} />
+      <Header />
       <div className = "error error--404" style = {{
         height: ErrorDivStyle.HEIGHT,
         width: ErrorDivStyle.WIDTH,
@@ -54,6 +46,3 @@ function Page404({authorizationStatus}: PropsFromRedux): JSX.Element {
     </div>
   );
 }
-
-export {Page404};
-export default connector(Page404);

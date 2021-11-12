@@ -10,3 +10,8 @@ export type Comment = {
       'name': string,
     },
 };
+
+export type PostComment = {
+  'comment': string,
+  'rating': number,
+};

@@ -4,9 +4,10 @@ type starOption = {
   starNumber: number,
   starTitle: string,
   setRating: (evt: FormEvent<HTMLInputElement>) => void,
+  status: boolean,
 }
 
-export default function PropertyCommentStarItem({starNumber, starTitle, setRating}:starOption): JSX.Element {
+export default function PropertyCommentStarItem({starNumber, starTitle, setRating, status}:starOption): JSX.Element {
   return (
     <>
       <input
@@ -17,6 +18,7 @@ export default function PropertyCommentStarItem({starNumber, starTitle, setRatin
         type="radio"
         onChange = {setRating}
         value = {starNumber + 1}
+        checked = {status}
       />
       <label
         htmlFor={`${starNumber + 1}-stars`}

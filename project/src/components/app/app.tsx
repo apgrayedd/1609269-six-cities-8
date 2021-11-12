@@ -6,24 +6,18 @@ import Favorites from '../favorites/favorites';
 import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-import { Comment } from '../../types/comment';
-// import { isCheckedAuth } from '../../utils/common';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import LoadingSpinner from '../loading-spinner/loading-spinner';
 
-type countPoints = {
-  comments: Comment[],
-};
-
-const stateToProps = ({isDataLoaded}:State) => ({
-  isDataLoaded,
+const stateToProps = ({isDataLoading}:State) => ({
+  isDataLoading,
 });
 const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function App({comments, isDataLoaded}: PropsFromRedux & countPoints): JSX.Element {
-  if (isDataLoaded) {
+function App({isDataLoading}: PropsFromRedux): JSX.Element {
+  if (isDataLoading) {
     return <LoadingSpinner />;
   }
 
@@ -46,7 +40,7 @@ function App({comments, isDataLoaded}: PropsFromRedux & countPoints): JSX.Elemen
         >
         </PrivateRoute>
         <Route exact path = {AppRoute.Room}>
-          <Property comments = {comments} />
+          <Property />
         </Route>
         <Route>
           <Page404 />

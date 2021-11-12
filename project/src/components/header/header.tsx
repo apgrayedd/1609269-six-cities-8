@@ -1,12 +1,16 @@
-import { AuthorizationStatus } from '../../const';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
 
-type HeaderOptions = {
-  authorizationStatus: AuthorizationStatus,
-}
+const stateToProps = ({filteredHostels, authorizationStatus}:State) => ({
+  filteredHostels,
+  authorizationStatus,
+});
+const connector = connect(stateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default function Header({authorizationStatus}:HeaderOptions): JSX.Element {
+function Header({authorizationStatus}:PropsFromRedux): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -22,3 +26,6 @@ export default function Header({authorizationStatus}:HeaderOptions): JSX.Element
     </header>
   );
 }
+
+export {Header};
+export default connector(Header);

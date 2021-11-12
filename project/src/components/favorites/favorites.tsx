@@ -4,21 +4,35 @@ import FavoritesEmpty from './favorites-empty';
 import FavoritesList from './favorites-list';
 import Header from '../header/header';
 import { connect, ConnectedProps } from 'react-redux';
+import { useState } from 'react';
+import { getFavorites } from '../..';
+import LoadingSpinner from '../loading-spinner/loading-spinner';
 
-const stateToProps = ({filteredHostels, authorizationStatus}:State) => ({
-  filteredHostels,
-  authorizationStatus,
+const stateToProps = ({favorites}:State) => ({
+  favorites,
 });
 const connector = connect(stateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Favorites({filteredHostels, authorizationStatus}: PropsFromRedux): JSX.Element {
+function Favorites({favorites}: PropsFromRedux): JSX.Element {
+  const [startLoading, setStartLoading] = useState<boolean>(false);
+  const [endLoading, setEndLoading] = useState<boolean>(false);
+
+  if (!endLoading) {
+    if(!startLoading) {
+      setStartLoading(true);
+      getFavorites(() => setEndLoading(true));
+    }
+
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className = 'page'>
-      <Header authorizationStatus = {authorizationStatus} />
+      <Header />
       <div className="page__favorites-container container">
         {
-          filteredHostels.length > 0
+          favorites.length > 0
             ?
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>

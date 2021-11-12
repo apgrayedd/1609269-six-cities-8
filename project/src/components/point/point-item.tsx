@@ -1,4 +1,4 @@
-import { useMemo, MouseEvent, Dispatch } from 'react';
+import { useMemo, MouseEvent, Dispatch, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { State } from '../../types/state';
 import { Hostel } from '../../types/hostel';
@@ -6,6 +6,7 @@ import PointLink from './point-link';
 import { Actions } from '../../types/action';
 import { changeHoverMarker } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
+import { postFavoritesStatus } from '../..';
 
 type PointOptions = {
   hostel: Hostel,
@@ -27,7 +28,8 @@ type ConnectedComponentProps = PropsFromRedux & PointOptions;
 
 function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX.Element {
   const raiting = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
-  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
+  const [favoriteStatus, setFavoriteStatus] = useState<boolean>(hostel.is_favorite);
+  const favoriteClassName = `place-card__bookmark-button button ${favoriteStatus &&
     'place-card__bookmark-button--active'}`;
 
   const onEnterHandler = (evt: MouseEvent) => {
@@ -37,6 +39,14 @@ function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX
   const onLeaveHandler = (evt: MouseEvent) => {
     evt.preventDefault();
     setMarkerId(undefined);
+  };
+  const changeFavoriteStatusTemplate = (evt: MouseEvent) => {
+    evt.preventDefault();
+    setFavoriteStatus(!favoriteStatus);
+    postFavoritesStatus(
+      hostel.id, !hostel.is_favorite ? 1 : 0,
+      () => setFavoriteStatus(favoriteStatus),
+    );
   };
   const hoverStyle = hoverId === hostel.id ? {'opacity': '0.6'} : {};
 
@@ -57,11 +67,11 @@ function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX
             <b className="place-card__price-value">€{hostel.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={favoriteClassName} type="button">
+          <button className={favoriteClassName} type="button" onClick = {changeFavoriteStatusTemplate}>
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>
-            <span className="visually-hidden">{hostel.is_favorite ? 'In bookmarks' : 'To bookmarks'}</span>
+            <span className="visually-hidden">{favoriteStatus ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">

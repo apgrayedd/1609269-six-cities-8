@@ -8,14 +8,14 @@ export const initialState = {
   sorting: DEFAULT_ACTIVE_SORT,
   hostels: [],
   hostelProperty: undefined,
+  commentsProperty: [],
   filteredHostels: [],
-  nearbyHostels: [],
+  nearbyHostelsProperty: [],
   favorites: [],
-  comments: [],
   hoverHostel: undefined,
   hoverMarker: undefined,
   authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: true,
+  isDataLoading : true,
 };
 
 export function reducer(state: State = initialState, action: Actions):State {
@@ -31,7 +31,7 @@ export function reducer(state: State = initialState, action: Actions):State {
           hostel.city.name.toLowerCase() === state.city.toLowerCase()),
       };
     case ActionType.ChangeSortingAction:
-      return {...state, sorting: action.sorting, hostels: sortHostels(state.hostels,action.sorting, state.city)};
+      return {...state, sorting: action.sorting, filteredHostels: sortHostels(state.filteredHostels,action.sorting, state.city, state.hostels)};
     case ActionType.ChangeHoverHostelgAction:
       return {...state, hoverHostel: action.hostelId};
     case ActionType.ChangeHoverMarkerAction:
@@ -39,9 +39,20 @@ export function reducer(state: State = initialState, action: Actions):State {
     case ActionType.ChangeAuthorizationStatusAction:
       return {...state, authorizationStatus: action.authorizationStatus};
     case ActionType.ChangeLoaderStatusAction:
-      return {...state, isDataLoaded: action.isDataLoaded};
+      return {...state, isDataLoading: action.isDataLoading};
     case ActionType.ChangeHostelPropertyAction:
       return {...state, hostelProperty: action.hostelProperty};
+    case ActionType.ChangeCommentsPropertyAction:
+      return {...state, commentsProperty: action.commentsProperty};
+    case ActionType.ChangeNearbyHostelsAction:
+      return {...state, nearbyHostelsProperty: action.nearbyHostelsProperty};
+    case ActionType.ChangeFavoritesAction:
+      return {...state, favorites: action.favorites};
+    case ActionType.AddCommentPropertyAction:
+      return {...state, commentsProperty:
+        state.commentsProperty
+          ? state.commentsProperty.concat(action.commentProperty)
+          : [action.commentProperty]};
     default:
       return state;
   }

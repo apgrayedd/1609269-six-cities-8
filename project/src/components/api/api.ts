@@ -1,13 +1,13 @@
 import axios, {AxiosError, AxiosResponse, AxiosInstance, AxiosRequestConfig} from 'axios';
 import { getToken } from './token';
 
-const baseURL = 'https://8.react.pages.academy/six-cities';
-const timeout = 5000;
+const BASE_URL = 'https://8.react.pages.academy/six-cities';
+const TIMEOUT = 5000;
 
 export const createAPI = (onUnauthorized: () => void):AxiosInstance => {
   const api = axios.create({
-    baseURL: baseURL,
-    timeout: timeout,
+    baseURL: BASE_URL,
+    timeout: TIMEOUT,
   });
 
   api.interceptors.response.use(

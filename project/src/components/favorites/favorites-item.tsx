@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../types/hostel';
-import PointLink from '../point/point-link';
 
 type HostelOptions = {
   hostel: Hostel,
@@ -15,7 +14,9 @@ export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <PointLink id = {hostel.id} img = {hostel.preview_image} />
+        <Link to = {`/property/${hostel.id}`}>
+          <img className ="place-card__image" src={hostel.preview_image} width="150" height="110" alt={hostel.title}/>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">

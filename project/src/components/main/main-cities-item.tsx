@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { MouseEvent } from 'react';
 import { changeCity } from '../../store/action';
 import { State } from '../../types/state';

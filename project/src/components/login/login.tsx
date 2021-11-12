@@ -1,16 +1,17 @@
 import { useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { loginFromIndex } from '../..';
+import { postlogin } from '../..';
 import Logo from '../logo/logo';
 
 export default function FavoritesEmpty(): JSX.Element {
   const formRef = useRef(null);
   const history = useHistory();
-  const submitTemplate = (data: any) => {
-    data.preventDefault();
-    loginFromIndex({
-      login: data.email,
-      password: data.password,
+  const submitTemplate = (evt: any) => {
+    evt.preventDefault();
+    const data = evt.target.elements;
+    postlogin({
+      login: data.email.value,
+      password: data.password.value,
       action: () => history.push('/'),
     });
   };

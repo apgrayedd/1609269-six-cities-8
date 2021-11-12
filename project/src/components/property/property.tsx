@@ -1,25 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable semi */
-/* eslint-disable no-console */
-/* eslint-disable no-debugger */
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import { nanoid } from '@reduxjs/toolkit';
-// import { useMemo } from 'react';
+import { Dispatch, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
-import { OfferInfoFromIndex } from '../..';
-import { Comment } from '../../types/comment';
+import { getOfferInfo } from '../..';
+import { changeLoaderStatus } from '../../store/action';
+import { Actions } from '../../types/action';
 import { Hostel } from '../../types/hostel';
 import { State } from '../../types/state';
 import Header from '../header/header';
+import LoadingSpinner from '../loading-spinner/loading-spinner';
 import Map from '../map/map';
 import Page404 from '../page-404/page-404';
 import PropertyNeighbourhoodList from './property-neighbourhood-list';
 import PropertyReviews from './property-reviews/property-reviews';
-
-type PropertyOptions = {
-  comments: Comment[],
-};
 
 function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   const propertyGallery = hostel.images.map((img) => (
@@ -40,21 +33,33 @@ function propertyGalleryContainer(hostel: Hostel): JSX.Element{
   );
 }
 
-const stateToProps = ({hostelProperty, hostels, authorizationStatus}:State) => ({
-  hostels,
+const stateToProps = ({nearbyHostelsProperty,hostelProperty, authorizationStatus}:State) => ({
+  nearbyHostelsProperty,
   hostelProperty,
   authorizationStatus,
 });
-const connector = connect(stateToProps);
+const dispatchToProps = (dispatch:Dispatch<Actions>) => ({
+  setLoaderStatus(status: boolean) {
+    dispatch(changeLoaderStatus(status));
+  },
+});
+const connector = connect(stateToProps, dispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropertyOptions & PropsFromRedux;
 
-function Property({hostels, hostelProperty, comments, authorizationStatus}: ConnectedComponentProps): JSX.Element {
+function Property({nearbyHostelsProperty, hostelProperty, authorizationStatus}: PropsFromRedux): JSX.Element {
   const {id} = useParams<{ id: string }>();
-  if (hostelProperty === undefined || hostelProperty.id !== parseInt(id, 10)) {
-    OfferInfoFromIndex(parseInt(id, 10));
+  const [statusError, setError] = useState<boolean>(false);
+
+  if ((hostelProperty === undefined && !statusError) ||
+  (hostelProperty && hostelProperty.id !== parseInt(id,10) && !statusError)) {
+    getOfferInfo(
+      parseInt(id, 10),
+      () => setError(false),
+      () => setError(true),
+    );
+    return <LoadingSpinner />;
   }
-  if (!hostelProperty) {
+  if (statusError || hostelProperty === undefined) {
     return  <Page404 />;
   }
   const raiting = Math.round(hostelProperty.rating) * 20;
@@ -62,7 +67,7 @@ function Property({hostels, hostelProperty, comments, authorizationStatus}: Conn
     'property__bookmark-button--active'}`;
   return (
     <div className="page">
-      <Header authorizationStatus = {authorizationStatus} />
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           {propertyGalleryContainer(hostelProperty)}
@@ -139,15 +144,18 @@ function Property({hostels, hostelProperty, comments, authorizationStatus}: Conn
                   </p>
                 </div>
               </div>
-              <PropertyReviews comments = {comments} authorizationStatus = {authorizationStatus}/>
+              <PropertyReviews id = {parseInt(id,10)}/>
             </div>
           </div>
           <section className="property__map map">
-            <Map activeHostelId = {parseInt(id,10)} hostels = {hostels}/>
+            {
+              nearbyHostelsProperty &&
+                <Map activeHostelId = {parseInt(id,10)} hostels = {nearbyHostelsProperty}/>
+            }
           </section>
         </section>
         <div className="container">
-          <PropertyNeighbourhoodList hostelInProperty = {hostelProperty}/>
+          <PropertyNeighbourhoodList />
         </div>
       </main>
     </div>

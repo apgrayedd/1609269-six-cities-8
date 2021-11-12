@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { ActionType} from '../types/action';
+import { Comment } from '../types/comment';
 import { Hostel } from '../types/hostel';
 
 export const changeCity = (city: string) => ({
@@ -32,9 +33,9 @@ export const changeAuthorizationStatus = (authorizationStatus: AuthorizationStat
   authorizationStatus: authorizationStatus,
 } as const);
 
-export const changeLoaderStatus = (isDataLoaded: boolean) => ({
+export const changeLoaderStatus = (isDataLoading: boolean) => ({
   type: ActionType.ChangeLoaderStatusAction,
-  isDataLoaded: isDataLoaded,
+  isDataLoading: isDataLoading,
 } as const);
 
 export const changeFavorites = (favorites: Hostel[]) => ({
@@ -45,4 +46,19 @@ export const changeFavorites = (favorites: Hostel[]) => ({
 export const changeHostelProperty = (hostelProperty: Hostel | undefined) => ({
   type: ActionType.ChangeHostelPropertyAction,
   hostelProperty: hostelProperty,
+} as const);
+
+export const changeCommentsProperty = (comments: Comment[] | undefined) => ({
+  type: ActionType.ChangeCommentsPropertyAction,
+  commentsProperty: comments,
+} as const);
+
+export const changeNearbyHostelsProperty = (nearbyHostelsProperty: Hostel[] | undefined) => ({
+  type: ActionType.ChangeNearbyHostelsAction,
+  nearbyHostelsProperty: nearbyHostelsProperty,
+} as const);
+
+export const addCommentProperty = (commentProperty: Comment) => ({
+  type: ActionType.AddCommentPropertyAction,
+  commentProperty: commentProperty,
 } as const);

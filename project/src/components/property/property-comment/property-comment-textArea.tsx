@@ -9,7 +9,9 @@ export default function PropertyCommentTextArea(): JSX.Element {
       name="review"
       placeholder="Tell how was your stay, what you like and what can be improved"
       defaultValue={commentText}
-      onChange = {(evt: FormEvent<HTMLTextAreaElement>) => setComment((evt.target as HTMLTextAreaElement).value)}
+      onChange = {(evt: FormEvent<HTMLTextAreaElement>) => {
+        setComment((evt.target as HTMLTextAreaElement).value);
+      }}
     />
   );
 }
