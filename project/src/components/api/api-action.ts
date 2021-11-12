@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
 import { APIRoute, AuthorizationStatus } from '../../const';
 import {
   changeAuthorizationStatus,
@@ -17,6 +19,7 @@ import { dropToken, saveToken, Token } from './token';
 
 export const fetchHostelAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    console.log(1)
     const {data} = await api.get<Hostel[]>(APIRoute.Hotels);
     dispatch(changeHostels(data));
     dispatch(changeLoaderStatus(false));

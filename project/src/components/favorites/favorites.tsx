@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
 import { State } from '../../types/state';
 import Logo from '../logo/logo';
 import FavoritesEmpty from './favorites-empty';
@@ -5,16 +7,29 @@ import FavoritesList from './favorites-list';
 import Header from '../header/header';
 import { connect, ConnectedProps } from 'react-redux';
 import { useState } from 'react';
-import { getFavorites } from '../..';
 import LoadingSpinner from '../loading-spinner/loading-spinner';
+import { fetchFavoritesInfo } from '../api/api-action';
+import { ThunkAppDispatch } from '../../types/action';
+import { changeFavorites } from '../../store/action';
 
-const stateToProps = ({favorites}:State) => ({
+const mapStateToProps = ({favorites}:State) => ({
   favorites,
 });
-const connector = connect(stateToProps);
+const mapDispatchToProps = (dispatch: any) => ({
+  getFavorites(actionOnError: () => void) {
+    (dispatch as ThunkAppDispatch)(fetchFavoritesInfo())
+      .then((favorites) => {
+        dispatch(changeFavorites(favorites));
+        actionOnError();
+      })
+      .then(() => Promise.resolve())
+      .catch((err) => Promise.reject(err));
+  },
+});
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Favorites({favorites}: PropsFromRedux): JSX.Element {
+function Favorites({favorites, getFavorites}: PropsFromRedux): JSX.Element {
   const [startLoading, setStartLoading] = useState<boolean>(false);
   const [endLoading, setEndLoading] = useState<boolean>(false);
 
