@@ -1,34 +1,31 @@
-import { useMemo, MouseEvent, Dispatch, useState } from 'react';
+import { useMemo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { State } from '../../types/state';
 import { Hostel } from '../../types/hostel';
 import PointLink from './point-link';
-import { Actions } from '../../types/action';
+import { ThunkAppDispatch } from '../../types/action';
 import { changeHoverMarker } from '../../store/action';
-import { connect, ConnectedProps } from 'react-redux';
-import { postFavoritesStatus } from '../..';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchFavoritesInfo, fetchHostelAction, postFavoritesStatusAction } from '../api/api-action';
+import useFavorite from '../../hooks/use-favorite';
+import { getHoverHostel } from '../../store/user-hover/selectors';
 
 type PointOptions = {
   hostel: Hostel,
 };
 
-const stateToProps = ({hoverHostel}:State) => ({
-  hoverId: hoverHostel,
-});
-const dispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  setMarkerId(id:number | undefined) {
+
+function PointItem({hostel}: PointOptions): JSX.Element {
+  const hoverId = useSelector(getHoverHostel);
+  const dispatch = useDispatch();
+  const postFavoriteStatus = (id: number, status: 0 | 1) =>
+    (dispatch as ThunkAppDispatch)(postFavoritesStatusAction(id, status))
+      .then(() => (dispatch as ThunkAppDispatch)(fetchFavoritesInfo(false)))
+      .then(() => (dispatch as ThunkAppDispatch)(fetchHostelAction(false)));
+  const setMarkerId = (id:number | undefined) =>
     dispatch(changeHoverMarker(id));
-  },
-});
-const connector = connect(stateToProps, dispatchToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & PointOptions;
-
-
-function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX.Element {
   const raiting = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
-  const [favoriteStatus, setFavoriteStatus] = useState<boolean>(hostel.is_favorite);
+  const [favoriteStatus, changeFavoriteStatusTemplate] = useFavorite(hostel, postFavoriteStatus);
   const favoriteClassName = `place-card__bookmark-button button ${favoriteStatus &&
     'place-card__bookmark-button--active'}`;
 
@@ -39,14 +36,6 @@ function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX
   const onLeaveHandler = (evt: MouseEvent) => {
     evt.preventDefault();
     setMarkerId(undefined);
-  };
-  const changeFavoriteStatusTemplate = (evt: MouseEvent) => {
-    evt.preventDefault();
-    setFavoriteStatus(!favoriteStatus);
-    postFavoritesStatus(
-      hostel.id, !hostel.is_favorite ? 1 : 0,
-      () => setFavoriteStatus(favoriteStatus),
-    );
   };
   const hoverStyle = hoverId === hostel.id ? {'opacity': '0.6'} : {};
 
@@ -91,5 +80,4 @@ function PointItem({hostel, hoverId, setMarkerId}: ConnectedComponentProps): JSX
   );
 }
 
-export {PointItem};
-export default connector(PointItem);
+export default PointItem;

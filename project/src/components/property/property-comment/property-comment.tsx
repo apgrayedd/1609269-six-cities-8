@@ -1,12 +1,22 @@
 import { useState } from 'react';
-import { postComment } from '../../..';
+import { useDispatch } from 'react-redux';
 import { REVIEWS_TEXT_AMOUNT } from '../../../const';
+import { changeCommentsProperty } from '../../../store/action';
+import { ThunkAppDispatch } from '../../../types/action';
+import { Comment, PostComment } from '../../../types/comment';
+import { fetchCommentsInfo, postCommentAction } from '../../api/api-action';
 import PropertyCommentStarList from './property-comment-start-list';
 import PropertyCommentTextArea from './property-comment-textArea';
 
 type PropertyId = {id: number};
 
-export default function PropertyComment({id}:PropertyId): JSX.Element {
+function PropertyComment({id}:PropertyId): JSX.Element {
+  const dispatch = useDispatch();
+  const postComment = ({comment, rating}:PostComment) =>
+    (dispatch as ThunkAppDispatch)(postCommentAction(id, {comment, rating}))
+      .then(() => (dispatch as ThunkAppDispatch)(fetchCommentsInfo(id)))
+      .then((comments:Comment[]) => dispatch(changeCommentsProperty(comments)));
+
   const [starCount, setStar] = useState<number>(0);
   const [disableStatus, setDisableStatus] = useState<boolean>(true);
   const changeSubmitStatusTemplate = (evt:any) => {
@@ -17,7 +27,7 @@ export default function PropertyComment({id}:PropertyId): JSX.Element {
   const submitTemplate = (evt:any) => {
     evt.preventDefault();
     const data = evt.target.elements;
-    postComment(id,
+    postComment(
       {
         'comment': data.review.value,
         'rating': starCount,
@@ -51,3 +61,5 @@ export default function PropertyComment({id}:PropertyId): JSX.Element {
     </form>
   );
 }
+
+export default PropertyComment;

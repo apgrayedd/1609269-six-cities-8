@@ -9,9 +9,8 @@ type StarListOption = {
 }
 
 export default function PropertyCommentStarList({setStar, starCount}:StarListOption): JSX.Element {
-  const setStarTemplate = (evt:FormEvent<HTMLInputElement>) => (
-    setStar(parseInt((evt.target as HTMLInputElement).value, 10))
-  );
+  const setStarTemplate = (evt:FormEvent<HTMLInputElement>) =>
+    setStar(parseInt((evt.target as HTMLInputElement).value, 10));
   const starList = starsTitlesInReview.map((starTitle, i) =>
     (<PropertyCommentStarItem
       key = {nanoid()}

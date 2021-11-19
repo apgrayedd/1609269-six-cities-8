@@ -1,22 +1,23 @@
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
+import { useSelector } from 'react-redux';
+import { getFilteredHostels } from '../../store/data-process/selectors';
+import Sorting from '../sorting/sorting';
 import PointItem from './point-item';
 
-const stateToProps = ({filteredHostels}:State) => ({
-  filteredHostels,
-});
-const connector = connect(stateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function PointList ({filteredHostels}:PropsFromRedux):  JSX.Element {
+function PointList ():  JSX.Element {
+  const filteredHostels = useSelector(getFilteredHostels);
   const hostelsList = filteredHostels.map((hostel) =>
     <PointItem key = {hostel.id} hostel = {hostel}/>);
+
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {hostelsList}
-    </div>
+    <section className="cities__places places">
+      <h2 className="visually-hidden">Places</h2>
+      <b className="places__found">{filteredHostels.length} places to stay in Amsterdam</b>
+      <Sorting />
+      <div className="cities__places-list places__list tabs__content">
+        {hostelsList}
+      </div>
+    </section>
   );
 }
 
-export {PointList};
-export default connector(PointList);
+export default PointList;

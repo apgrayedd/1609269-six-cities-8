@@ -6,18 +6,13 @@ import Favorites from '../favorites/favorites';
 import Property from '../property/property';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LoadingSpinner from '../loading-spinner/loading-spinner';
+import { getLoadingStatus } from '../../store/data-process/selectors';
 
-const stateToProps = ({isDataLoading}:State) => ({
-  isDataLoading,
-});
-const connector = connect(stateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App({isDataLoading}: PropsFromRedux): JSX.Element {
-  if (isDataLoading) {
+function App(): JSX.Element {
+  const statusLoading = useSelector(getLoadingStatus);
+  if (statusLoading) {
     return <LoadingSpinner />;
   }
 
@@ -50,5 +45,4 @@ function App({isDataLoading}: PropsFromRedux): JSX.Element {
   );
 }
 
-export {App};
-export default connector(App);
+export default App;

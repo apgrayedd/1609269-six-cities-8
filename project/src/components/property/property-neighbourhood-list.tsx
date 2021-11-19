@@ -1,15 +1,11 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MAX_NEIGHBOURHOOD_ITEMS } from '../../const';
-import { State } from '../../types/state';
+import { getNearbyHostels } from '../../store/data-process/selectors';
 import PointItem from '../point/point-item';
 
-const stateToProps = ({nearbyHostelsProperty}:State) => ({
-  nearbyHostelsProperty,
-});
-const connector = connect(stateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
+function PropertyNeighbourhoodList():JSX.Element {
+  const nearbyHostelsProperty = useSelector(getNearbyHostels);
 
-function PropertyNeighbourhoodList({nearbyHostelsProperty}:PropsFromRedux):JSX.Element {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -23,5 +19,4 @@ function PropertyNeighbourhoodList({nearbyHostelsProperty}:PropsFromRedux):JSX.E
   );
 }
 
-export {PropertyNeighbourhoodList};
-export default connector(PropertyNeighbourhoodList);
+export default PropertyNeighbourhoodList;

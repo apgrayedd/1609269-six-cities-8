@@ -1,33 +1,24 @@
 import { MouseEvent } from 'react';
 import { changeCity } from '../../store/action';
-import { State } from '../../types/state';
-import { Dispatch } from 'redux';
-import { connect,ConnectedProps } from 'react-redux';
-import { Actions } from '../../types/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCity } from '../../store/data-process/selectors';
 
 type cityOption = {
   city: string,
-  activeCity: string,
 }
-const statesToProps = ({city}: State) => ({
-  activeCity: city,
-});
-const dispatchToProps = (dispacth: Dispatch<Actions>) => ({
-  setCity(city:string) {
-    dispacth(changeCity(city));
-  },
-});
-const connector = connect(statesToProps, dispatchToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & cityOption;
+function MainCitiesItem({city}:cityOption): JSX.Element {
+  const activeCity = useSelector(getCity);
+  const dispacth = useDispatch();
+  const setCityTemplate = (newCity: string) =>
+    dispacth(changeCity(newCity));
 
-function MainCitiesItem({city, activeCity, setCity}:ConnectedComponentProps): JSX.Element {
   const linkClassName = `locations__item-link tabs__item ${activeCity.toLowerCase() === city.toLowerCase() && 'tabs__item--active'}`;
   const setCityHandler = (evt:MouseEvent) => {
     evt.preventDefault();
-    setCity(city);
+    setCityTemplate(city);
   };
+
   return (
     <li className="locations__item">
       <a className = {linkClassName} onClick = {setCityHandler}>
@@ -37,5 +28,4 @@ function MainCitiesItem({city, activeCity, setCity}:ConnectedComponentProps): JS
   );
 }
 
-export {MainCitiesItem};
-export default connector(MainCitiesItem);
+export default MainCitiesItem;

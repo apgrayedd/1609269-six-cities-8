@@ -1,19 +1,39 @@
 import { useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { postlogin } from '../..';
 import Logo from '../logo/logo';
+import { ThunkAppDispatch } from '../../types/action';
+import { loginAction } from '../api/api-action';
+import { changeAuthorizationStatus, changeLoaderStatus } from '../../store/action';
+import { AuthData } from '../../types/auth-data';
+import { AuthorizationStatus } from '../../const';
+import { useDispatch } from 'react-redux';
 
-export default function FavoritesEmpty(): JSX.Element {
+function FavoritesEmpty(): JSX.Element {
+  const dispatch = useDispatch();
+  const postLogin = ({login, password}:AuthData,  actionOnEnd:() => void) =>
+    (dispatch as ThunkAppDispatch)(loginAction({login: login, password: password}))
+      .then(() => {
+        dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+        actionOnEnd();
+        dispatch(changeLoaderStatus(false));
+      })
+      .catch((err) => Promise.reject(err));
+  const setLoaderStatus = (status: boolean) =>
+    dispatch(changeLoaderStatus(status));
+
   const formRef = useRef(null);
   const history = useHistory();
   const submitTemplate = (evt: any) => {
     evt.preventDefault();
+    setLoaderStatus(true);
     const data = evt.target.elements;
-    postlogin({
-      login: data.email.value,
-      password: data.password.value,
-      action: () => history.push('/'),
-    });
+    postLogin(
+      {
+        login: data.email.value,
+        password: data.password.value,
+      },
+      () => history.push('/'),
+    );
   };
 
   return (
@@ -71,3 +91,5 @@ export default function FavoritesEmpty(): JSX.Element {
     </div>
   );
 }
+
+export default FavoritesEmpty;

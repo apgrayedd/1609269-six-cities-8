@@ -1,29 +1,16 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { Dispatch,MouseEvent, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { MouseEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { SortingList } from '../../const';
 import { changeSorting } from '../../store/action';
-import { Actions } from '../../types/action';
-import { State } from '../../types/state';
+import { getSorting } from '../../store/data-process/selectors';
 
-type SortingOptions = {
-  activeSort:string,
-};
+function Sorting():JSX.Element {
+  const activeSort = useSelector(getSorting);
+  const dispatch = useDispatch();
+  const setSorting = (sorting:string) =>
+    dispatch(changeSorting(sorting));
 
-const stateToProps = ({sorting}:State) => ({
-  activeSort: sorting,
-});
-const dispacthToProps = (dispacth: Dispatch<Actions>) => ({
-  setSorting(sorting:string){
-    dispacth(changeSorting(sorting));
-  },
-});
-const connector = connect(stateToProps, dispacthToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = SortingOptions & PropsFromRedux;
-
-function Sorting({activeSort, setSorting}:ConnectedComponentProps):JSX.Element {
   const [listClassName, setListClassName] = useState('');
   const openSortingTemplate = (evt:MouseEvent) => setListClassName('places__options--opened');
   const closeSortingTemplate = (evt:MouseEvent) => setListClassName('');
@@ -57,5 +44,4 @@ function Sorting({activeSort, setSorting}:ConnectedComponentProps):JSX.Element {
   );
 }
 
-export {Sorting};
-export default connector(Sorting);
+export default Sorting;

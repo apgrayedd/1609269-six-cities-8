@@ -1,18 +1,16 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AuthorizationStatus } from '../../../const';
-import { State } from '../../../types/state';
+import { getCommentsProperty } from '../../../store/data-process/selectors';
+import { getAuthorizationStatus } from '../../../store/user-process/selectors';
 import PropertyComment from '../property-comment/property-comment';
 import PropertyReviewsList from './property-reviews-list';
 
-const stateToProps = ({commentsProperty, authorizationStatus}:State) => ({
-  commentsProperty,
-  authorizationStatus,
-});
-const connector = connect(stateToProps);
 type ReviewsID = {id: number};
-type PropsFromRedux = ConnectedProps<typeof connector> & ReviewsID;
 
-function RropertyReviews({commentsProperty, authorizationStatus, id}: PropsFromRedux): JSX.Element {
+function RropertyReviews({id}: ReviewsID): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const commentsProperty = useSelector(getCommentsProperty);
+
   return (
     <section className="property__reviews reviews">
       {
@@ -32,5 +30,4 @@ function RropertyReviews({commentsProperty, authorizationStatus, id}: PropsFromR
   );
 }
 
-export {RropertyReviews};
-export default connector(RropertyReviews);
+export default RropertyReviews;

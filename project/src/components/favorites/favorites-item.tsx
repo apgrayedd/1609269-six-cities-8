@@ -1,14 +1,25 @@
-import { useMemo } from 'react';
+import { useMemo} from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useFavorite from '../../hooks/use-favorite';
+import { ThunkAppDispatch } from '../../types/action';
 import { Hostel } from '../../types/hostel';
+import { fetchFavoritesInfo, fetchHostelAction, postFavoritesStatusAction } from '../api/api-action';
 
 type HostelOptions = {
   hostel: Hostel,
 };
 
-export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
+function FavoritesItem({hostel}: HostelOptions): JSX.Element {
+  const dispatch = useDispatch();
+  const postFavoriteStatus = (id:number, status: 0 | 1) =>
+    (dispatch as ThunkAppDispatch)(postFavoritesStatusAction(id, status))
+      .then(() => (dispatch as ThunkAppDispatch)(fetchFavoritesInfo(false)))
+      .then(() => (dispatch as ThunkAppDispatch)(fetchHostelAction(false)));
+
+  const [statusFavorite, changeFavoriteStatusTemplate] = useFavorite(hostel, postFavoriteStatus);
   const rating = useMemo(() => Math.round(hostel.rating) * 20, [hostel.rating]);
-  const favoriteClassName = `place-card__bookmark-button button ${hostel.is_favorite &&
+  const favoriteClassName = `place-card__bookmark-button button ${statusFavorite &&
     'place-card__bookmark-button--active'}`;
 
   return (
@@ -27,6 +38,7 @@ export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
           <button
             className={favoriteClassName}
             type="button"
+            onClick = {changeFavoriteStatusTemplate}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
@@ -50,3 +62,5 @@ export default function FavoritesItem({hostel}: HostelOptions): JSX.Element {
     </article>
   );
 }
+
+export default FavoritesItem;

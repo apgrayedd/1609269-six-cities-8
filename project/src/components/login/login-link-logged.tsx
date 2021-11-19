@@ -1,24 +1,12 @@
-import { Dispatch } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const';
-import { changeAuthorizationStatus } from '../../store/action';
-import { Actions } from '../../types/action';
-import { State } from '../../types/state';
+import { ThunkAppDispatch } from '../../types/action';
+import { logoutAction } from '../api/api-action';
 
-const stateToProps = ({authorizationStatus}:State) => ({
-  authorizationStatus,
-});
-const dispatchToProps = (dispatch:Dispatch<Actions>) => ({
-  setAuthorizationStatus(authorizationStatus: AuthorizationStatus) {
-    dispatch(changeAuthorizationStatus(authorizationStatus));
-  },
-});
-const connector = connect(stateToProps, dispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginLinkLogged({setAuthorizationStatus}:PropsFromRedux): JSX.Element {
-  const logoutTemplate = () => setAuthorizationStatus(AuthorizationStatus.NoAuth);
+function LoginLinkLogged(): JSX.Element {
+  const dispatch = useDispatch();
+  const logoutTemplate = () =>
+    (dispatch as ThunkAppDispatch)(logoutAction());
 
   return (
     <ul className="header__nav-list">
@@ -38,5 +26,4 @@ function LoginLinkLogged({setAuthorizationStatus}:PropsFromRedux): JSX.Element {
   );
 }
 
-export {LoginLinkLogged};
-export default connector(LoginLinkLogged);
+export default LoginLinkLogged;

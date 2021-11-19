@@ -1,8 +1,7 @@
-/* eslint-disable semi */
-/* eslint-disable no-console */
 import { APIRoute, AuthorizationStatus } from '../../const';
 import {
   changeAuthorizationStatus,
+  changeFavorites,
   changeHostels,
   changeLoaderStatus
 } from '../../store/action';
@@ -17,12 +16,13 @@ import { Comment, PostComment } from '../../types/comment';
 import { Hostel } from '../../types/hostel';
 import { dropToken, saveToken, Token } from './token';
 
-export const fetchHostelAction = (): ThunkActionResult =>
+export const fetchHostelAction = (loading: boolean): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    console.log(1)
+    loading && dispatch(changeLoaderStatus(true));
     const {data} = await api.get<Hostel[]>(APIRoute.Hotels);
     dispatch(changeHostels(data));
     dispatch(changeLoaderStatus(false));
+    loading && dispatch(changeLoaderStatus(false));
   };
 
 export const fetchOfferInfo = (id: number): ThunkActionResultHostel =>
@@ -43,10 +43,12 @@ export const fetchNearByHostelsInfo = (id: number): ThunkActionResultHostels =>
     return Promise.resolve(data);
   };
 
-export const fetchFavoritesInfo = (): ThunkActionResultHostels =>
-  async (dispacth, _getstate, api): Promise<Hostel[]> => {
+export const fetchFavoritesInfo = (loading: boolean): ThunkActionResult =>
+  async (dispatch, _getstate, api): Promise<void> => {
+    loading && dispatch(changeLoaderStatus(true));
     const {data} = await api.get<Hostel[]>(APIRoute.Favorites);
-    return Promise.resolve(data);
+    dispatch(changeFavorites(data));
+    loading && dispatch(changeLoaderStatus(false));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
