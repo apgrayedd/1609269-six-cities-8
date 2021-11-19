@@ -9,27 +9,17 @@ import PropertyReviews from './property-reviews/property-reviews';
 import Map from '../map/map';
 import { useMemo } from 'react';
 
-function propertyGalleryContainer(hostel: Hostel): JSX.Element{
+function PropertyInfo({hostel}:{hostel:Hostel}): JSX.Element {
+  const nearbyHostelsProperty = useSelector(getNearbyHostels);
   const propertyGallery = hostel.images.map((img) => (
     <div className="property__image-wrapper" key = {nanoid()}>
       <img
         className="property__image"
         src={img}
-        alt="Photo studio"
+        alt={hostel.title}
       />
     </div>
   ));
-  return (
-    <div className="property__gallery-container container">
-      <div className="property__gallery">
-        {propertyGallery}
-      </div>
-    </div>
-  );
-}
-
-function PropertyInfo({hostel}:{hostel:Hostel}): JSX.Element {
-  const nearbyHostelsProperty = useSelector(getNearbyHostels);
   const raiting = useMemo(() => Math.round(hostel.rating) * 20,[hostel.rating]);
 
   return (
@@ -37,7 +27,11 @@ function PropertyInfo({hostel}:{hostel:Hostel}): JSX.Element {
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
-          {propertyGalleryContainer(hostel)}
+          <div className="property__gallery-container container">
+            <div className="property__gallery">
+              {propertyGallery}
+            </div>
+          </div>
           <div className="property__container container">
             <div className="property__wrapper">
               {

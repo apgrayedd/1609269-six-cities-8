@@ -1,4 +1,7 @@
-import { useState } from 'react';
+/* eslint-disable semi */
+/* eslint-disable no-console */
+/* eslint-disable no-nested-ternary */
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import {
@@ -25,7 +28,7 @@ function Property(): JSX.Element {
   const [statusError, setError] = useState<boolean>(false);
   const hostelProperty = useSelector(getHostelProperty);
   const dispatch = useDispatch();
-  const getOfferInfo = () =>
+  useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchCommentsInfo(parseInt(id, 10)))
       .then((comments:Comment[]) => dispatch(changeCommentsProperty(comments)))
 
@@ -36,18 +39,15 @@ function Property(): JSX.Element {
       .then((offerInfo:Hostel) => {dispatch(changeHostelProperty(offerInfo));})
 
       .catch(() => setError(true));
+  }, [dispatch, id]);
 
-  if ((hostelProperty === undefined) || (hostelProperty && hostelProperty.id !== parseInt(id,10))) {
-    getOfferInfo();
-
-    return <LoadingSpinner />;
+  if (!statusError && hostelProperty) {
+    return <PropertyInfo hostel = {hostelProperty}/>;
+  } else if (statusError) {
+    return <Page404 />;
   }
 
-  return (
-    statusError || hostelProperty === undefined
-      ? <Page404 />
-      : <PropertyInfo hostel = {hostelProperty}/>
-  );
+  return <LoadingSpinner />;
 }
 
 export default Property;
