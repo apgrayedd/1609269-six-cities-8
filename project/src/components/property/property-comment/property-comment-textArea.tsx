@@ -1,7 +1,8 @@
 import { useState,FormEvent } from 'react';
+import { initialComment } from './property-comment';
 
 export default function PropertyCommentTextArea(): JSX.Element {
-  const [commentText, setComment] = useState('');
+  const [commentText, setComment] = useState(initialComment.commentText);
   return (
     <textarea
       className="reviews__textarea form__textarea"

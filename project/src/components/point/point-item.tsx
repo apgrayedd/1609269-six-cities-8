@@ -1,7 +1,6 @@
 import { useMemo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Hostel } from '../../types/hostel';
-import PointLink from './point-link';
 import { ThunkAppDispatch } from '../../types/action';
 import { changeHoverMarker } from '../../store/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +48,11 @@ function PointItem({hostel}: PointOptions): JSX.Element {
             <span>Premium</span>
           </div>
       }
-      <PointLink id = {hostel.id} img = {hostel.preview_image}/>
+      <Link to = {`/property/${hostel.id}`}>
+        <img className="place-card__image" src={hostel.preview_image}
+          alt={hostel.title} width={260} height={200}
+        />
+      </Link>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">

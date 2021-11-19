@@ -8,6 +8,11 @@ import { fetchCommentsInfo, postCommentAction } from '../../api/api-action';
 import PropertyCommentStarList from './property-comment-start-list';
 import PropertyCommentTextArea from './property-comment-textArea';
 
+
+export const initialComment = {
+  commentText: '',
+  starCount: 0,
+};
 type PropertyId = {id: number};
 
 function PropertyComment({id}:PropertyId): JSX.Element {
@@ -32,8 +37,8 @@ function PropertyComment({id}:PropertyId): JSX.Element {
         'comment': data.review.value,
         'rating': starCount,
       });
-    data.review.value = '';
-    setStar(0);
+    data.review.value = initialComment.commentText;
+    setStar(initialComment.starCount);
   };
 
   return (

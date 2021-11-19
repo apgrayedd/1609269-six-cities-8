@@ -22,7 +22,6 @@ import LoadingSpinner from '../loading-spinner/loading-spinner';
 import Page404 from '../page-404/page-404';
 import PropertyInfo from './property-info';
 
-
 function Property(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const [statusError, setError] = useState<boolean>(false);
