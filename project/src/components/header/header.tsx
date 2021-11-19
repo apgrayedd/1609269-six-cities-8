@@ -1,11 +1,7 @@
-import { useSelector } from 'react-redux';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import LoginLink from '../login/login-link';
 import Logo from '../logo/logo';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
-
   return (
     <header className="header">
       <div className="container">
@@ -14,7 +10,7 @@ function Header(): JSX.Element {
             <Logo />
           </div>
           <nav className="header__nav">
-            <LoginLink authorizationStatus = {authorizationStatus} />
+            <LoginLink />
           </nav>
         </div>
       </div>

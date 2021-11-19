@@ -1,12 +1,12 @@
+import { useSelector } from 'react-redux';
 import { AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import LoginLinkLogged from './login-link-logged';
 import LoginLinkNotLogged from './login-link-not-logged';
 
-type LoginStatus = {
-  authorizationStatus: AuthorizationStatus,
-};
+export default function LoginLink(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
-export default function LoginLink({authorizationStatus}: LoginStatus): JSX.Element {
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? <LoginLinkLogged />

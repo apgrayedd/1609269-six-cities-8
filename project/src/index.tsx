@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {configureStore} from '@reduxjs/toolkit';
@@ -27,10 +29,12 @@ const store = configureStore({
     }),
 });
 
-store.dispatch(checkAuthAction());
+store.dispatch(checkAuthAction())
+  .then(() => {
+    store.getState()[NameSpace.userProcess].authorizationStatus === AuthorizationStatus.Auth &&
+      store.dispatch(fetchFavoritesInfo(true));
+  });
 store.dispatch(fetchHostelAction(true));
-store.getState()[NameSpace.userProcess].authorizationStatus === AuthorizationStatus.Auth &&
-  store.dispatch(fetchFavoritesInfo(true));
 
 ReactDOM.render(
   <React.StrictMode>
