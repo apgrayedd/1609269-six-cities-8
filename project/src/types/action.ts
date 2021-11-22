@@ -13,7 +13,7 @@ export enum ActionType {
   ChangeNearbyHostelsAction = 'data/changeNearbyHostelsAction',
   AddCommentPropertyAction = 'data/addCommentPropertyAction',
   ChangeCityAction = 'data/changCityAction',
-  ChangeSortingAction = 'changSortingAction',
+  ChangeSortingAction = 'user/changSortingAction',
   ChangeHoverHostelAction = 'hover/changHoverHostelAction',
   ChangeHoverMarkerAction = 'hover/changeHoverMarkerAction',
   ChangeAuthorizationStatusAction = 'user/changeAuthorizationStatus',

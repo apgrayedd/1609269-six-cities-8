@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
 import Header from '../header/header';
 import PointList from '../point/point-list';
 import MainEmpty from './main-empty';
@@ -5,10 +7,13 @@ import MainCitiesList from './main-cities-list';
 import Map from '../map/map';
 import { useSelector } from 'react-redux';
 import { getFilteredHostels } from '../../store/data-process/selectors';
+import { SortingList } from '../../const';
+import { getByKey } from '../../utils/common';
 
 function Main(): JSX.Element {
   const hostels = useSelector(getFilteredHostels);
-
+  console.log(Object.values(SortingList))
+  console.log(getByKey(Object.values(SortingList), 'name'))
   return (
     <div className={`page page--gray page--main ${!hostels.length && 'page__main--index-empty'}`}>
       <Header />
