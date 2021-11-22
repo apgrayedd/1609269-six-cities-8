@@ -21,7 +21,7 @@ function MainCitiesItem({city}:cityOption): JSX.Element {
 
   return (
     <li className="locations__item">
-      <a className = {linkClassName} onClick = {setCityHandler}>
+      <a className = {linkClassName} onClick = {setCityHandler} >
         <span>{city}</span>
       </a>
     </li>
