@@ -1,7 +1,5 @@
 import { Action, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { Comment } from './comment';
-import { Hostel } from './hostel';
 import { State } from './state';
 
 export enum ActionType {
@@ -19,8 +17,5 @@ export enum ActionType {
   ChangeAuthorizationStatusAction = 'user/changeAuthorizationStatus',
 }
 
-export type ThunkActionResultHostels<R = Promise<Hostel[]>> = ThunkAction<R, State, AxiosInstance, Action>;
-export type ThunkActionResultComments<R = Promise<Comment[]>> = ThunkAction<R, State, AxiosInstance, Action>;
-export type ThunkActionResultHostel<R = Promise<Hostel>> = ThunkAction<R, State, AxiosInstance, Action>;
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;

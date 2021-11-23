@@ -7,7 +7,7 @@ export default function LoadingSpinner():JSX.Element {
       position: 'absolute',
       top: '50%',
       left: '50%',
-    }}
+    }} data-testid = 'loading-spinner'
     >
       <svg className="circle-outer" viewBox="0 0 86 86">
         <circle className="back" cx="43" cy="43" r="40"></circle>

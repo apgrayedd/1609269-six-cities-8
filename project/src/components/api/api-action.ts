@@ -1,16 +1,14 @@
 import { APIRoute, AuthorizationStatus } from '../../const';
 import {
   changeAuthorizationStatus,
+  changeCommentsProperty,
   changeFavorites,
+  changeHostelProperty,
   changeHostels,
-  changeLoaderStatus
+  changeLoaderStatus,
+  changeNearbyHostelsProperty
 } from '../../store/action';
-import {
-  ThunkActionResult,
-  ThunkActionResultComments,
-  ThunkActionResultHostel,
-  ThunkActionResultHostels
-} from '../../types/action';
+import {ThunkActionResult} from '../../types/action';
 import { AuthData } from '../../types/auth-data';
 import { Comment, PostComment } from '../../types/comment';
 import { Hostel } from '../../types/hostel';
@@ -21,26 +19,25 @@ export const fetchHostelAction = (loading: boolean): ThunkActionResult =>
     loading && dispatch(changeLoaderStatus(true));
     const {data} = await api.get<Hostel[]>(APIRoute.Hotels);
     dispatch(changeHostels(data));
-    dispatch(changeLoaderStatus(false));
     loading && dispatch(changeLoaderStatus(false));
   };
 
-export const fetchOfferInfo = (id: number): ThunkActionResultHostel =>
-  async (dispacth, _getstate, api): Promise<Hostel> => {
+export const fetchOfferInfo = (id: number): ThunkActionResult =>
+  async (dispacth, _getstate, api): Promise<void> => {
     const {data} = await api.get<Hostel>(APIRoute.OfferInfo.replace('id', `${id}`));
-    return Promise.resolve(data);
+    dispacth(changeHostelProperty(data));
   };
 
-export const fetchCommentsInfo = (id: number): ThunkActionResultComments =>
-  async (dispacth, _getstate, api): Promise<Comment[]> => {
+export const fetchCommentsInfo = (id: number): ThunkActionResult =>
+  async (dispacth, _getstate, api): Promise<void> => {
     const {data} = await api.get<Comment[]>(APIRoute.Comments.replace('id', `${id}`));
-    return Promise.resolve(data);
+    dispacth(changeCommentsProperty(data));
   };
 
-export const fetchNearByHostelsInfo = (id: number): ThunkActionResultHostels =>
-  async (dispacth, _getstate, api): Promise<Hostel[]> => {
+export const fetchNearByHostelsInfo = (id: number): ThunkActionResult =>
+  async (dispacth, _getstate, api): Promise<void> => {
     const {data} = await api.get<Hostel[]>(APIRoute.NearbyHostels.replace('id', `${id}`));
-    return Promise.resolve(data);
+    dispacth(changeNearbyHostelsProperty(data));
   };
 
 export const fetchFavoritesInfo = (loading: boolean): ThunkActionResult =>

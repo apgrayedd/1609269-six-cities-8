@@ -1,8 +1,8 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
-import { Hostel } from '../../types/hostel';
-import { getTitleList } from '../../utils/common';
-import FavoritesItem from './favorites-item';
+import { Hostel } from '../../../types/hostel';
+import { getTitleList } from '../../../utils/common';
+import FavoritesItem from '../favorites-item/favorites-item';
 
 type FavoritesListType = {
   'key': string,
@@ -35,7 +35,7 @@ function FavoritesList ({favorites}: FavoritesType): JSX.Element {
     );
   });
   return (
-    <ul className="favorites__list">
+    <ul className="favorites__list" data-testid = 'favorites-list'>
       {favoritesListArray.length > 0 && favoritesListArray}
     </ul>
   );

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { REVIEWS_TEXT_AMOUNT } from '../../../const';
-import { changeCommentsProperty } from '../../../store/action';
 import { ThunkAppDispatch } from '../../../types/action';
-import { Comment, PostComment } from '../../../types/comment';
+import { PostComment } from '../../../types/comment';
 import { fetchCommentsInfo, postCommentAction } from '../../api/api-action';
 import PropertyCommentStarList from './property-comment-start-list';
 import PropertyCommentTextArea from './property-comment-textArea';
@@ -19,8 +18,7 @@ function PropertyComment({id}:PropertyId): JSX.Element {
   const dispatch = useDispatch();
   const postComment = ({comment, rating}:PostComment) =>
     (dispatch as ThunkAppDispatch)(postCommentAction(id, {comment, rating}))
-      .then(() => (dispatch as ThunkAppDispatch)(fetchCommentsInfo(id)))
-      .then((comments:Comment[]) => dispatch(changeCommentsProperty(comments)));
+      .then(() => (dispatch as ThunkAppDispatch)(fetchCommentsInfo(id)));
 
   const [starCount, setStar] = useState<number>(0);
   const [disableStatus, setDisableStatus] = useState<boolean>(true);

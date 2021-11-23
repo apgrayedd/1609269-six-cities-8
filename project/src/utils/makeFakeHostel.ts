@@ -13,7 +13,7 @@ export const makeFakeHostel = ():Hostel => ({
     'name': name.firstName(),
   },
   'description': lorem.words(150),
-  'goods': [...Array(Math.floor(Math.random() * 10) + 1)].fill(() => lorem.words(10)),
+  'goods': [...Array(Math.floor(Math.random() * 10) + 1)].fill(lorem.words(10)),
   'host': {
     'avatar_url': internet.avatar(),
     'id': Math.floor(Math.random() * 100) + 1,
@@ -21,7 +21,7 @@ export const makeFakeHostel = ():Hostel => ({
     'name': name.firstName(),
   },
   'id': Math.floor(Math.random() * 100) + 1,
-  'images': [...Array(Math.floor(Math.random() * 5) + 1)].fill(() => internet.url()),
+  'images': [...Array(Math.floor(Math.random() * 5) + 1)].fill(internet.url()),
   'is_favorite': Boolean(Math.random()),
   'is_premium': Boolean(Math.random()),
   'location': {

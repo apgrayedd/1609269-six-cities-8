@@ -4,15 +4,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import {
-  changeCommentsProperty,
-  changeHostelProperty,
-  changeNearbyHostelsProperty
-} from '../../store/action';
 import { getHostelProperty } from '../../store/data-process/selectors';
 import { ThunkAppDispatch } from '../../types/action';
-import { Comment } from '../../types/comment';
-import { Hostel } from '../../types/hostel';
 import {
   fetchCommentsInfo,
   fetchNearByHostelsInfo,
@@ -29,14 +22,8 @@ function Property(): JSX.Element {
   const dispatch = useDispatch();
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchCommentsInfo(parseInt(id, 10)))
-      .then((comments:Comment[]) => dispatch(changeCommentsProperty(comments)))
-
       .then(() => (dispatch as ThunkAppDispatch)(fetchNearByHostelsInfo(parseInt(id, 10))))
-      .then((hostels:Hostel[]) => dispatch(changeNearbyHostelsProperty(hostels)))
-
       .then(() => (dispatch as ThunkAppDispatch)(fetchOfferInfo(parseInt(id, 10))))
-      .then((offerInfo:Hostel) => {dispatch(changeHostelProperty(offerInfo));})
-
       .catch(() => setError(true));
   }, [dispatch, id]);
 

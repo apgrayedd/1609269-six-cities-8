@@ -62,6 +62,7 @@ function FavoritesEmpty(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid = 'email'
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -72,9 +73,10 @@ function FavoritesEmpty(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  data-testid = 'password'
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit">
+              <button className="login__submit form__submit button" type="submit" data-testid = 'buttonSignIn'>
                 Sign in
               </button>
             </form>

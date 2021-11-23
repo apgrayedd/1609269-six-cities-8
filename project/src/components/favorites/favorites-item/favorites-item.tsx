@@ -1,10 +1,10 @@
 import { useMemo} from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import useFavorite from '../../hooks/use-favorite';
-import { ThunkAppDispatch } from '../../types/action';
-import { Hostel } from '../../types/hostel';
-import { fetchFavoritesInfo, fetchHostelAction, postFavoritesStatusAction } from '../api/api-action';
+import useFavorite from '../../../hooks/use-favorite';
+import { ThunkAppDispatch } from '../../../types/action';
+import { Hostel } from '../../../types/hostel';
+import { fetchFavoritesInfo, fetchHostelAction, postFavoritesStatusAction } from '../../api/api-action';
 
 type HostelOptions = {
   hostel: Hostel,
@@ -23,7 +23,7 @@ function FavoritesItem({hostel}: HostelOptions): JSX.Element {
     'place-card__bookmark-button--active'}`;
 
   return (
-    <article className="favorites__card place-card">
+    <article className="favorites__card place-card" data-testid = 'favorites-item'>
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to = {`/property/${hostel.id}`}>
           <img className ="place-card__image" src={hostel.preview_image} width="150" height="110" alt={hostel.title}/>

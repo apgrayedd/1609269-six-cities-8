@@ -1,6 +1,6 @@
 import Logo from '../logo/logo';
-import FavoritesEmpty from './favorites-empty';
-import FavoritesList from './favorites-list';
+import FavoritesEmpty from './favorites-empty/favorites-empty';
+import FavoritesList from './favorites-list/favorites-list';
 import Header from '../header/header';
 import { useSelector } from 'react-redux';
 import { getFavorites } from '../../store/user-process/selectors';

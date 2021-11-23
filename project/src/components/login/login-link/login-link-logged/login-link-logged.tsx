@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ThunkAppDispatch } from '../../types/action';
-import { logoutAction } from '../api/api-action';
+import { ThunkAppDispatch } from '../../../../types/action';
+import { logoutAction } from '../../../api/api-action';
 
 function LoginLinkLogged(): JSX.Element {
   const dispatch = useDispatch();
