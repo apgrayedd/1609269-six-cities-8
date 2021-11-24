@@ -23,8 +23,8 @@ describe('Редьюсер: User-Hover', () => {
     const state = {
       hoverHostel: undefined,
       hoverMarker: Math.random() < 0.5
-      ? Math.floor(Math.random() * 100)
-      : undefined,
+        ? Math.floor(Math.random() * 100)
+        : undefined,
     };
     expect(UserHover(state, changeHoverMarker(testIdMarker))).toEqual({
       hoverHostel: undefined,
