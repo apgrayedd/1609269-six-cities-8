@@ -1,7 +1,7 @@
 import Header from '../header/header';
 import PointList from '../point/point-list';
-import MainEmpty from './main-empty';
-import MainCitiesList from './main-cities-list';
+import MainEmpty from './main-empty/main-empty';
+import MainCitiesList from './main-cities-list/main-cities-list';
 import Map from '../map/map';
 import { useSelector } from 'react-redux';
 import { getFilteredHostels } from '../../store/data-process/selectors';

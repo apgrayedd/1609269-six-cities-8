@@ -19,6 +19,7 @@ export default function PropertyCommentStarItem({starNumber, starTitle, setRatin
         onChange = {setRating}
         value = {starNumber + 1}
         checked = {status}
+        data-testid = {`star-${starNumber}`}
       />
       <label
         htmlFor={`${starNumber + 1}-stars`}

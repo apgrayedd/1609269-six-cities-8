@@ -23,7 +23,7 @@ export default function PropertyCommentStarList({setStar, starCount}:StarListOpt
   ).reverse();
 
   return (
-    <div className="reviews__rating-form form__rating">
+    <div className="reviews__rating-form form__rating" data-testid = 'comment-star-list'>
       {starList}
     </div>
   );

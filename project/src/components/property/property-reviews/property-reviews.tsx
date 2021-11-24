@@ -12,7 +12,7 @@ function RropertyReviews({id}: ReviewsID): JSX.Element {
   const commentsProperty = useSelector(getCommentsProperty);
 
   return (
-    <section className="property__reviews reviews">
+    <section className="property__reviews reviews" data-testid = 'property-reviews'>
       {
         (commentsProperty && commentsProperty.length > 0) &&
         <>

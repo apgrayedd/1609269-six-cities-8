@@ -37,7 +37,7 @@ function PropertyInfo({hostel}:{hostel:Hostel}): JSX.Element {
               {
                 hostel.is_premium &&
                 <div className="property__mark">
-                  <span>Premium</span>
+                  <span data-testid = 'hostel-premium-status'>Premium</span>
                 </div>
               }
               <PropertyFavorite hostel = {hostel}/>
@@ -46,28 +46,36 @@ function PropertyInfo({hostel}:{hostel:Hostel}): JSX.Element {
                   <span style={{width: `${raiting}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{hostel.rating}</span>
+                <span className="property__rating-value rating__value" data-testid = 'hostel-raiting'>{hostel.rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire" style = {{textTransform: 'capitalize'}}>
+                <li className="property__feature property__feature--entire"
+                  style = {{textTransform: 'capitalize'}}
+                  data-testid = 'hostel-type'
+                >
                   {hostel.type}
                 </li>
-                <li className="property__feature property__feature--bedrooms">
+                <li className="property__feature property__feature--bedrooms"
+                  data-testid = 'hostel-bedrooms'
+                >
                   {hostel.bedrooms} Bedrooms
                 </li>
-                <li className="property__feature property__feature--adults">
+                <li className="property__feature property__feature--adults"
+                  data-testid = 'hostel-adults'
+                >
                 Max {hostel.max_adults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€{hostel.price}</b>
+                <b className="property__price-value" data-testid = 'hostel-price'>€{hostel.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    hostel.goods.map((good) => <li className="property__inside-item" key = {nanoid()}>{good}</li>)
+                    hostel.goods.map((good) =>
+                      <li className="property__inside-item" key = {nanoid()}>{good}</li>)
                   }
                 </ul>
               </div>
@@ -86,11 +94,11 @@ function PropertyInfo({hostel}:{hostel:Hostel}): JSX.Element {
                   <span className="property__user-name">{hostel.host.name}</span>
                   {
                     hostel.host.is_pro &&
-                    <span className="property__user-status">Pro</span>
+                    <span className="property__user-status" data-testid = 'host-pro-status'>Pro</span>
                   }
                 </div>
                 <div className="property__description">
-                  <p className="property__text">
+                  <p className="property__text" data-testid = 'hostel-description'>
                     {hostel.description}
                   </p>
                 </div>

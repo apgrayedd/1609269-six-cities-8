@@ -10,7 +10,7 @@ export default function RropertyReviewsList({commentsProperty}: ReviewsListOptio
   const reviewsArray = commentsProperty &&
     commentsProperty.map((comment) => <PropertyReviewsItem key = {comment.id} comment = {comment}/>);
   return (
-    <ul className="reviews__list">
+    <ul className="reviews__list" data-testid = 'reviews-list'>
       {reviewsArray}
     </ul>
   );

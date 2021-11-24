@@ -13,6 +13,7 @@ export default function PropertyCommentTextArea(): JSX.Element {
       onChange = {(evt: FormEvent<HTMLTextAreaElement>) => {
         setComment((evt.target as HTMLTextAreaElement).value);
       }}
+      data-testid = 'comment-textarea'
     />
   );
 }

@@ -1,6 +1,3 @@
-/* eslint-disable semi */
-/* eslint-disable no-console */
-/* eslint-disable no-nested-ternary */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';

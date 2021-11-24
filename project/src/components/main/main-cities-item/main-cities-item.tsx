@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../../store/action';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCity } from '../../store/data-process/selectors';
+import { getCity } from '../../../store/data-process/selectors';
 
 type cityOption = {
   city: string,
@@ -21,7 +21,7 @@ function MainCitiesItem({city}:cityOption): JSX.Element {
 
   return (
     <li className="locations__item">
-      <a className = {linkClassName} onClick = {setCityHandler} >
+      <a className = {linkClassName} onClick = {setCityHandler} data-testid = 'change-city-link'>
         <span>{city}</span>
       </a>
     </li>

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Comment } from '../../../types/comment';
+import dayjs from 'dayjs';
 
 type RropertyReviewsItemOptions = {
   comment: Comment,
@@ -19,7 +20,7 @@ export default function RropertyReviewsItem({comment}: RropertyReviewsItemOption
             height={54}
           />
         </div>
-        <span className="reviews__user-name" style = {{textTransform: 'capitalize'}}>{comment.user.name}</span>
+        <span className="reviews__user-name" style = {{textTransform: 'capitalize'}} data-testid = 'comment-user-name'>{comment.user.name}</span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
@@ -28,9 +29,9 @@ export default function RropertyReviewsItem({comment}: RropertyReviewsItemOption
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <p className="reviews__text">{comment.comment}</p>
-        <time className="reviews__time" dateTime={comment.date}>
-          {comment.date}
+        <p className="reviews__text" data-testid = 'comment-comment'>{comment.comment}</p>
+        <time className="reviews__time" dateTime={comment.date} data-testid = 'comment-date'>
+          {dayjs(comment.date).format('MMMM YYYY')}
         </time>
       </div>
     </li>

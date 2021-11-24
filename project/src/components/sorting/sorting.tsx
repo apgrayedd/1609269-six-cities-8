@@ -12,13 +12,13 @@ function Sorting():JSX.Element {
     dispatch(changeSorting(sorting));
 
   const [listClassName, setListClassName] = useState('');
-  const openSortingTemplate = (evt:MouseEvent) => setListClassName('places__options--opened');
-  const closeSortingTemplate = (evt:MouseEvent) => setListClassName('');
+  const openSortingTemplate = () => setListClassName('places__options--opened');
+  const closeSortingTemplate = () => setListClassName('');
   const sortingList = Object.values(SortingList).map(({name}) => {
     const setSortingTemplate = (evt:MouseEvent) => {
       evt.preventDefault();
       setSorting(name);
-      closeSortingTemplate(evt);
+      closeSortingTemplate();
     };
 
     return (
@@ -31,7 +31,10 @@ function Sorting():JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by {' '}</span>
-      <span className="places__sorting-type" tabIndex={0} onMouseOver = {openSortingTemplate} style = {{textTransform: 'capitalize'}}>
+      <span className="places__sorting-type" tabIndex={0} onMouseOver = {openSortingTemplate}
+        style = {{textTransform: 'capitalize'}}
+        data-testid = 'active-sort'
+      >
         {activeSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

@@ -52,3 +52,5 @@ export const sortHostels = (
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
+
+export const capitalizeText = (text:string):string => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();

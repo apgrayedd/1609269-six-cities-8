@@ -5,7 +5,7 @@ import { UserProcess } from './user-process/user-process';
 
 export enum NameSpace {
   data = 'DATA',
-  userProcess = 'USER_PROCESS',
+  userProcess = 'USER_PROCCES',
   userHover = 'USER_HOVER',
 }
 

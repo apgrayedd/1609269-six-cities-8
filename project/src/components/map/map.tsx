@@ -79,7 +79,7 @@ function Map({hostels, activeHostelId}: MapOptions): JSX.Element {
     });
   }, [map, hostels, hoverMarker, setHostelId, activeHostelId]);
 
-  return <div style = {{height: '100%'}} ref={mapRef}></div>;
+  return <div style = {{height: '100%'}} data-testid = 'map' ref={mapRef}></div>;
 }
 
 export default Map;
