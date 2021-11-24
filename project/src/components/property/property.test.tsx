@@ -17,7 +17,7 @@ const store = mockStore({
     nearbyHostelsProperty: testNearbyHostelsProperty,
     commentsProperty: testComments,
   },
-  'USER_PROCCES': {
+  'USER_PROCESS': {
     authorizationStatus: Math.random() < 0.5,
   },
   'USER_HOVER': {

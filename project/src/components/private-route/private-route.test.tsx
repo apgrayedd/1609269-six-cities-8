@@ -16,7 +16,7 @@ describe('Компонент: PrivateRouter', () => {
 
   it('будет ли рендер компонента, если пользователь не авторизован', () => {
     const store = mockStore({
-      'USER_PROCCES': {authorizationStatus: AuthorizationStatus.NoAuth},
+      'USER_PROCESS': {authorizationStatus: AuthorizationStatus.NoAuth},
     });
 
     render(
@@ -38,7 +38,7 @@ describe('Компонент: PrivateRouter', () => {
 
   it('будет ли рендер компонента, если пользователь авторизован', () => {
     const store = mockStore({
-      'USER_PROCCES': {authorizationStatus: AuthorizationStatus.Auth},
+      'USER_PROCESS': {authorizationStatus: AuthorizationStatus.Auth},
     });
 
     render(

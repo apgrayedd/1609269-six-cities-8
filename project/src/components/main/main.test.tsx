@@ -21,7 +21,7 @@ describe('Компонент: Main', () => {
       filteredHostels: testHostels.filter((hostel) =>
         hostel.city.name.toLowerCase() === testCity.toLowerCase()),
     },
-    'USER_PROCCES': {
+    'USER_PROCESS': {
       authorizationStatus: Math.random() < 0.5,
     },
   });

@@ -11,7 +11,7 @@ const history = createMemoryHistory();
 describe('Компонент: Header', () => {
 
   it('проврека на правильный рендер', () => {
-    const store = mockStore({'USER_PROCCES': {authorizationStatus: Math.random() < 0.5}});
+    const store = mockStore({'USER_PROCESS': {authorizationStatus: Math.random() < 0.5}});
     render(
       <Provider store={store}>
         <Router history = {history}>

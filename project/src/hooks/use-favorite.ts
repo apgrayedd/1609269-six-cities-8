@@ -15,5 +15,5 @@ export default function useFavorite(
     );
   };
 
-  return[favoriteStatus, handleFavoriteStatusChange];
+  return[favoriteStatus,  handleFavoriteStatusChange];
 }

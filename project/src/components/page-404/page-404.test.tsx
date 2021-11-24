@@ -10,7 +10,7 @@ describe('Компонент: Page-404', () => {
   const mockStore = configureMockStore();
   const history = createMemoryHistory();
   const store = mockStore({
-    'USER_PROCCES': {
+    'USER_PROCESS': {
       authorizationStatus: Math.random() < 0.5,
     },
   });

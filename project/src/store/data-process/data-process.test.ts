@@ -1,8 +1,8 @@
-import { Cities, DEFAULT_ACTIVE_CITY, DEFAULT_ACTIVE_SORT, SortingList } from '../const';
-import { Comment } from '../types/comment';
-import { Hostel } from '../types/hostel';
-import { getByKey, sortHostels } from '../utils/common';
-import { makeFakeHostel, makeFakeHostelComment } from '../utils/makeFakeHostel';
+import { Cities, DEFAULT_ACTIVE_CITY, DEFAULT_ACTIVE_SORT, SortingList } from '../../const';
+import { Comment } from '../../types/comment';
+import { Hostel } from '../../types/hostel';
+import { getByKey, sortHostels } from '../../utils/common';
+import { makeFakeHostel, makeFakeHostelComment } from '../../utils/makeFakeHostel';
 import {
   addCommentProperty,
   changeCity,
@@ -12,11 +12,11 @@ import {
   changeLoaderStatus,
   changeNearbyHostelsProperty,
   changeSorting
-} from './action';
-import { DataProcess } from './data-process/data-process';
+} from '../action';
+import { DataProcess } from './data-process';
 
-describe('Тесты редьюсера', () => {
-  it('Тест изменения города', () => {
+describe('Редьюсер: Data-Process', () => {
+  it('изменение города', () => {
     const newCity = Object.values(Cities)[Math.floor(Math.random() * Object.values(Cities).length)].toLowerCase();
     const testHostels:Hostel[] = [...Array(5)].fill(makeFakeHostel());
     const filteredTestHostels = testHostels.filter((hostel) =>
@@ -43,7 +43,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест изменения статуса лоадера', () => {
+  it('изменение статуса лоадера', () => {
     const state = {
       isDataLoading: false,
       city: DEFAULT_ACTIVE_CITY,
@@ -66,7 +66,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест изменения отеля для страницы предложения', () => {
+  it('изменение отеля для страницы предложения', () => {
     const state = {
       isDataLoading: false,
       city: DEFAULT_ACTIVE_CITY,
@@ -90,7 +90,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест изменения комментариев для страницы предложения', () => {
+  it('изменение комментариев для страницы предложения', () => {
     const state = {
       isDataLoading: false,
       city: DEFAULT_ACTIVE_CITY,
@@ -114,7 +114,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест изменения отелей поблизости для страницы предложения', () => {
+  it('изменение отелей поблизости для страницы предложения', () => {
     const state = {
       isDataLoading: false,
       city: DEFAULT_ACTIVE_CITY,
@@ -138,7 +138,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест добавления комментария для страницы предложения', () => {
+  it('добавление комментария для страницы предложения', () => {
     const testCommenstHostel:Comment[] = [...Array(5)].fill(makeFakeHostelComment());
     const newComment = makeFakeHostelComment();
     const state = {
@@ -163,7 +163,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест изменения сортировки отелей', () => {
+  it('изменение сортировки отелей', () => {
     const testFilteredHostels:Hostel[] = [...Array(3)].fill(makeFakeHostel());
     const testSortingName = getByKey(Object.values(SortingList), 'name')[Math.floor(Math.random() * Object.values(SortingList).length)];
     const sortingFilteredHostels = sortHostels(testFilteredHostels, testSortingName,DEFAULT_ACTIVE_CITY, testFilteredHostels);
@@ -189,7 +189,7 @@ describe('Тесты редьюсера', () => {
     });
   });
 
-  it('Тест изменения отелей', () => {
+  it('изменение отелей', () => {
     const newHostels = [...Array(5)].fill(makeFakeHostel());
     const newFilteredHostels = newHostels.filter((hostel) =>
       hostel.city.name.toLowerCase() === DEFAULT_ACTIVE_CITY.toLowerCase());
