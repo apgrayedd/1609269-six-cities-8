@@ -10,10 +10,12 @@ import MainCitiesItem from './main-cities-item/main-cities-item';
 import MainCitiesList from './main-cities-list/main-cities-list';
 import MainEmpty from './main-empty/main-empty';
 
+const TEST_HOSTELS_AMOUNT = 10;
+
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 describe('Компонент: Main', () => {
-  const testHostels = [...Array(10)].fill(makeFakeHostel());
+  const testHostels = [...Array(TEST_HOSTELS_AMOUNT)].fill(makeFakeHostel());
   const testCity =  Object.values(Cities)[Math.floor(Math.random() * Object.values(Cities).length)];
   const store = mockStore({
     'DATA': {

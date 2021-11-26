@@ -11,6 +11,10 @@ import PropertyCommentStarList from './property-comment-start-list';
 import { starsTitlesInReview } from '../../../const';
 import PropertyCommentStarItem from './property-comment-star-item';
 
+const STAR_COUNT = 0;
+const PARSE_RADIX = 10;
+const TEST_COMMENT_TEXT = 'Test';
+
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 const store = mockStore();
@@ -55,16 +59,16 @@ describe('Компонент: Property-Comment-TextArea', () => {
       </Provider>,
     );
 
-    userEvent.type(screen.getByRole('textbox'), 'Test');
-    expect(screen.getByText('Test')).toBeInTheDocument();
+    userEvent.type(screen.getByRole('textbox'), TEST_COMMENT_TEXT);
+    expect(screen.getByText(TEST_COMMENT_TEXT)).toBeInTheDocument();
   });
 });
 
 describe('Компонент: Property-Comment-Start-List', () => {
   it('проверка на правильный рендер', () => {
-    let starCount = 0;
+    let starCount = STAR_COUNT;
     const setStar = jest.fn((item) =>
-      starCount = (parseInt((item.target as HTMLInputElement).value, 10)));
+      starCount = (parseInt((item.target as HTMLInputElement).value, PARSE_RADIX)));
     render(
       <Provider store = {store}>
         <Router history = {history}>
@@ -78,14 +82,14 @@ describe('Компонент: Property-Comment-Start-List', () => {
 });
 
 describe('Компонент: Property-Comment-Start-Item', () => {
-  let starCount = 0;
+  let starCount = STAR_COUNT;
   const starNumber = Math.floor(Math.random() * starsTitlesInReview.length);
   const starTitle = starsTitlesInReview[starNumber];
 
   it('проверка на правильный рендер', () => {
-    starCount = 0;
+    starCount = STAR_COUNT;
     const setRating = jest.fn((item) =>
-      starCount = (parseInt((item.target as HTMLInputElement).value, 10)));
+      starCount = (parseInt((item.target as HTMLInputElement).value, PARSE_RADIX)));
     render(
       <Provider store = {store}>
         <Router history = {history}>
@@ -103,9 +107,9 @@ describe('Компонент: Property-Comment-Start-Item', () => {
   });
 
   it('проверка на правильность изменения оценки', () => {
-    starCount = 0;
+    starCount = STAR_COUNT;
     const setRating = jest.fn((item) =>
-      starCount = (parseInt((item.target as HTMLInputElement).value, 10)));
+      starCount = (parseInt((item.target as HTMLInputElement).value, PARSE_RADIX)));
     render(
       <Provider store = {store}>
         <Router history = {history}>

@@ -13,7 +13,6 @@ export default function PropertyCommentStarItem({starNumber, starTitle, setRatin
       <input
         className="form__rating-input visually-hidden"
         name="rating"
-        defaultValue={starNumber + 1}
         id={`${starNumber + 1}-stars`}
         type="radio"
         onChange = {setRating}

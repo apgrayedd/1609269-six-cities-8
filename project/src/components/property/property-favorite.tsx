@@ -10,10 +10,11 @@ type PropertyOption = {
 
 function PropertyFavorite({hostel}:PropertyOption):JSX.Element {
   const dispatch = useDispatch();
-  const postFavoriteStatus = (id: number, status: 0 | 1) =>
+  const postFavoriteStatus = (id: number, status: 0 | 1, onError: () => void) =>
     (dispatch as ThunkAppDispatch)(postFavoritesStatusAction(id, status))
       .then(() => (dispatch as ThunkAppDispatch)(fetchFavoritesInfo(false)))
-      .then(() => (dispatch as ThunkAppDispatch)(fetchHostelAction(false)));
+      .then(() => (dispatch as ThunkAppDispatch)(fetchHostelAction(false)))
+      .catch(() => onError());
 
   const [favoriteStatus, changeFavoriteStatusTemplate] = useFavorite(hostel, postFavoriteStatus);
   const favoriteClassName = `property__bookmark-button button ${favoriteStatus &&

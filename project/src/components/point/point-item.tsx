@@ -16,10 +16,11 @@ type PointOptions = {
 function PointItem({hostel}: PointOptions): JSX.Element {
   const hoverId = useSelector(getHoverHostel);
   const dispatch = useDispatch();
-  const postFavoriteStatus = (id: number, status: 0 | 1) =>
+  const postFavoriteStatus = (id: number, status: 0 | 1, onError: () => void) =>
     (dispatch as ThunkAppDispatch)(postFavoritesStatusAction(id, status))
       .then(() => (dispatch as ThunkAppDispatch)(fetchFavoritesInfo(false)))
-      .then(() => (dispatch as ThunkAppDispatch)(fetchHostelAction(false)));
+      .then(() => (dispatch as ThunkAppDispatch)(fetchHostelAction(false)))
+      .catch(() => onError());
   const setMarkerId = (id:number | undefined) =>
     dispatch(changeHoverMarker(id));
 

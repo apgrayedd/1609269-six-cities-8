@@ -37,6 +37,7 @@ function PropertyComment({id}:PropertyId): JSX.Element {
       });
     data.review.value = initialComment.commentText;
     setStar(initialComment.starCount);
+    setDisableStatus(true);
   };
 
   return (

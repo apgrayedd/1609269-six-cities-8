@@ -12,6 +12,11 @@ import thunk from 'redux-thunk';
 import { State } from '../../types/state';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 
+const TEST_EMAIL = 'test@mail.ru';
+const TEST_PASSWORD = '123456';
+const SUCCESSFUL_SENDING_CODE = 200;
+const TOKEN = '12345';
+
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 const store = mockStore();
@@ -41,10 +46,10 @@ describe('Компонент: Login', () => {
       </Provider>,
     );
 
-    userEvent.type(screen.getByTestId('email'), 'test@mail.ru');
-    userEvent.type(screen.getByTestId('password'), '123456');
-    expect(screen.getByDisplayValue(/test@mail.ru/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
+    userEvent.type(screen.getByTestId('email'), TEST_EMAIL);
+    userEvent.type(screen.getByTestId('password'), TEST_PASSWORD);
+    expect(screen.getByDisplayValue(TEST_EMAIL)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(TEST_PASSWORD)).toBeInTheDocument();
   });
 
   it('проврека на редирект на главную страницу', async () => {
@@ -57,7 +62,7 @@ describe('Компонент: Login', () => {
     Action,
     ThunkDispatch<State, typeof api, Action>
   >(middlewares);
-    mockAPI.onPost(APIRoute.Login).reply(200, '12345');
+    mockAPI.onPost(APIRoute.Login).reply(SUCCESSFUL_SENDING_CODE, TOKEN);
 
     render(
       <Provider store={mockStoreWithMiddleWares()}>
@@ -66,8 +71,8 @@ describe('Компонент: Login', () => {
         </Router>
       </Provider>,
     );
-    userEvent.type(screen.getByTestId('email'), 'test@mail.ru');
-    userEvent.type(screen.getByTestId('password'), '123456');
+    userEvent.type(screen.getByTestId('email'), TEST_EMAIL);
+    userEvent.type(screen.getByTestId('password'), TEST_PASSWORD);
     userEvent.click(screen.getByTestId('buttonSignIn'));
     await waitFor(() => expect(mockAPI.history.post.length).toBe(1));
     expect(history.location.pathname).toBe('/');

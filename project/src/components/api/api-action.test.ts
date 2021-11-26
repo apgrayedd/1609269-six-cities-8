@@ -27,6 +27,11 @@ import { makeFakeHostel, makeFakeHostelComment } from '../../utils/makeFakeHoste
 import { Hostel } from '../../types/hostel';
 import { Comment } from '../../types/comment';
 
+
+const SUCCESSFUL_SENDING_CODE = 200;
+const TEST_HOSTELS_AMOUNT = 5;
+const ID_MAX_AMOUNT = 100;
+
 describe('Тесты API функций', () => {
   const onFakeUnauthorized = jest.fn();
   const api = createAPI(onFakeUnauthorized());
@@ -43,7 +48,7 @@ describe('Тесты API функций', () => {
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.Login)
-      .reply(200, []);
+      .reply(SUCCESSFUL_SENDING_CODE, []);
 
     expect(store.getActions()).toEqual([]);
 
@@ -55,11 +60,11 @@ describe('Тесты API функций', () => {
   });
 
   it('Тест получения данных с сервера', async () => {
-    const testHostels:Hostel[] = [...Array(5)].fill(makeFakeHostel());
+    const testHostels:Hostel[] = [...Array(TEST_HOSTELS_AMOUNT)].fill(makeFakeHostel());
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.Hotels)
-      .reply(200, testHostels);
+      .reply(SUCCESSFUL_SENDING_CODE, testHostels);
 
     expect(store.getActions()).toEqual([]);
 
@@ -72,11 +77,11 @@ describe('Тесты API функций', () => {
 
   it('Тест получения отеля для страницы предложения', async () => {
     const testHostel:Hostel = makeFakeHostel();
-    const id = Math.floor(Math.random() * 100);
+    const id = Math.floor(Math.random() * ID_MAX_AMOUNT);
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.OfferInfo.replace('id', `${id}`))
-      .reply(200, testHostel);
+      .reply(SUCCESSFUL_SENDING_CODE, testHostel);
 
     expect(store.getActions()).toEqual([]);
 
@@ -88,12 +93,12 @@ describe('Тесты API функций', () => {
   });
 
   it('Тест получения комментариев для страницы предложения', async () => {
-    const testComments:Comment[] = [...Array(5)].fill(makeFakeHostelComment());
-    const id = Math.floor(Math.random() * 100);
+    const testComments:Comment[] = [...Array(TEST_HOSTELS_AMOUNT)].fill(makeFakeHostelComment());
+    const id = Math.floor(Math.random() * ID_MAX_AMOUNT);
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.Comments.replace('id', `${id}`))
-      .reply(200, testComments);
+      .reply(SUCCESSFUL_SENDING_CODE, testComments);
 
     expect(store.getActions()).toEqual([]);
 
@@ -105,12 +110,12 @@ describe('Тесты API функций', () => {
   });
 
   it('Тест получения отелей поблизости для страницы предложения', async () => {
-    const testHostels:Hostel[] = [...Array(5)].fill(makeFakeHostel());
-    const id = Math.floor(Math.random() * 100);
+    const testHostels:Hostel[] = [...Array(TEST_HOSTELS_AMOUNT)].fill(makeFakeHostel());
+    const id = Math.floor(Math.random() * ID_MAX_AMOUNT);
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.NearbyHostels.replace('id', `${id}`))
-      .reply(200, testHostels);
+      .reply(SUCCESSFUL_SENDING_CODE, testHostels);
 
     expect(store.getActions()).toEqual([]);
 
@@ -122,11 +127,11 @@ describe('Тесты API функций', () => {
   });
 
   it('Тест получения понравившихся отелей', async () => {
-    const testHostels:Hostel[] = [...Array(5)].fill(makeFakeHostel());
+    const testHostels:Hostel[] = [...Array(TEST_HOSTELS_AMOUNT )].fill(makeFakeHostel());
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.Favorites)
-      .reply(200, testHostels);
+      .reply(SUCCESSFUL_SENDING_CODE, testHostels);
 
     expect(store.getActions()).toEqual([]);
 
@@ -139,11 +144,11 @@ describe('Тесты API функций', () => {
 
   it('Тест отправления нового комментария', async () => { ////
     const newComment:Comment = makeFakeHostelComment();
-    const id = Math.floor(Math.random() * 100);
+    const id = Math.floor(Math.random() * ID_MAX_AMOUNT);
     const store = mockStore();
     mockAPI
       .onPost(APIRoute.Comments.replace('id', `${id}`))
-      .reply(200);
+      .reply(SUCCESSFUL_SENDING_CODE);
 
     expect(store.getActions()).toEqual([]);
     await store.dispatch(postCommentAction(id, newComment));
@@ -152,11 +157,11 @@ describe('Тесты API функций', () => {
 
   it('Тест отправления статуса избранного для отеля', async () => { ////
     const newStatus:0 | 1 = Math.random() < 0.5 ? 1 : 0;
-    const id = Math.floor(Math.random() * 100);
+    const id = Math.floor(Math.random() * ID_MAX_AMOUNT);
     const store = mockStore();
     mockAPI
       .onPost(APIRoute.PostFavorites.replace('id', `${id}`).replace('status', `${newStatus}`))
-      .reply(200);
+      .reply(SUCCESSFUL_SENDING_CODE);
 
     expect(store.getActions()).toEqual([]);
     await store.dispatch(postFavoritesStatusAction(id, newStatus));

@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { Hostel } from '../types/hostel';
 
@@ -11,7 +13,7 @@ export default function useFavorite(
     setFavoriteStatus(!favoriteStatus);
     postFavoriteStatus(
       hostel.id, (!favoriteStatus) ? 1 : 0,
-      () => setFavoriteStatus(!favoriteStatus),
+      () => setFavoriteStatus(favoriteStatus),
     );
   };
 

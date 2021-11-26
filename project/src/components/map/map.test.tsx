@@ -7,8 +7,10 @@ import { getByKey } from '../../utils/common';
 import { makeFakeHostel } from '../../utils/makeFakeHostel';
 import Map from './map';
 
+const TEST_HOSTELS_AMOUNT = 3;
+
 describe('Компонент: Map', () => {
-  const testHostels = [...Array(3)].fill(makeFakeHostel());
+  const testHostels = [...Array(TEST_HOSTELS_AMOUNT)].fill(makeFakeHostel());
   const mockStore = configureMockStore();
   const store = mockStore({
     'USER_HOVER': {

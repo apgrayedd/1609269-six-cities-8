@@ -8,8 +8,11 @@ import PropertyFavorite from './property-favorite';
 import PropertyInfo from './property-info';
 import PropertyNeighbourhoodList from './property-neighbourhood-list';
 
-const testNearbyHostelsProperty = [...Array(3)].fill(makeFakeHostel());
-const testComments = Math.random() < 0.5 ? [...Array(5)].fill(makeFakeHostelComment()) : [];
+const TEST_COMMENTS_AMOUNT = 5;
+const TEST_NEARBY_HOSTELS_AMOUNT = 3;
+
+const testNearbyHostelsProperty = [...Array(TEST_NEARBY_HOSTELS_AMOUNT)].fill(makeFakeHostel());
+const testComments = Math.random() < 0.5 ? [...Array(TEST_COMMENTS_AMOUNT)].fill(makeFakeHostelComment()) : [];
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 const store = mockStore({

@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { ThunkAppDispatch } from '../../types/action';
@@ -8,7 +7,7 @@ import { AuthData } from '../../types/auth-data';
 import { AuthorizationStatus } from '../../const';
 import { useDispatch } from 'react-redux';
 
-function FavoritesEmpty(): JSX.Element {
+function Login(): JSX.Element {
   const dispatch = useDispatch();
   const postLogin = ({login, password}:AuthData,  actionOnEnd:() => void) =>
     (dispatch as ThunkAppDispatch)(loginAction({login: login, password: password}))
@@ -20,8 +19,6 @@ function FavoritesEmpty(): JSX.Element {
       .catch((err) => Promise.reject(err));
   const setLoaderStatus = (status: boolean) =>
     dispatch(changeLoaderStatus(status));
-
-  const formRef = useRef(null);
   const history = useHistory();
   const submitTemplate = (evt: any) => {
     evt.preventDefault();
@@ -52,7 +49,7 @@ function FavoritesEmpty(): JSX.Element {
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <form className="login__form form" action="/login" method="post"
-              ref = {formRef} onSubmit = {submitTemplate}
+              onSubmit = {submitTemplate}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -94,4 +91,4 @@ function FavoritesEmpty(): JSX.Element {
   );
 }
 
-export default FavoritesEmpty;
+export default Login;

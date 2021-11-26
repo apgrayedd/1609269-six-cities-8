@@ -9,6 +9,8 @@ import FavoritesEmpty from './favorites-empty/favorites-empty';
 import { makeFakeHostel } from '../../utils/makeFakeHostel';
 import { Hostel } from '../../types/hostel';
 
+const TEST_HOSTELS_AMOUNT = 5;
+
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 const store = mockStore({});
@@ -37,7 +39,7 @@ describe('Компонент: Favorites-List', () => {
   });
 
   it('проврека на правильный рендер', () => {
-    const testHostels:Hostel[] = [...Array(5)].fill(makeFakeHostel());
+    const testHostels:Hostel[] = [...Array(TEST_HOSTELS_AMOUNT)].fill(makeFakeHostel());
     render(
       <Provider store={store}>
         <Router history={history}>

@@ -1,20 +1,10 @@
 import {Link} from 'react-router-dom';
 import Header from '../header/header';
 import Logo from '../logo/logo';
-
-const ErrorDivStyle = {
-  HEIGHT: '50vh',
-  WIDTH: '1144px',
-  MARGIN_LEFT: 'auto',
-  MARGIN_RIGHT: 'auto',
-  PADDING_LEFT: '58px',
-  PADDING_RIGHT: '58px',
-};
-
-const ErrorDescriptionStyle = {
-  FONT_SIZE: '78px',
-  MARGIN_BOTTOM: '20px',
-};
+import {
+  ErrorDescriptionStyle,
+  ErrorDivStyle
+} from './page-404.style';
 
 export default function Page404(): JSX.Element {
   return (

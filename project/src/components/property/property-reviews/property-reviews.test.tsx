@@ -9,7 +9,9 @@ import PropertyReviewsList from './property-reviews-list';
 import PropertyReviewsItem from './property-reviews-item';
 import dayjs from 'dayjs';
 
-const testComments = Math.random() < 0.5 ? [...Array(5)].fill(makeFakeHostelComment()) : [];
+const TEST_COMMENTS_AMOUNT = 3;
+
+const testComments = Math.random() < 0.5 ? [...Array(TEST_COMMENTS_AMOUNT)].fill(makeFakeHostelComment()) : [];
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
 
