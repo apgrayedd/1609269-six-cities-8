@@ -5,7 +5,7 @@ type ReviewsListOption = {
   commentsProperty: Comment[];
 };
 
-export default function RropertyReviewsList({commentsProperty}: ReviewsListOption): JSX.Element {
+export default function PropertyReviewsList({commentsProperty}: ReviewsListOption): JSX.Element {
 
   const reviewsArray = commentsProperty &&
     commentsProperty.map((comment) => <PropertyReviewsItem key = {comment.id} comment = {comment}/>);

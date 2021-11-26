@@ -7,7 +7,7 @@ import PropertyReviewsList from './property-reviews-list';
 
 type ReviewsID = {id: number};
 
-function RropertyReviews({id}: ReviewsID): JSX.Element {
+function PropertyReviews({id}: ReviewsID): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const commentsProperty = useSelector(getCommentsProperty);
 
@@ -30,4 +30,4 @@ function RropertyReviews({id}: ReviewsID): JSX.Element {
   );
 }
 
-export default RropertyReviews;
+export default PropertyReviews;

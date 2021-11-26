@@ -6,7 +6,7 @@ type RropertyReviewsItemOptions = {
   comment: Comment,
 }
 
-export default function RropertyReviewsItem({comment}: RropertyReviewsItemOptions): JSX.Element {
+export default function PropertyReviewsItem({comment}: RropertyReviewsItemOptions): JSX.Element {
   const raiting = useMemo(() => Math.round(comment.rating) * 20, [comment.rating]);
   return (
     <li className="reviews__item">
